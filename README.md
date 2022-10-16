@@ -1,6 +1,6 @@
 # SIGO - A project to improve the management of a construction
 
-<div style="display: flex; flex-diretion: row;">
+<div style="display: flex; flex-direction: row;">
   <img width="200" src="https://i.imgur.com/JBLOtze.png" alt="Home Screen">
   <li>
     <p>
