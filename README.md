@@ -1,3 +1,3 @@
 # SIGO
 
-<img width="800" src="https://i.imgur.com/JBLOtze.png" alt="Home Screen">
+<img width="200" src="https://i.imgur.com/JBLOtze.png" alt="Home Screen">
