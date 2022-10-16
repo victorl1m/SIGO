@@ -4,8 +4,6 @@
 
 <img src="https://i.imgur.com/JBLOtze.png" alt="project-screenshot" width="200" height="400/">
 
-<img src="https://i.imgur.com/JBLOtze.png" alt="project-screenshot" width="200" height="400/">
-
   
   
 <h2>🧐 Features</h2>
