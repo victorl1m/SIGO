@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "sigo-project",
+    "slug": "sigo-project",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
