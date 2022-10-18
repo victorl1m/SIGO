@@ -20,3 +20,4 @@ Technologies used in the project:
 
 *   React Native
 *   React-JS
+* <a href="https://www.figma.com/file/wjR78UYXasj7H861OvMFli/SIGO?node-id=0%3A1">Figma</a>
