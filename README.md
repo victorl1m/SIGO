@@ -1,4 +1,10 @@
 <p align="center"><img src="https://socialify.git.ci/trackedby/SIGO/image?description=1&amp;font=Source%20Code%20Pro&amp;issues=1&amp;language=1&amp;name=1&amp;pulls=1&amp;theme=Light" alt="project-image"></p>
+<h2>👥 Members</h2>
+
+*   <a href="https://github.com/Marcos-Segantine">Marcos Segantine</a>
+*   <a href="https://github.com/HyathoZ">João Victor</a>
+*   <a href="https://github.com/Luiz-NP">Luiz Gustavo</a>
+*   <a href="https://github.com/xsabatox">Victor Sábato</a>
 
 <h2>Project Screenshots:</h2>
 
@@ -21,6 +27,6 @@ Here're some of the project's best features:
 
 Technologies used in the project:
 
-*   React Native (Expo framework)
+*   React Native (Expo framework) (Bare workflow)
 *   React-JS
 * <a href="https://www.figma.com/file/wjR78UYXasj7H861OvMFli/SIGO?node-id=0%3A1">Figma</a>
