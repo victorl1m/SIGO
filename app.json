@@ -3,6 +3,7 @@
     "name": "sigo-project",
     "slug": "sigo-project",
     "version": "1.0.0",
+    "android":{"softwareKeyboardLayoutMode": "pan"},
     "assetBundlePatterns": [
       "**/*"
     ]
