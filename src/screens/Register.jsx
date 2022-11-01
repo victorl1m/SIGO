@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
-export default function Register() {
+export function Register() {
     return(
         <View style={styles.container}>
-            </View>
+            <Text>Register Screen</Text>
+        </View>
     )
 };
 
