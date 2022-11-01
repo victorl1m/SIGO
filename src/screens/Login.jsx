@@ -4,7 +4,14 @@ import {Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Svg, { G, Rect, Path, Defs, ClipPath } from "react-native-svg"
-export default function Login() {
+import { Button } from "react-native-web";
+
+export function Login({ navigation }) {
+
+  // Login function
+  function handleLogin() {
+    navigation.navigate('Home');
+  }
 
 
   // font loader
@@ -71,7 +78,11 @@ export default function Login() {
         </View>
         <View style={styles.submitArea}>
             <Pressable style={styles.submitBtn}>
-              <Text style={styles.submitText}>Entrar</Text>
+              <Button 
+                title="Entrar"
+                style={styles.submitText}
+                onPress={handleLogin}  
+              />
             </Pressable>
             <Pressable style={styles.ForgotBtn}>
               <Text style={styles.ForgotText}>Esqueceu sua senha?</Text>
@@ -84,6 +95,7 @@ export default function Login() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
