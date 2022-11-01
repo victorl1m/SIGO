@@ -19,7 +19,8 @@
     "react-native": "0.69.6",
     "react-native-svg": "12.3.0",
     "react-native-web": "~0.18.7",
-    "react-navigation": "^4.4.4"
+    "react-navigation": "^4.4.4",
+    "@expo/webpack-config": "^0.17.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
