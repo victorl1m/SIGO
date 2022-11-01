@@ -9,10 +9,10 @@ export default function Login() {
 
   // font loader
   const [fontsLoaded] = useFonts({
-    "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
-    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
-    "Montserrat-Light": require("./assets/fonts/Montserrat-Light.ttf"),
-    "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+    "Montserrat-Medium": require("../../assets/fonts/Montserrat-Medium.ttf"),
+    "Montserrat-Bold": require("../../assets/fonts/Montserrat-Bold.ttf"),
+    "Montserrat-Light": require("../../assets/fonts/Montserrat-Light.ttf"),
+    "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
   });
 
   // prevents SplashScreen from auto hiding while the fonts are loaded.
