@@ -1,16 +1,26 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useCallback, props } from "react";
-import {Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {Pressable, StyleSheet, Text, TextInput, View, Button } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Svg, { G, Rect, Path, Defs, ClipPath } from "react-native-svg"
-import { Button } from "react-native-web";
 
 export function Login({ navigation }) {
 
   // Login function
   function handleLogin() {
-    navigation.navigate('Home');
+    const { navigate } = navigation;
+    navigate('Home');
+  }
+
+  function handleForgot() {
+    const { navigate } = navigation;
+    navigate('ForgotPW');
+  }
+
+  function handleRegister() {
+    const { navigate } = navigation;
+    navigate('Register');
   }
 
 
@@ -49,7 +59,6 @@ export function Login({ navigation }) {
       width={64}
       height={64}
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <G clipPath="url(#a)">
@@ -77,17 +86,13 @@ export function Login({ navigation }) {
           </View>
         </View>
         <View style={styles.submitArea}>
-            <Pressable style={styles.submitBtn}>
-              <Button 
-                title="Entrar"
-                style={styles.submitText}
-                onPress={handleLogin}  
-              />
+            <Pressable onPress={handleLogin} style={styles.submitBtn}>
+              <Text style={styles.submitText}>Entrar</Text>
             </Pressable>
-            <Pressable style={styles.ForgotBtn}>
+            <Pressable onPress={handleForgot} style={styles.ForgotBtn}>
               <Text style={styles.ForgotText}>Esqueceu sua senha?</Text>
             </Pressable>
-            <Pressable style={styles.signUpBtn}>
+            <Pressable onPress={handleRegister} style={styles.signUpBtn}>
               <Text style={styles.signUpText}>Registrar-se</Text>
             </Pressable>
         </View>
