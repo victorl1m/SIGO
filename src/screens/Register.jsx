@@ -1,18 +1,29 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 
-export function Register() {
-    return(
+export function Register({ navigation }) {
+
+    function goBack() {
+        const { navigate } = navigation;
+        navigate('Login');
+    }
+
+    return (
         <View style={styles.container}>
-            <Text>Register Screen</Text>
+            <Text>Register</Text>
+            <Button 
+                title="go back"
+                onPress={goBack}
+            />
         </View>
     )
-};
+}
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#00B2CB",
-    },
-}
-);
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10
+    }
+});
