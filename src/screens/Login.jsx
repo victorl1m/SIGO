@@ -1,28 +1,29 @@
+import {Pressable, StyleSheet, Text, TextInput, View, Alert } from "react-native";
+import { useState, useEffect, useCallback, props } from "react";
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useCallback, props } from "react";
-import {Pressable, StyleSheet, Text, TextInput, View, Button } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import Svg, { G, Rect, Path, Defs, ClipPath } from "react-native-svg"
+import Svg, { G, Rect, Path, Defs, ClipPath } from "react-native-svg";
+
+// firebase authentication
+import auth from "@react-native-firebase/auth";
 
 export function Login({ navigation }) {
+  const { navigate } = navigation;
+  const { alert } = Alert;
 
-  // Login function
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   function handleLogin() {
-    const { navigate } = navigation;
-    navigate('Home');
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => navigate('Home'))
+      .catch((err) => {
+        alert("Email or Password incorrect");
+        console.log(err);
+      });
   }
-
-  function handleForgot() {
-    const { navigate } = navigation;
-    navigate('ForgotPW');
-  }
-
-  function handleRegister() {
-    const { navigate } = navigation;
-    navigate('Register');
-  }
-
 
   // font loader
   const [fontsLoaded] = useFonts({
@@ -77,22 +78,22 @@ export function Login({ navigation }) {
         </View>
           <View style={styles.loginSpacer}>
            <Text style={styles.loginText}>Usuário</Text>
-            <TextInput maxLength={8} selectionColor={'#00B2CB'} autoComplete="username" style={styles.loginInput}/>
+            <TextInput maxLength={8} selectionColor={'#00B2CB'} autoComplete="username" style={styles.loginInput} onChangeText={setEmail}/>
           </View>
 
           <View style={styles.LoginSpacer}>
            <Text style={styles.loginText}>Senha</Text>
-            <TextInput maxLength={8} selectionColor={'#00B2CB'} style={styles.loginInput} secureTextEntry={true}/>
+            <TextInput maxLength={8} selectionColor={'#00B2CB'} style={styles.loginInput} secureTextEntry={true} onChangeText={setPassword}/>
           </View>
         </View>
         <View style={styles.submitArea}>
             <Pressable onPress={handleLogin} style={styles.submitBtn}>
               <Text style={styles.submitText}>Entrar</Text>
             </Pressable>
-            <Pressable onPress={handleForgot} style={styles.ForgotBtn}>
+            <Pressable onPress={() => navigate('ForgotPW')} style={styles.ForgotBtn}>
               <Text style={styles.ForgotText}>Esqueceu sua senha?</Text>
             </Pressable>
-            <Pressable onPress={handleRegister} style={styles.signUpBtn}>
+            <Pressable onPress={() => navigate('Register')} style={styles.signUpBtn}>
               <Text style={styles.signUpText}>Registrar-se</Text>
             </Pressable>
         </View>
