@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native-web"
 
-export function ForgotPW({ navigation }) {
+export function Home({ navigation }) {
 
     function goBack() {
         const { navigate } = navigation;
@@ -9,7 +9,7 @@ export function ForgotPW({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text>Do you Forgot? :(</Text>
+            <Text>Home</Text>
             <Button 
                 title="go back"
                 onPress={goBack}
@@ -26,4 +26,3 @@ const styles = StyleSheet.create({
         gap: 10
     }
 });
-
