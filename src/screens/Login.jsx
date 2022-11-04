@@ -6,7 +6,9 @@ import * as SplashScreen from "expo-splash-screen";
 import Svg, { G, Rect, Path, Defs, ClipPath } from "react-native-svg";
 
 // firebase authentication
-import auth from "@react-native-firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
+
 
 export function Login({ navigation }) {
   const { navigate } = navigation;
@@ -15,14 +17,16 @@ export function Login({ navigation }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  function handleLogin() {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => navigate('Home'))
-      .catch((err) => {
-        alert("Email or Password incorrect");
-        console.log(err);
-      });
+  async function handleLogin() {
+    await signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("Successfull login");
+      navigate('Home')
+    })
+    .catch((error) => {
+      alert("Email or Password Incorrect");
+      console.log(error);
+    })
   }
 
   // font loader
@@ -78,12 +82,12 @@ export function Login({ navigation }) {
         </View>
           <View style={styles.loginSpacer}>
            <Text style={styles.loginText}>Usuário</Text>
-            <TextInput maxLength={8} selectionColor={'#00B2CB'} autoComplete="username" style={styles.loginInput} onChangeText={setEmail}/>
+            <TextInput selectionColor={'#00B2CB'} autoComplete="username" style={styles.loginInput} onChangeText={setEmail}/>
           </View>
 
           <View style={styles.LoginSpacer}>
            <Text style={styles.loginText}>Senha</Text>
-            <TextInput maxLength={8} selectionColor={'#00B2CB'} style={styles.loginInput} secureTextEntry={true} onChangeText={setPassword}/>
+            <TextInput selectionColor={'#00B2CB'} style={styles.loginInput} secureTextEntry={true} onChangeText={setPassword}/>
           </View>
         </View>
         <View style={styles.submitArea}>

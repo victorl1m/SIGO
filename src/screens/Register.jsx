@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { View, Text, StyleSheet, Button } from "react-native";
 
 export function Register({ navigation }) {
