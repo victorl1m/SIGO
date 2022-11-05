@@ -20,7 +20,7 @@ export const ClientSelection = () => {
   return (
     <View>
       <View style={styles.welcomeUser}>
-        <Text style={{ fontWeight: "900" }}>Bem-vindo, Victor Lima</Text>
+        <Text style={{ fontWeight: 900 }}>Bem-vindo, Victor Lima</Text>
         <View style={styles.photoUser}></View>
       </View>
 
