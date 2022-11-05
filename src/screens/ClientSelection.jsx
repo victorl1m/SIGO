@@ -20,7 +20,7 @@ export const ClientSelection = () => {
   return (
     <View>
       <View style={styles.welcomeUser}>
-        <Text style={{ fontWeight: 900 }}>Bem-vindo, Victor Lima</Text>
+        <Text style={{ fontWeight: '900' }}>Bem-vindo, Victor Lima</Text>
         <View style={styles.photoUser}></View>
       </View>
 
@@ -76,7 +76,7 @@ const Client = ({ nameUser }) => {
           <Text style={styles.aboutClientButtonText}>Financeiro</Text>
         </Pressable>
         <Pressable style={styles.accessButton}>
-          <Text style={{ fontSize: 18, fontWeight: 700, color: "#00B2CB" }}>
+          <Text style={{ fontSize: 18, fontWeight: '700', color: "#00B2CB" }}>
             Acessar
           </Text>
         </Pressable>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 
   dropDownText: {
     fontSize: 18,
-    fontWeight: 700,
+    fontWeight: '700',
     color: "#00B2CB",
     width: "max-content",
     padding: 5,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
 
   numberProgressUser: {
-    fontWeight: 700,
+    fontWeight: '700',
     fontSize: 18,
     color: "white",
   },
