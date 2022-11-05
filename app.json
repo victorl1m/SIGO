@@ -3,9 +3,16 @@
     "name": "sigo-project",
     "slug": "sigo-project",
     "version": "1.0.0",
-    "android":{"softwareKeyboardLayoutMode": "pan"},
+    "android": {
+      "softwareKeyboardLayoutMode": "pan"
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f9b6ccdd-3b61-4cc6-b3a0-9071b93b793b"
+      }
+    }
   }
 }
