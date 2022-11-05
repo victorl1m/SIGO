@@ -92,11 +92,9 @@ export function Login({ navigation }) {
           placeholder="Senha"
           placeholderTextColor={"#00B2CB"}
         />
-        <Pressable
-          onPress={() => {
-            navigation.navigate("ForgotPW");
-          }}
-        >
+        <Pressable onPress={() => {
+          navigation.navigate("ForgotPW");
+        }}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
@@ -112,7 +110,10 @@ export function Login({ navigation }) {
           textDecorationLine: "none",
         }}
       />
-      <Pressable style={styles.logInbtn} onPress={handleLogin}>
+      <Pressable
+        style={styles.logInbtn}
+        onPress={handleLogin}
+      >
         <Text style={styles.buttonText}>Entrar</Text>
       </Pressable>
       <Pressable
