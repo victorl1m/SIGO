@@ -87,7 +87,6 @@ const Client = ({ nameUser }) => {
 
 const styles = StyleSheet.create({
   welcomeUser: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -95,13 +94,11 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
 
   dropDown: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
@@ -140,7 +137,6 @@ const styles = StyleSheet.create({
   },
 
   rowAboutClient: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -162,7 +158,6 @@ const styles = StyleSheet.create({
   },
 
   progressBarUser: {
-    display: "block",
     width: "40%",
     height: 5,
     borderRadius: 25,
@@ -179,7 +174,6 @@ const styles = StyleSheet.create({
 
   aboutClientButton: {
     backgroundColor: "#00B2CB",
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 8,
