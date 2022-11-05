@@ -16,7 +16,7 @@ export function Register({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.registerContainer}>
+    <SafeAreaView  style={styles.registerContainer}>
       <StatusBar style="light" />
         <View style={styles.registerArea}>
             <Text style={styles.registerTitle}>Registrar-se</Text>
