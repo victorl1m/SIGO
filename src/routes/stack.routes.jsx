@@ -14,6 +14,13 @@ export function StackRoutes() {
   return (
     <Navigator>
       <Screen
+        name="ClientSelection"
+        component={ClientSelection}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Screen
         name="Login"
         component={Login}
         options={{
@@ -40,14 +47,6 @@ export function StackRoutes() {
       <Screen
         name="Home"
         component={Home}
-        options={{
-          headerShown: false,
-        }}
-      />
-      
-      <Screen
-        name="ClientSelection"
-        component={ClientSelection}
         options={{
           headerShown: false,
         }}
