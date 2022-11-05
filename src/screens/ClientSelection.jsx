@@ -87,7 +87,6 @@ const Client = ({ nameUser }) => {
 
 const styles = StyleSheet.create({
   welcomeUser: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -95,13 +94,11 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
 
   dropDown: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
@@ -112,7 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     color: "#00B2CB",
-    width: "max-content",
     padding: 5,
   },
 
@@ -122,26 +118,25 @@ const styles = StyleSheet.create({
 
   input: {
     border: "none",
-    borderRadius: "15px",
+    borderRadius: 15,
     padding: 10,
     backgroundColor: "#D9D9D9",
     width: "75%",
     color: "rgba(0, 0, 0, .5)",
-    marginTop: "10px",
+    marginTop: 10,
   },
 
   client: {
     backgroundColor: "#00B2CB",
     color: "white",
-    borderRadius: "10px",
+    borderRadius: 10,
     width: "95%",
-    maxWidth: "340px",
+    maxWidth: 340,
     padding: 10,
     marginTop: 15,
   },
 
   rowAboutClient: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -157,13 +152,12 @@ const styles = StyleSheet.create({
   },
 
   nameUser: {
-    fontSize: "14px",
+    fontSize: 14,
     color: "white",
-    width: "80px",
+    width: 80,
   },
 
   progressBarUser: {
-    display: "block",
     width: "40%",
     height: 5,
     borderRadius: 25,
@@ -180,8 +174,6 @@ const styles = StyleSheet.create({
 
   aboutClientButton: {
     backgroundColor: "#00B2CB",
-    maxWidth: "max-content",
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 8,
@@ -202,6 +194,5 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     backgroundColor: "white",
     borderRadius: 5,
-    maxWidth: "max-content",
   },
 });
