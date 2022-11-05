@@ -29,7 +29,7 @@ export function Login({ navigation }) {
     await signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         alert("Successfull login");
-        navigate("Home");
+        navigate("ClientSelection");
       })
       .catch((error) => {
         alert("Email or Password Incorrect");
@@ -80,7 +80,7 @@ export function Login({ navigation }) {
         <TextInput
           style={styles.input}
           autoComplete="email"
-          placeholder="Email"
+          placeholder="E-mail"
           placeholderTextColor={"#00B2CB"}
           onChangeText={setEmail}
         />
@@ -142,11 +142,12 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#1E1E1E",
     width: "100%",
-    height: 50,
+    height: 70,
     color: "#00B2CB",
     borderRadius: 10,
     padding: 12,
     marginBottom: 10,
+    fontSize: 16,
     fontFamily: "Montserrat-Medium",
   },
   forgotPassword: {
