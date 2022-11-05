@@ -44,7 +44,7 @@ export function StackRoutes() {
           headerShown: false,
         }}
       />
-
+      
       <Screen
         name="ClientSelection"
         component={ClientSelection}

@@ -1,14 +1,21 @@
-import { View, Text, TextInput, StyleSheet, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  Image,
+} from "react-native";
 import React, { useState } from "react";
+import Svg, { Path } from "react-native-svg";
 
-import statisticsIcon from '../assets/icon/statistics-icon.png'
-import financialIcon from '../assets/icon/financial-icon.png'
-import arrowDropDownIcon from '../assets/icon/arrowDropDown-icon.png'
+import statisticsIcon from "../assets/icon/statistics-icon.png";
+import financialIcon from "../assets/icon/financial-icon.png";
 
 export const ClientSelection = () => {
-  const [visible, setVisible] = useState(true);
+  const [dropDownClient, setdropDownClient] = useState(true);
 
-  const handleDropDown = () => setVisible(!visible);
+  const handleDropDown = () => setdropDownClient(!dropDownClient);
 
   return (
     <View>
@@ -21,11 +28,21 @@ export const ClientSelection = () => {
         <Text style={styles.dropDownText} onPress={handleDropDown}>
           Seus Clientes
         </Text>
-        <Image source={arrowDropDownIcon} style={styles.dropDownArrow} />
+        <View>
+          <Svg
+            style={dropDownClient ? styles.dropDownArrow : styles.dropDownActived}
+            xmlns="http://www.w3.org/2000/svg"
+            width={15}
+            height={15}
+            viewBox="0 0 24 24"
+            fill="#00b2cb"
+          >
+            <Path d="M3 19h18a1.002 1.002 0 00.823-1.569l-9-13c-.373-.539-1.271-.539-1.645 0l-9 13A.999.999 0 003 19z" />
+          </Svg>
+        </View>
       </View>
 
-
-      {visible ? (
+      {dropDownClient ? (
         <View style={styles.content}>
           <Text style={{ color: "rgba(0, 0, 0, .5)" }}>
             Todos os seus clientes estão aqui!
@@ -35,13 +52,12 @@ export const ClientSelection = () => {
           <Client nameUser="Luiz Oliveira" />
           <Client nameUser="Marcos" />
         </View>
-        ) : 
-        null}
+      ) : null}
     </View>
   );
 };
 
-const Client = ({nameUser}) => {
+const Client = ({ nameUser }) => {
   return (
     <View style={styles.client}>
       <View style={styles.rowAboutClient}>
@@ -52,11 +68,11 @@ const Client = ({nameUser}) => {
       </View>
       <View style={styles.rowAboutClient}>
         <Pressable style={styles.aboutClientButton}>
-          <Image source={statisticsIcon} style={{width: 10, height: 10}} />
+          <Image source={statisticsIcon} style={{ width: 10, height: 10 }} />
           <Text style={styles.aboutClientButtonText}>Estatísticas</Text>
         </Pressable>
         <Pressable style={styles.aboutClientButton}>
-          <Image source={financialIcon} style={{width: 10, height: 12}} />
+          <Image source={financialIcon} style={{ width: 10, height: 12 }} />
           <Text style={styles.aboutClientButtonText}>Financeiro</Text>
         </Pressable>
         <Pressable style={styles.accessButton}>
@@ -86,11 +102,11 @@ const styles = StyleSheet.create({
 
   dropDown: {
     display: "flex",
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
-    paddingLeft: 10
-  },  
+    paddingLeft: 10,
+  },
 
   dropDownText: {
     fontSize: 18,
@@ -100,10 +116,9 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 
-  dropDownArrow: {
-    width: 6,
-    height: 6,
-  },  
+  dropDownActived: {
+    transform: [{ rotate: "180deg" }],
+  },
 
   input: {
     border: "none",
@@ -144,7 +159,7 @@ const styles = StyleSheet.create({
   nameUser: {
     fontSize: "14px",
     color: "white",
-    width: '80px'
+    width: "80px",
   },
 
   progressBarUser: {
