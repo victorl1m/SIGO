@@ -33,7 +33,12 @@ export function StackRoutes() {
         name="Register"
         component={Register}
         options={{
-          headerShown: false,
+          title: '',
+          headerStyle: {
+            backgroundColor: '#121212',
+          },
+          headerTintColor: '#AAAAAA'
+          
         }}
       />
 
