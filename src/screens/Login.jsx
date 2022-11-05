@@ -80,7 +80,7 @@ export function Login({ navigation }) {
         <TextInput
           style={styles.input}
           autoComplete="email"
-          placeholder="E-mail"
+          placeholder="Email"
           placeholderTextColor={"#00B2CB"}
           onChangeText={setEmail}
         />
