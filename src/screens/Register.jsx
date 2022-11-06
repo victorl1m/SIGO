@@ -8,11 +8,38 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
+import { useState } from "react"; 
+
+// firebase authentication
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
 
 export function Register({ navigation }) {
-  function goBack() {
-    const { navigate } = navigation;
-    navigate("Login");
+  const { navigate } = navigation;
+  const { alert } = Alert;
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function handleRegister() {
+    // Capitalize name
+    const unformatted = `${firstName} ${lastName}`
+    const formatted = unformatted.split(' ').map(name => {
+      return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    }).join(' ');
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(({user}) => {
+        user.displayName = formatted;
+        alert("Account Created!", `Welcome ${user.displayName}`);
+        navigate("Home");
+      })
+      .catch((error) => {
+        alert(error.message);
+        console.log(error.message);
+      })
   }
 
   return (
@@ -23,6 +50,7 @@ export function Register({ navigation }) {
             <Text style={styles.registerSubtitle}>Preencha os campos abaixo {'\n'} para criar sua conta</Text>
           <TextInput
             style={styles.registerInput}
+            onChangeText={setFirstName}
             placeholder="Nome"
             placeholderTextColor="#AAAAAA"
             keyboardType="name"
@@ -31,6 +59,7 @@ export function Register({ navigation }) {
           />
           <TextInput
             style={styles.registerInput}
+            onChangeText={setLastName}
             placeholder="Sobrenome"
             placeholderTextColor="#AAAAAA"
             keyboardType="last-name"
@@ -39,6 +68,7 @@ export function Register({ navigation }) {
           />
           <TextInput
             style={styles.registerInput}
+            onChangeText={setEmail}
             placeholder="Email"
             placeholderTextColor="#AAAAAA"
             keyboardType="email-address"
@@ -47,6 +77,7 @@ export function Register({ navigation }) {
           />
           <TextInput
             style={styles.registerInput}
+            onChangeText={setPassword}
             placeholder="Senha"
             placeholderTextColor="#AAAAAA"
             secureTextEntry={true}
@@ -57,7 +88,7 @@ export function Register({ navigation }) {
             placeholderTextColor="#AAAAAA"
             secureTextEntry={true}
           />
-          <Pressable style={styles.signUpbtn}>
+          <Pressable style={styles.signUpbtn} onPress={handleRegister}>
             <Text style={styles.buttonText}>Cadastrar</Text>
           </Pressable>
         </View>
