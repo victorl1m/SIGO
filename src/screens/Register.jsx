@@ -11,7 +11,7 @@ import {
 import { useState } from "react"; 
 
 // firebase authentication
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../config/firebase";
 
 export function Register({ navigation }) {
@@ -32,8 +32,10 @@ export function Register({ navigation }) {
 
     await createUserWithEmailAndPassword(auth, email, password)
       .then(({user}) => {
-        user.displayName = formatted;
-        alert("Account Created!", `Welcome ${user.displayName}`);
+        updateProfile(user, {
+          displayName: formatted,
+        })
+        alert("Account Created!", `Welcome ${formatted}`);
         navigate("Home");
       })
       .catch((error) => {
