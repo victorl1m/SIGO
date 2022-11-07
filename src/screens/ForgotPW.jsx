@@ -8,10 +8,26 @@ import {
     SafeAreaView,
   } from "react-native";
 
+import { useState } from "react";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../config/firebase";
+
 export function ForgotPW({ navigation }) {
-  function goBack() {
-    const { navigate } = navigation;
-    navigate("Login");
+  const { navigate } = navigation;
+  const { alert } = Alert;
+
+  const [email, setEmail] = useState('');
+  
+  async function sendEmail() {
+    await sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("Password reset email sent!")
+        navigate("Login");
+      })
+      .catch((error) => {
+        alert(error.message);
+        console.log(error);
+      })
   }
 
   return (
@@ -23,13 +39,14 @@ export function ForgotPW({ navigation }) {
         </Text>
         <TextInput
           style={styles.forgotInput}
+          onChangeText={setEmail}
           placeholder="Email"
           placeholderTextColor="#AAAAAA"
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
         ></TextInput>
-        <Pressable style={styles.forgotBtn}>
+        <Pressable style={styles.forgotBtn} onPress={sendEmail}>
           <Text style={styles.buttonText}>Recuperar acesso</Text>
         </Pressable>
       </View>
