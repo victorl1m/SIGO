@@ -1,26 +1,37 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 
 export function Profile() {
   return (
-    <View style={style.container}>
+    <SafeAreaView style={styles.profileContainer}>
+      <StatusBar style="light"/>
+      <View style={styles.profileArea}>
       <View>
-        <Button title="go back"
-                onPress={goBack}/>
-
-        <Text>Seu Perfil</Text>
+        <Text style={styles.profileTitle}>Seu Perfil</Text>
+        <Image source={require("C:\Users\Hyatho\Downloads\perfil-300x300-4.jpg")}></Image>
       </View>
       <View>
-        <Text>Victor Lima</Text>
-        <Text>trackedby1@gmail.com</Text>
+        <Text style={styles.profileName}>Victor Lima</Text>
+        <Text style={styles.profileEmail}>trackedby1@gmail.com</Text>
       </View>
       <View>
-        <Text>Altera Senha</Text>
-        <Text>Alterar dados pessoais</Text>
-        <Text>Solução de problemas</Text>
-        <Text>Altera tema</Text>
+        <Text style={styles.changePassword}>Altera Senha</Text>
+        <Text style={styles.changeData}>Alterar dados pessoais</Text>
+        <Text style={styles.solutionProblem}>Solução de problemas</Text>
+        <Text style={styles.changeTheme}>Altera tema</Text>
       </View>
-      <View>Privacidade & Termos</View>
-    </View>
+      <Text  style={styles.privacyTerms}>Privacidade & Termos</Text>
+      </View>
+    </SafeAreaView>
   );
 }
+const styles = StyleSheet.create({
+  profileContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10
+  }
+
+});
