@@ -14,10 +14,14 @@ export function StackRoutes() {
   return (
     <Navigator>
       <Screen
-        name="ClientSelection"
-        component={ClientSelection}
+        name="Register"
+        component={Register}
         options={{
-          headerShown: false,
+          title: "",
+          headerStyle: {
+            backgroundColor: "#121212",
+          },
+          headerTintColor: "#AAAAAA",
         }}
       />
       <Screen
@@ -36,22 +40,19 @@ export function StackRoutes() {
         }}
       />
 
-      <Screen
-        name="Register"
-        component={Register}
-        options={{
-          title: '',
-          headerStyle: {
-            backgroundColor: '#121212',
-          },
-          headerTintColor: '#AAAAAA'
-          
-        }}
-      />
+      
 
       <Screen
         name="Home"
         component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Screen
+        name="ClientSelection"
+        component={ClientSelection}
         options={{
           headerShown: false,
         }}
