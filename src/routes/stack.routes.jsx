@@ -14,6 +14,17 @@ export function StackRoutes() {
   return (
     <Navigator>
       <Screen
+        name="Register"
+        component={Register}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: "#121212",
+          },
+          headerTintColor: "#AAAAAA",
+        }}
+      />
+      <Screen
         name="Login"
         component={Login}
         options={{
@@ -29,17 +40,7 @@ export function StackRoutes() {
         }}
       />
 
-      <Screen
-        name="Register"
-        component={Register}
-        options={{
-          title: "",
-          headerStyle: {
-            backgroundColor: "#121212",
-          },
-          headerTintColor: "#AAAAAA",
-        }}
-      />
+      
 
       <Screen
         name="Home"
