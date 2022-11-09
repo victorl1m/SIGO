@@ -24,15 +24,21 @@ export function Login({ navigation }) {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
+  const [styleErrorEmail, setStyleErrorEmail] = useState(false)
+  
   async function handleLogin() {
+
+    const emailIsValid = /@/.test(email);
+    if(!emailIsValid) {
+      setStyleErrorEmail(true)
+    }
+
     await signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        alert("Successfull login");
         navigate("ClientSelection");
       })
       .catch((error) => {
-        alert("Email or Password Incorrect");
+        setStyleErrorEmail(true);
         console.log(error);
       });
   }
@@ -77,24 +83,27 @@ export function Login({ navigation }) {
             />
           </Svg>
         </View>
+        <Text style={styleErrorEmail ? styles.textError : styles.textRight}>Email ou senha incorretos</Text>
         <TextInput
-          style={styles.input}
+          style={styleErrorEmail ? styles.errorEmail : styles.input}
           autoComplete="email"
           placeholder="Email"
           placeholderTextColor={"#00B2CB"}
           onChangeText={setEmail}
         />
         <TextInput
-          style={styles.input}
+          style={styleErrorEmail ? styles.errorEmail : styles.input}
           autoComplete="password"
           secureTextEntry={true}
           onChangeText={setPassword}
           placeholder="Senha"
           placeholderTextColor={"#00B2CB"}
         />
-        <Pressable onPress={() => {
-          navigation.navigate("ForgotPW");
-        }}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("ForgotPW");
+          }}
+        >
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
@@ -110,10 +119,7 @@ export function Login({ navigation }) {
           textDecorationLine: "none",
         }}
       />
-      <Pressable
-        style={styles.logInbtn}
-        onPress={handleLogin}
-      >
+      <Pressable style={styles.logInbtn} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </Pressable>
       <Pressable
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     width: "90%",
-    height: "50%",
+    height: "60%",
     gap: 10,
   },
   input: {
@@ -177,4 +183,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 12,
   },
+  errorEmail: {
+    backgroundColor: "#1E1E1E",
+    width: "100%",
+    height: 70,
+    color: "#00B2CB",
+    borderColor: '#CD0000',
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+    fontSize: 16,
+    fontFamily: "Montserrat-Medium",
+  },
+  textRight: {
+    color: "#121212",
+  },
+  textError: {
+    color: "#CD0000",
+    fontSize: 14,
+  }
 });

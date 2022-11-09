@@ -22,6 +22,7 @@ export function Register({ navigation }) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [styleErrorInput, setStyleErrorInput] = useState(false)
 
   async function handleRegister() {
     // Capitalize name
@@ -39,7 +40,7 @@ export function Register({ navigation }) {
         navigate("Home");
       })
       .catch((error) => {
-        alert(error.message);
+        setStyleErrorInput(true);
         console.log(error.message);
       })
   }
@@ -69,7 +70,7 @@ export function Register({ navigation }) {
             autoCorrect={false}
           />
           <TextInput
-            style={styles.registerInput}
+            style={styleErrorInput ? styles.errorInput : styles.registerInput}
             onChangeText={setEmail}
             placeholder="Email"
             placeholderTextColor="#AAAAAA"
@@ -148,5 +149,18 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "Montserrat-Bold",
     fontSize: 24,
+  },
+  errorInput: {
+    borderColor: '#CD0000',
+    borderWidth: 1,
+    backgroundColor: "#1E1E1E",
+    width: "90%",
+    height: 70,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+    fontSize: 16,
+    fontFamily: "Montserrat-Medium",
+    color: "#00B2CB",
   },
 });
