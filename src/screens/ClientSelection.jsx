@@ -5,14 +5,41 @@ import {
   StyleSheet,
   Pressable,
   Image,
+  BackHandler,
+  Alert
 } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Svg, { Path } from "react-native-svg";
+import { useFocusEffect } from "@react-navigation/native";
 
 import statisticsIcon from "../assets/icon/statistics-icon.png";
 import financialIcon from "../assets/icon/financial-icon.png";
 
 export const ClientSelection = () => {
+  const { alert } = Alert;
+
+  // preventing back button
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        alert("Hold on!", "Are you sure you want to go back?", [
+          {
+            text: "Cancel",
+            onPress: () => false,
+          },
+          { text: "YES", onPress: () => BackHandler.exitApp() }
+        ]);
+
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => subscription.remove();
+    })
+  );
+  
+
   const [dropDownClient, setdropDownClient] = useState(true);
 
   const handleDropDown = () => setdropDownClient(!dropDownClient);

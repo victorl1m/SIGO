@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   View,
-  Alert,
   SafeAreaView,
 } from "react-native";
 import { useState, useEffect, useCallback } from "react";
@@ -22,7 +21,6 @@ import { auth } from "../config/firebase";
 
 export function Login({ navigation }) {
   const { navigate } = navigation;
-  const { alert } = Alert;
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
