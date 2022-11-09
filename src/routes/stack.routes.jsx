@@ -29,7 +29,17 @@ export function StackRoutes() {
           headerShown: false,
         }}
       />
-
+      <Screen
+        name="Register"
+        component={Register}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: "#121212",
+          },
+          headerTintColor: "#AAAAAA",
+        }}
+      />
       <Screen
         name="ForgotPW"
         component={ForgotPW}
@@ -37,15 +47,6 @@ export function StackRoutes() {
           headerShown: false,
         }}
       />
-
-      <Screen
-        name="Register"
-        component={Register}
-        options={{
-          headerShown: false,
-        }}
-      />
-
       <Screen
         name="Home"
         component={Home}

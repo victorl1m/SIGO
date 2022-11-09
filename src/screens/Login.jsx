@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   View,
-  Alert,
   SafeAreaView,
 } from "react-native";
 import { useState, useEffect, useCallback } from "react";
@@ -14,30 +13,38 @@ import * as SplashScreen from "expo-splash-screen";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Svg, { Rect, Path } from "react-native-svg";
 
-// firebase authentication
+// =======================================================================================================
+//       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Firebase Authentication
+// =======================================================================================================
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
 
 export function Login({ navigation }) {
   const { navigate } = navigation;
-  const { alert } = Alert;
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [styleErrorEmail, setStyleErrorEmail] = useState(false);
 
   async function handleLogin() {
+    const emailIsValid = /@/.test(email);
+    if (!emailIsValid) {
+      setStyleErrorEmail(true);
+    }
+
     await signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        alert("Successfull login");
         navigate("ClientSelection");
       })
       .catch((error) => {
-        alert("Email or Password Incorrect");
+        setStyleErrorEmail(true);
         console.log(error);
       });
   }
 
-  // font loader
+  // =======================================================================================================
+  //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Font Loader
+  // =======================================================================================================
   const [fontsLoaded] = useFonts({
     "Montserrat-Medium": require("../../assets/fonts/Montserrat-Medium.ttf"),
     "Montserrat-Bold": require("../../assets/fonts/Montserrat-Bold.ttf"),
@@ -63,12 +70,19 @@ export function Login({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
-
+  {
+    /* =======================================================================================================
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
+      ======================================================================================================= */
+  }
   return (
     <SafeAreaView onLayout={onLayoutRootView} style={styles.loginContainer}>
       <StatusBar style="light" />
       <View style={styles.inputArea}>
-        <View style={{ marginBottom: 48 }}>
+        {/* =======================================================================================================
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Logo <View>
+      ======================================================================================================= */}
+        <View style={{ marginBottom: 36 }}>
           <Svg width={72} height={72} viewBox="0 0 64 64" fill="none">
             <Rect width={64} height={64} rx={25} fill="#00B2CB" />
             <Path
@@ -77,25 +91,39 @@ export function Login({ navigation }) {
             />
           </Svg>
         </View>
+        {/* =======================================================================================================
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login <Form>
+      ======================================================================================================= */}
+        <Text style={styleErrorEmail ? styles.textError : styles.textRight}>
+          Email ou senha incorretos
+        </Text>
         <TextInput
-          style={styles.input}
+          style={styleErrorEmail ? styles.errorEmail : styles.input}
           autoComplete="email"
-          placeholder="E-mail"
+          placeholder="Email"
           placeholderTextColor={"#00B2CB"}
           onChangeText={setEmail}
         />
         <TextInput
-          style={styles.input}
+          style={styleErrorEmail ? styles.errorEmail : styles.input}
           autoComplete="password"
           secureTextEntry={true}
           onChangeText={setPassword}
           placeholder="Senha"
           placeholderTextColor={"#00B2CB"}
         />
-        <Pressable>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("ForgotPW");
+          }}
+        >
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
+
+      {/* =======================================================================================================
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login <Form>
+      ======================================================================================================= */}
       <BouncyCheckbox
         size={25}
         fillColor="#00B2CB"
@@ -108,23 +136,22 @@ export function Login({ navigation }) {
           textDecorationLine: "none",
         }}
       />
-      <Pressable
-        style={styles.logInbtn}
-        onPress={handleLogin}
-      >
-        <Text style={styles.buttonText}>Entrar</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigation.navigate("Register");
-        }}
-      >
-        <Text style={styles.signUpText}>Cadastrar</Text>
-      </Pressable>
+        <Pressable style={styles.logInbtn} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Entrar</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("Register");
+          }}
+        >
+          <Text style={styles.signUpText}>Cadastrar</Text>
+        </Pressable>
     </SafeAreaView>
   );
 }
-
+// ==========================================================================================================
+//  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Stylesheet {styles}
+// ==========================================================================================================
 const styles = StyleSheet.create({
   loginContainer: {
     flex: 1,
@@ -136,8 +163,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     width: "90%",
-    height: "50%",
-    gap: 10,
+    marginBottom: 24,
   },
   input: {
     backgroundColor: "#1E1E1E",
@@ -174,5 +200,25 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
     fontSize: 18,
     marginTop: 12,
+  },
+  errorEmail: {
+    backgroundColor: "#1E1E1E",
+    width: "100%",
+    height: 70,
+    color: "#00B2CB",
+    borderColor: "#CD0000",
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 12,
+    fontSize: 16,
+  },
+  textRight: {
+    color: "#121212",
+  },
+  textError: {
+    color: "#CD0000",
+    fontSize: 14,
+    fontFamily: "Montserrat-Medium",
   },
 });

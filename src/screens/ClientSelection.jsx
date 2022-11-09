@@ -1,19 +1,53 @@
-import { View, Text, TextInput, StyleSheet, Pressable, Image } from "react-native";
-import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  Image,
+  BackHandler,
+  Alert
+} from "react-native";
+import React, { useCallback, useState } from "react";
+import Svg, { Path } from "react-native-svg";
+import { useFocusEffect } from "@react-navigation/native";
 
-import statisticsIcon from '../assets/icon/statistics-icon.png'
-import financialIcon from '../assets/icon/financial-icon.png'
-import arrowDropDownIcon from '../assets/icon/arrowDropDown-icon.png'
+import statisticsIcon from "../assets/icon/statistics-icon.png";
+import financialIcon from "../assets/icon/financial-icon.png";
 
 export const ClientSelection = () => {
-  const [visible, setVisible] = useState(true);
+  const { alert } = Alert;
 
-  const handleDropDown = () => setVisible(!visible);
+  // preventing back button
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        alert("Hold on!", "Are you sure you want to go back?", [
+          {
+            text: "Cancel",
+            onPress: () => false,
+          },
+          { text: "YES", onPress: () => BackHandler.exitApp() }
+        ]);
+
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => subscription.remove();
+    })
+  );
+  
+
+  const [dropDownClient, setdropDownClient] = useState(true);
+
+  const handleDropDown = () => setdropDownClient(!dropDownClient);
 
   return (
     <View>
       <View style={styles.welcomeUser}>
-        <Text style={{ fontWeight: "900" }}>Bem-vindo, Victor Lima</Text>
+        <Text style={{ fontWeight: '900' }}>Bem-vindo, Victor Lima</Text>
         <View style={styles.photoUser}></View>
       </View>
 
@@ -21,11 +55,21 @@ export const ClientSelection = () => {
         <Text style={styles.dropDownText} onPress={handleDropDown}>
           Seus Clientes
         </Text>
-        <Image source={arrowDropDownIcon} style={styles.dropDownArrow} />
+        <View>
+          <Svg
+            style={dropDownClient ? styles.dropDownArrow : styles.dropDownActived}
+            xmlns="http://www.w3.org/2000/svg"
+            width={15}
+            height={15}
+            viewBox="0 0 24 24"
+            fill="#00b2cb"
+          >
+            <Path d="M3 19h18a1.002 1.002 0 00.823-1.569l-9-13c-.373-.539-1.271-.539-1.645 0l-9 13A.999.999 0 003 19z" />
+          </Svg>
+        </View>
       </View>
 
-
-      {visible ? (
+      {dropDownClient ? (
         <View style={styles.content}>
           <Text style={{ color: "rgba(0, 0, 0, .5)" }}>
             Todos os seus clientes estão aqui!
@@ -35,13 +79,12 @@ export const ClientSelection = () => {
           <Client nameUser="Luiz Oliveira" />
           <Client nameUser="Marcos" />
         </View>
-        ) : 
-        null}
+      ) : null}
     </View>
   );
 };
 
-const Client = ({nameUser}) => {
+const Client = ({ nameUser }) => {
   return (
     <View style={styles.client}>
       <View style={styles.rowAboutClient}>
@@ -52,15 +95,15 @@ const Client = ({nameUser}) => {
       </View>
       <View style={styles.rowAboutClient}>
         <Pressable style={styles.aboutClientButton}>
-          <Image source={statisticsIcon} style={{width: 10, height: 10}} />
+          <Image source={statisticsIcon} style={{ width: 10, height: 10 }} />
           <Text style={styles.aboutClientButtonText}>Estatísticas</Text>
         </Pressable>
         <Pressable style={styles.aboutClientButton}>
-          <Image source={financialIcon} style={{width: 10, height: 12}} />
+          <Image source={financialIcon} style={{ width: 10, height: 12 }} />
           <Text style={styles.aboutClientButtonText}>Financeiro</Text>
         </Pressable>
         <Pressable style={styles.accessButton}>
-          <Text style={{ fontSize: 18, fontWeight: 700, color: "#00B2CB" }}>
+          <Text style={{ fontSize: 18, fontWeight: '700', color: "#00B2CB" }}>
             Acessar
           </Text>
         </Pressable>
@@ -71,7 +114,6 @@ const Client = ({nameUser}) => {
 
 const styles = StyleSheet.create({
   welcomeUser: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -79,54 +121,49 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
 
   dropDown: {
-    display: "flex",
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
-    paddingLeft: 10
-  },  
+    paddingLeft: 10,
+  },
 
   dropDownText: {
     fontSize: 18,
-    fontWeight: 700,
+    fontWeight: '700',
     color: "#00B2CB",
-    width: "max-content",
     padding: 5,
   },
 
-  dropDownArrow: {
-    width: 6,
-    height: 6,
-  },  
+  dropDownActived: {
+    transform: [{ rotate: "180deg" }],
+  },
 
   input: {
     border: "none",
-    borderRadius: "15px",
+    borderRadius: 15,
     padding: 10,
     backgroundColor: "#D9D9D9",
     width: "75%",
     color: "rgba(0, 0, 0, .5)",
-    marginTop: "10px",
+    marginTop: 10,
   },
 
   client: {
     backgroundColor: "#00B2CB",
     color: "white",
-    borderRadius: "10px",
+    borderRadius: 10,
     width: "95%",
-    maxWidth: "340px",
+    maxWidth: 340,
     padding: 10,
     marginTop: 15,
   },
 
   rowAboutClient: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -142,13 +179,12 @@ const styles = StyleSheet.create({
   },
 
   nameUser: {
-    fontSize: "14px",
+    fontSize: 14,
     color: "white",
-    width: '80px'
+    width: 80,
   },
 
   progressBarUser: {
-    display: "block",
     width: "40%",
     height: 5,
     borderRadius: 25,
@@ -158,15 +194,13 @@ const styles = StyleSheet.create({
   },
 
   numberProgressUser: {
-    fontWeight: 700,
+    fontWeight: '700',
     fontSize: 18,
     color: "white",
   },
 
   aboutClientButton: {
     backgroundColor: "#00B2CB",
-    maxWidth: "max-content",
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 8,
@@ -187,6 +221,5 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     backgroundColor: "white",
     borderRadius: 5,
-    maxWidth: "max-content",
   },
 });
