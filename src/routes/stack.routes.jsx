@@ -10,11 +10,19 @@ import { Home } from "../screens/Home";
 import { Profile } from "../screens/Profile";
 import { ForgotPW } from "../screens/ForgotPW";
 import { CustomerSelection } from "../screens/CustomerSelection";
+import { AddCustomer } from "../screens/AddCustomer";
 
 // routes
 export function StackRoutes() {
   return (
     <Navigator>
+      <Screen
+        name="CustomerSelection"
+        component={CustomerSelection}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Screen
         name="Login"
         component={Login}
@@ -54,9 +62,9 @@ export function StackRoutes() {
           headerShown: false,
         }}
       />
-      <Screen
-        name="CustomerSelection"
-        component={CustomerSelection}
+            <Screen
+        name="AddCustomer"
+        component={AddCustomer}
         options={{
           headerShown: false,
         }}
