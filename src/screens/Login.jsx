@@ -49,7 +49,7 @@ export function Login({ navigation }) {
     ======================================================================================================= */
 
   return (
-    <SafeAreaView  onLayout={onLayoutRootView} style={styles.loginContainer}>
+    <SafeAreaView onLayout={onLayoutRootView} style={styles.loginContainer}>
       <StatusBar style="light" />
       <View style={styles.inputArea}>
         {/* =======================================================================================================
