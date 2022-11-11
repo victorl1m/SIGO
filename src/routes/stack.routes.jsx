@@ -7,7 +7,7 @@ const { Screen, Navigator } = createNativeStackNavigator();
 import { Login } from "../screens/Login";
 import { Register } from "../screens/Register";
 import { Home } from "../screens/Home";
-import { Profile } from "../screens/Profile"; 
+import { Profile } from "../screens/Profile";
 import { ForgotPW } from "../screens/ForgotPW";
 import { CustomerSelection } from "../screens/CustomerSelection";
 
@@ -22,7 +22,7 @@ export function StackRoutes() {
           headerShown: false,
         }}
       />
-       <Screen
+      <Screen
         name="Profile"
         component={Profile}
         options={{
@@ -54,7 +54,6 @@ export function StackRoutes() {
           headerShown: false,
         }}
       />
-
       <Screen
         name="CustomerSelection"
         component={CustomerSelection}

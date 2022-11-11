@@ -8,14 +8,17 @@ import {
   BackHandler,
   Alert,
   SafeAreaView,
-  StatusBar
+  StatusBar,
+  ScrollView
 } from "react-native";
-import React, { useCallback, useState } from "react";
-import Svg, { Path } from "react-native-svg";
+import React, { useCallback, useContext } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import { FontContext } from "../contexts/FontContext";
 
 export const CustomerSelection = () => {
   const { alert } = Alert;
+
+  const { onLayoutRootView } = useContext(FontContext);
 
   // preventing back button
   useFocusEffect(
@@ -54,9 +57,11 @@ export const CustomerSelection = () => {
   } else if (hours >= 17) {
     var greeting = "Boa noite";
   }
-  
+// =======================================================================================================
+//       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀View Component
+// =======================================================================================================
     return (
-      <SafeAreaView style={styles.container}>
+      <ScrollView onLayout={onLayoutRootView} style={styles.container}>
         <StatusBar style="light" />
         <View style={styles.header}>
           <View style={styles.headerContent}>
@@ -89,7 +94,7 @@ export const CustomerSelection = () => {
           ></TextInput>
         </View>
         <Customer />
-      </SafeAreaView>
+      </ScrollView>
     );
   };
 
@@ -117,7 +122,7 @@ const styles = StyleSheet.create({
     color: "#00b2bc",
   },
   headerText: {
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat-Bold",
     fontSize: 14,
     color: "#FFFFFF",
   },
@@ -130,13 +135,13 @@ const styles = StyleSheet.create({
   userText: {
     color: "white",
     fontSize: 32,
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat-Bold",
     marginRight: 6,
   },
   userName: {
     color: "white",
     fontSize: 32,
-    fontFamily: "Montserrat_500Medium",
+    fontFamily: "Montserrat-Medium",
   },
   userImage: {
     width: 48,
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   btnOption: {
-    borderColor: "#00b2bc",
+    borderColor: "transparent",
     borderWidth: 2,
     borderRadius: 15,
     padding: 12,
@@ -163,7 +168,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: "white",
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat-Bold",
     fontSize: 14,
   },
   btnOptions: {
@@ -176,7 +181,7 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 10,
     color: "white",
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Montserrat-Regular",
     fontSize: 14,
   },
 });
@@ -230,7 +235,7 @@ const customer = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat-Bold",
     fontSize: 18,
   },
   image: {
@@ -241,7 +246,7 @@ const customer = StyleSheet.create({
   },
   nameText: {
     color: "white",
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat-Bold",
     fontSize: 18,
   },
   customerArea: {
@@ -263,32 +268,32 @@ const customer = StyleSheet.create({
   },
   jobsNumber: {
     color: "#FFA500",
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat-Bold",
     fontSize: 14,
   },
   tasksNumber: {
     color: "yellow",
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat-Bold",
     fontSize: 14,
   },
   valueNumber: {
     color: "green",
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat-Bold",
     fontSize: 14,
   },
   jobsText: {
     color: "#FFA500",
-    fontFamily: "Montserrat_500Medium",
+    fontFamily: "Montserrat-Medium",
     fontSize: 14,
   },
   tasksText: {
     color: "yellow",
-    fontFamily: "Montserrat_500Medium",
+    fontFamily: "Montserrat-Medium",
     fontSize: 14,
   },
   valueText: {
     color: "green",
-    fontFamily: "Montserrat_500Medium",
+    fontFamily: "Montserrat-Medium",
     fontSize: 14,
   },
 });
