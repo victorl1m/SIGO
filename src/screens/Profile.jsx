@@ -1,11 +1,17 @@
 import Svg, { Path } from "react-native-svg";
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
+import { useContext } from "react";
+import { FontContext } from "../contexts/FontContext";
 
 export function Profile() {
   const pictureProfile =
     "https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png";
-  return (
-    <SafeAreaView style={styles.profileContainer}>
+  
+  // After the custom fonts have loaded, we can hide the splash screen and display the app screen.
+  const { onLayoutRootView } = useContext(FontContext);
+  
+    return (
+    <SafeAreaView onLayout={onLayoutRootView} style={styles.profileContainer}>
       <View style={styles.goBack}>
         <Svg
         style={styles.goBackIcon}
