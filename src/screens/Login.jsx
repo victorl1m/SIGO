@@ -34,7 +34,7 @@ export function Login({ navigation }) {
 
     await signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        navigate("ClientSelection");
+        navigate("CustomerSelection");
       })
       .catch((error) => {
         setStyleErrorEmail(true);

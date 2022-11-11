@@ -9,22 +9,22 @@ import { Register } from "../screens/Register";
 import { Home } from "../screens/Home";
 import { Profile } from "../screens/Profile"; 
 import { ForgotPW } from "../screens/ForgotPW";
-import { ClientSelection } from "../screens/ClientSelection";
+import { CustomerSelection } from "../screens/CustomerSelection";
 
 // routes
 export function StackRoutes() {
   return (
     <Navigator>
-       <Screen
-        name="Profile"
-        component={Profile}
+      <Screen
+        name="Login"
+        component={Login}
         options={{
           headerShown: false,
         }}
       />
-      <Screen
-        name="Login"
-        component={Login}
+       <Screen
+        name="Profile"
+        component={Profile}
         options={{
           headerShown: false,
         }}
@@ -56,8 +56,8 @@ export function StackRoutes() {
       />
 
       <Screen
-        name="ClientSelection"
-        component={ClientSelection}
+        name="CustomerSelection"
+        component={CustomerSelection}
         options={{
           headerShown: false,
         }}
