@@ -5,6 +5,7 @@ import {
   TextInput,
   View,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Svg, {Rect, Path} from 'react-native-svg';
@@ -23,6 +24,7 @@ export function Login({navigation}) {
 
   return (
     <SafeAreaView style={styles.loginContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.inputArea}>
         {/* =======================================================================================================
       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Logo <View>
@@ -39,25 +41,23 @@ export function Login({navigation}) {
         {/* =======================================================================================================
       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login <Form>
       ======================================================================================================= */}
-        <Text style={styleErrorEmail ? styles.textError : styles.textRight}>
+        {/* <Text style={styleErrorEmail ? styles.textError : styles.textRight}>
           Email ou senha incorretos
-        </Text>
+        </Text> */}
         <TextInput
-          style={styleErrorEmail ? styles.errorEmail : styles.input}
+          style={styles.input}
           autoComplete="email"
           placeholder="Email"
           placeholderTextColor={'#00B2CB'}
-          onChangeText={setEmail}
         />
         <TextInput
-          style={styleErrorEmail ? styles.errorEmail : styles.input}
+          style={styles.input}
           autoComplete="password"
           secureTextEntry={true}
-          onChangeText={setPassword}
           placeholder="Senha"
           placeholderTextColor={'#00B2CB'}
         />
-        <Pressable>
+        <Pressable onPress={() => navigate("ForgotPW")}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
@@ -77,7 +77,7 @@ export function Login({navigation}) {
           textDecorationLine: 'none',
         }}
       />
-      <Pressable style={styles.logInbtn}>
+      <Pressable onPress={() => navigate("CustomerSelection")} style={styles.logInbtn}>
         <Text style={styles.buttonText}>Entrar</Text>
       </Pressable>
       <Pressable onPress={() => navigate("Register")}>

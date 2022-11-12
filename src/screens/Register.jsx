@@ -10,6 +10,7 @@ import {
 export function Register() {
   return (
     <SafeAreaView style={styles.registerContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.registerArea}>
         <Text style={styles.registerTitle}>Registrar-se</Text>
         <Text style={styles.registerSubtitle}>
@@ -17,7 +18,6 @@ export function Register() {
         </Text>
         <TextInput
           style={styles.registerInput}
-          onChangeText={setFirstName}
           placeholder="Nome"
           placeholderTextColor="#AAAAAA"
           keyboardType="name"
@@ -26,7 +26,6 @@ export function Register() {
         />
         <TextInput
           style={styles.registerInput}
-          onChangeText={setLastName}
           placeholder="Sobrenome"
           placeholderTextColor="#AAAAAA"
           keyboardType="last-name"
@@ -34,8 +33,7 @@ export function Register() {
           autoCorrect={false}
         />
         <TextInput
-          style={styleErrorInput ? styles.errorInput : styles.registerInput}
-          onChangeText={setEmail}
+          style={styles.registerInput}
           placeholder="Email"
           placeholderTextColor="#AAAAAA"
           keyboardType="email-address"
@@ -44,7 +42,6 @@ export function Register() {
         />
         <TextInput
           style={styles.registerInput}
-          onChangeText={setPassword}
           placeholder="Senha"
           placeholderTextColor="#AAAAAA"
           secureTextEntry={true}

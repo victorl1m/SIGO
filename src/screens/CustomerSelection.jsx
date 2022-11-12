@@ -5,41 +5,13 @@ import {
   StyleSheet,
   Pressable,
   Image,
-  BackHandler,
-  Alert,
   SafeAreaView,
   StatusBar,
   ScrollView,
 } from "react-native";
-import React, { useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 import Svg, { Path } from "react-native-svg";
 
 export const CustomerSelection = () => {
-
-  // preventing back button
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        alert("Hold on!", "Are you sure you want to go back?", [
-          {
-            text: "Cancel",
-            onPress: () => false,
-          },
-          { text: "YES", onPress: () => BackHandler.exitApp() },
-        ]);
-
-        return true;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        "hardwareBackPress",
-        onBackPress
-      );
-
-      return () => subscription.remove();
-    })
-  );
 
   const userName = "Victor Lima";
   const userImage = "https://i.imgur.com/GpduYfh.jpg";
@@ -62,7 +34,7 @@ export const CustomerSelection = () => {
   // =======================================================================================================
   return (
     <ScrollView style={styles.container}>
-      <StatusBar style="light" />
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <View style={styles.yourJobs}>

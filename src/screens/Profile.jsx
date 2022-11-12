@@ -7,6 +7,7 @@ export function Profile() {
 
   return (
     <SafeAreaView style={styles.profileContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.goBack}>
         <Svg
           style={styles.goBackIcon}

@@ -10,6 +10,7 @@ import {
 export function ForgotPW() {
   return (
     <SafeAreaView style={styles.forgotContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.forgotArea}>
         <Text style={styles.forgotTitle}>Esqueci minha senha</Text>
         <Text style={styles.forgotSubtitle}>
@@ -18,13 +19,12 @@ export function ForgotPW() {
         </Text>
         <TextInput
           style={styles.forgotInput}
-          onChangeText={setEmail}
           placeholder="Email"
           placeholderTextColor="#AAAAAA"
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}></TextInput>
-        <Pressable style={styles.forgotBtn} onPress={sendEmail}>
+        <Pressable style={styles.forgotBtn}>
           <Text style={styles.buttonText}>Recuperar acesso</Text>
         </Pressable>
       </View>
