@@ -6,12 +6,11 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
-import { useState, useEffect, useCallback } from "react";
+import { useContext, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Svg, { Rect, Path } from "react-native-svg";
+import { FontContext } from "../contexts/FontContext";
 
 // =======================================================================================================
 //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Firebase Authentication
@@ -26,6 +25,9 @@ export function Login({ navigation }) {
   const [password, setPassword] = useState();
   const [styleErrorEmail, setStyleErrorEmail] = useState(false);
 
+  // After the custom fonts have loaded, we can hide the splash screen and display the app screen.
+  const { onLayoutRootView } = useContext(FontContext);
+
   async function handleLogin() {
     const emailIsValid = /@/.test(email);
     if (!emailIsValid) {
@@ -34,7 +36,7 @@ export function Login({ navigation }) {
 
     await signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        navigate("ClientSelection");
+        navigate("CustomerSelection");
       })
       .catch((error) => {
         setStyleErrorEmail(true);
@@ -42,39 +44,10 @@ export function Login({ navigation }) {
       });
   }
 
-  // =======================================================================================================
-  //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Font Loader
-  // =======================================================================================================
-  const [fontsLoaded] = useFonts({
-    "Montserrat-Medium": require("../../assets/fonts/Montserrat-Medium.ttf"),
-    "Montserrat-Bold": require("../../assets/fonts/Montserrat-Bold.ttf"),
-    "Montserrat-Light": require("../../assets/fonts/Montserrat-Light.ttf"),
-    "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
-  });
+  /* =======================================================================================================
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
+    ======================================================================================================= */
 
-  // prevents SplashScreen from auto hiding while the fonts are loaded.
-  useEffect(() => {
-    async function prepare() {
-      await SplashScreen.preventAutoHideAsync();
-    }
-    prepare();
-  }, []);
-
-  // After the custom fonts have loaded, we can hide the splash screen and display the app screen.
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
-  {
-    /* =======================================================================================================
-      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
-      ======================================================================================================= */
-  }
   return (
     <SafeAreaView onLayout={onLayoutRootView} style={styles.loginContainer}>
       <StatusBar style="light" />
