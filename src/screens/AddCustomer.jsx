@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, SafeAreaView, StatusBar, } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 export const AddCustomer = () => {

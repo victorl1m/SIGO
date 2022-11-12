@@ -5,6 +5,7 @@ import {
   TextInput,
   View,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 
 export function ForgotPW() {
