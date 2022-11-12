@@ -7,17 +7,18 @@ const { Screen, Navigator } = createNativeStackNavigator();
 import { Login } from "../screens/Login";
 import { Register } from "../screens/Register";
 import { Home } from "../screens/Home";
-import { Profile } from "../screens/Profile"; 
+import { Profile } from "../screens/Profile";
 import { ForgotPW } from "../screens/ForgotPW";
-import { ClientSelection } from "../screens/ClientSelection";
+import { CustomerSelection } from "../screens/CustomerSelection";
+import { AddCustomer } from "../screens/AddCustomer";
 
 // routes
 export function StackRoutes() {
   return (
     <Navigator>
-       <Screen
-        name="Profile"
-        component={Profile}
+      <Screen
+        name="CustomerSelection"
+        component={CustomerSelection}
         options={{
           headerShown: false,
         }}
@@ -25,6 +26,13 @@ export function StackRoutes() {
       <Screen
         name="Login"
         component={Login}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Screen
+        name="Profile"
+        component={Profile}
         options={{
           headerShown: false,
         }}
@@ -54,10 +62,9 @@ export function StackRoutes() {
           headerShown: false,
         }}
       />
-
-      <Screen
-        name="ClientSelection"
-        component={ClientSelection}
+            <Screen
+        name="AddCustomer"
+        component={AddCustomer}
         options={{
           headerShown: false,
         }}
