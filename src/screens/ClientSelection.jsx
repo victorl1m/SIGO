@@ -8,15 +8,20 @@ import {
   BackHandler,
   Alert
 } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Svg, { Path } from "react-native-svg";
 import { useFocusEffect } from "@react-navigation/native";
 
 import statisticsIcon from "../assets/icon/statistics-icon.png";
 import financialIcon from "../assets/icon/financial-icon.png";
+import { FontContext } from "../contexts/FontContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const ClientSelection = () => {
+  console.log("ok")
   const { alert } = Alert;
+
+  const { onLayoutRootView } = useContext(FontContext);
 
   // preventing back button
   useFocusEffect(
@@ -45,6 +50,7 @@ export const ClientSelection = () => {
   const handleDropDown = () => setdropDownClient(!dropDownClient);
 
   return (
+    <SafeAreaView onLayout={onLayoutRootView}>
     <View>
       <View style={styles.welcomeUser}>
         <Text style={{ fontWeight: '900' }}>Bem-vindo, Victor Lima</Text>
@@ -81,6 +87,7 @@ export const ClientSelection = () => {
         </View>
       ) : null}
     </View>
+    </SafeAreaView>
   );
 };
 

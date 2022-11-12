@@ -6,16 +6,17 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Svg, { Rect, Path } from "react-native-svg";
 import { FontContext } from "../contexts/FontContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 // =======================================================================================================
 //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Firebase Authentication
 // =======================================================================================================
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, setPersistence, inMemoryPersistence } from "firebase/auth";
 import { auth } from "../config/firebase";
 
 export function Login({ navigation }) {
@@ -26,7 +27,14 @@ export function Login({ navigation }) {
   const [styleErrorEmail, setStyleErrorEmail] = useState(false);
 
   // After the custom fonts have loaded, we can hide the splash screen and display the app screen.
-  const { onLayoutRootView } = useContext(FontContext);
+  const { loaded } = useContext(FontContext);
+  const { isLogged } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate("ClientSelection");
+    }
+  },[isLogged])
 
   async function handleLogin() {
     const emailIsValid = /@/.test(email);
@@ -49,7 +57,7 @@ export function Login({ navigation }) {
     ======================================================================================================= */
 
   return (
-    <SafeAreaView onLayout={onLayoutRootView} style={styles.loginContainer}>
+    <SafeAreaView onLayout={loaded} style={styles.loginContainer}>
       <StatusBar style="light" />
       <View style={styles.inputArea}>
         {/* =======================================================================================================
