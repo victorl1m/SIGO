@@ -1,12 +1,25 @@
 import Svg, { Path } from "react-native-svg";
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
+import { Montserrat_500Medium, Montserrat_700Bold } from "@expo-google-fonts/montserrat"
+import { useFonts } from "expo-font";
 import { useContext } from "react";
 import { FontContext } from "../contexts/FontContext";
+
 
 export function Profile() {
   const pictureProfile =
     "https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png";
   
+
+      let [fontsLoaded] = useFonts({
+        Montserrat_500Medium, Montserrat_700Bold})
+        if (!fontsLoaded) {
+          return <></>;
+        } else{
+
+        
+  return (
+    <SafeAreaView style={styles.profileContainer}>
   // After the custom fonts have loaded, we can hide the splash screen and display the app screen.
   const { onLayoutRootView } = useContext(FontContext);
   
@@ -101,6 +114,7 @@ export function Profile() {
     </SafeAreaView>
   );
 }
+}
 const styles = StyleSheet.create({
   goBack:{
     position: 'relative',
@@ -115,7 +129,7 @@ const styles = StyleSheet.create({
     marginTop: 46,
     fontSize: 18,
     color: "#00B2CB",
-    fontWeight: "bold",
+    fontFamily: "Montserrat_500Medium",
   },
   profileImage: {
     height: 220,
@@ -129,17 +143,16 @@ const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: 18,
-    fontStyle: "Montserrat",
-    fontWeight: "bold",
+    fontFamily: "Montserrat_700Bold",
     color: "#00B2CB",
   },
   profileEmail: {
     fontSize: 18,
-    fontStyle: "Montserrat",
     margin: 1,
-    marginBottom: 85,
+    marginBottom: 25,
   },
   boxChangePassword: {
+    fontFamily: "Montserrat_500Medium",
     marginBottom: 14,
     borderWidth: 1,
     borderColor: "rgba(0, 0, 0, 0.25)",
