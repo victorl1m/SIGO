@@ -6,7 +6,6 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
-import {useContext, useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Svg, {Rect, Path} from 'react-native-svg';
 
@@ -15,12 +14,15 @@ import Svg, {Rect, Path} from 'react-native-svg';
 // =======================================================================================================
 
 export function Login({navigation}) {
+  // react navigator
+  const { navigate } = navigation;
+
   /* =======================================================================================================
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
     ======================================================================================================= */
 
   return (
-    <SafeAreaView onLayout={onLayoutRootView} style={styles.loginContainer}>
+    <SafeAreaView style={styles.loginContainer}>
       <View style={styles.inputArea}>
         {/* =======================================================================================================
       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Logo <View>
@@ -78,7 +80,7 @@ export function Login({navigation}) {
       <Pressable style={styles.logInbtn}>
         <Text style={styles.buttonText}>Entrar</Text>
       </Pressable>
-      <Pressable>
+      <Pressable onPress={() => navigate("Register")}>
         <Text style={styles.signUpText}>Cadastrar</Text>
       </Pressable>
     </SafeAreaView>
