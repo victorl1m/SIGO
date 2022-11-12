@@ -11,8 +11,8 @@ export function Profile() {
       <View style={styles.goBack}>
         <Svg
           style={styles.goBackIcon}
-          width={18}
-          height={15}
+          width={16}
+          height={16}
           viewBox="0 0 18 15"
           fill="none"
           xmlns="http://www.w3.org/2000/svg">
@@ -106,10 +106,10 @@ const styles = StyleSheet.create({
   },
   youProfile: {
     textAlign: 'center',
-    marginTop: 46,
+    marginTop: 18,
     fontSize: 18,
     color: '#00B2CB',
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
   },
   profileImage: {
     height: 160,
@@ -123,19 +123,20 @@ const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: 18,
-    fontStyle: 'Montserrat-Bold',
+    fontFamily: 'Montserrat-Bold',
     color: '#00B2CB',
   },
   profileEmail: {
     fontSize: 18,
-    fontStyle: 'Montserrat-Light',
+    fontFamily: 'Montserrat-Light',
     margin: 1,
     color: 'white',
     marginBottom: 36,
   },
   optionText: {
-    marginLeft: 20,
+    marginLeft: 16,
     fontSize: 18,
+    fontFamily: 'Montserrat-Medium',
     color: '#fff',
   },
   boxBtn: {
@@ -146,18 +147,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   svgIcon: {
-    marginLeft: 12,
-  },
-  changeTheme: {
-    marginLeft: 20,
-    fontSize: 18,
+    marginLeft: 8,
   },
   privacyAndTerms: {
     textAlign: 'center',
-    marginTop: 24,
-    marginBottom: 24,
+    marginTop: 36,
+    marginBottom: 36,
     color: '#00B2CB',
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
     fontSize: 12,
   },
 });
