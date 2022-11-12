@@ -1,11 +1,14 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { useEffect, useCallback } from "react";
+import { AuthContext } from "./AuthContext";
 
 export const FontContext = createContext({});
 
 export function FontProvider({ children }) {
+  const { isLogged } = useContext(AuthContext);
+
   // =======================================================================================================
   //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Font Loader
   // =======================================================================================================
@@ -26,10 +29,10 @@ export function FontProvider({ children }) {
 
   // After the custom fonts have loaded, we can hide the splash screen and display the app screen.
   const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
+    if (fontsLoaded && isLogged) {
       await SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, isLogged]);
 
   if (!fontsLoaded) {
     return null;
