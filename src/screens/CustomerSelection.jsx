@@ -11,7 +11,8 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
-export const CustomerSelection = () => {
+export const CustomerSelection = ({ navigation }) => {
+  const { navigate } = navigation;
 
   const userName = "Victor Lima";
   const userImage = "https://i.imgur.com/GpduYfh.jpg";
