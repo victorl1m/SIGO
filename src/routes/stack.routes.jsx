@@ -16,6 +16,13 @@ import { AddCustomer } from "../screens/AddCustomer";
 export function StackRoutes() {
   return (
     <Navigator>
+            <Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Screen
         name="Login"
         component={Login}
@@ -26,13 +33,6 @@ export function StackRoutes() {
       <Screen
         name="CustomerSelection"
         component={CustomerSelection}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Screen
-        name="Profile"
-        component={Profile}
         options={{
           headerShown: false,
         }}
