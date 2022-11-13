@@ -1,18 +1,12 @@
 import { View, Text, StyleSheet, Button } from "react-native"
 
-export function Home({ navigation }) {
-
-    function goBack() {
-        const { navigate } = navigation;
-        navigate('Login');
-    }
+export function Home() {
 
     return (
         <View style={styles.container}>
             <Text>Home</Text>
             <Button 
                 title="go back"
-                onPress={goBack}
             />
         </View>
     )

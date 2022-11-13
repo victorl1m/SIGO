@@ -28,7 +28,7 @@ Here're some of the project's best features:
 
 Technologies used in the project:
 
-*   React Native (Expo framework) (Bare workflow)
+*   React Native (CLI)
 *   React-JS
 *   Jira (Agile methodology)
 * <a href="https://www.figma.com/file/wjR78UYXasj7H861OvMFli/SIGO?node-id=0%3A1">Figma</a>

@@ -5,46 +5,14 @@ import {
   StyleSheet,
   Pressable,
   Image,
-  BackHandler,
-  Alert,
   SafeAreaView,
   StatusBar,
   ScrollView,
 } from "react-native";
-import React, { useCallback, useContext } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import { FontContext } from "../contexts/FontContext";
 import Svg, { Path } from "react-native-svg";
 
-export const CustomerSelection = ({navigation}) => {
+export const CustomerSelection = ({ navigation }) => {
   const { navigate } = navigation;
-  const { alert } = Alert;
-
-  const { onLayoutRootView } = useContext(FontContext);
-
-  // preventing back button
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        alert("Hold on!", "Are you sure you want to go back?", [
-          {
-            text: "Cancel",
-            onPress: () => false,
-          },
-          { text: "YES", onPress: () => BackHandler.exitApp() },
-        ]);
-
-        return true;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        "hardwareBackPress",
-        onBackPress
-      );
-
-      return () => subscription.remove();
-    })
-  );
 
   const userName = "Victor Lima";
   const userImage = "https://i.imgur.com/GpduYfh.jpg";
@@ -66,8 +34,8 @@ export const CustomerSelection = ({navigation}) => {
   //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀View Component
   // =======================================================================================================
   return (
-    <ScrollView onLayout={onLayoutRootView} style={styles.container}>
-      <StatusBar style="light" />
+    <ScrollView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <View style={styles.yourJobs}>

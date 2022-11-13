@@ -17,15 +17,15 @@ export function StackRoutes() {
   return (
     <Navigator>
       <Screen
-        name="CustomerSelection"
-        component={CustomerSelection}
+        name="Login"
+        component={Login}
         options={{
           headerShown: false,
         }}
       />
       <Screen
-        name="Login"
-        component={Login}
+        name="CustomerSelection"
+        component={CustomerSelection}
         options={{
           headerShown: false,
         }}

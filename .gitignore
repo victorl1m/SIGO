@@ -20,7 +20,11 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+<<<<<<< HEAD
 project.xcworkspace
+=======
+ios/.xcode.env.local
+>>>>>>> f09d28e93b842dc966251625db36e3106e7066b3
 
 # Android/IntelliJ
 #
@@ -30,6 +34,10 @@ build/
 local.properties
 *.iml
 *.hprof
+<<<<<<< HEAD
+=======
+.cxx/
+>>>>>>> f09d28e93b842dc966251625db36e3106e7066b3
 
 # node.js
 #
@@ -43,6 +51,7 @@ buck-out/
 *.keystore
 !debug.keystore
 
+<<<<<<< HEAD
 # Bundle artifacts
 *.jsbundle
 
@@ -53,3 +62,23 @@ buck-out/
 .expo/
 web-build/
 dist/
+=======
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+
+# Bundle artifact
+*.jsbundle
+
+# Ruby / CocoaPods
+/ios/Pods/
+/vendor/bundle/
+>>>>>>> f09d28e93b842dc966251625db36e3106e7066b3
