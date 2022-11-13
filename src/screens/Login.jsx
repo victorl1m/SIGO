@@ -5,57 +5,31 @@ import {
   TextInput,
   View,
   SafeAreaView,
-} from "react-native";
-import { useContext, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import Svg, { Rect, Path } from "react-native-svg";
-import { FontContext } from "../contexts/FontContext";
+  StatusBar,
+} from 'react-native';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import Svg, {Rect, Path} from 'react-native-svg';
 
 // =======================================================================================================
-//       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Firebase Authentication
+//       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Firebase Authentication ~~deprecated need to be updated
 // =======================================================================================================
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
 
-export function Login({ navigation }) {
+export function Login({navigation}) {
+  // react navigator
   const { navigate } = navigation;
-
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [styleErrorEmail, setStyleErrorEmail] = useState(false);
-
-  // After the custom fonts have loaded, we can hide the splash screen and display the app screen.
-  const { onLayoutRootView } = useContext(FontContext);
-
-  async function handleLogin() {
-    const emailIsValid = /@/.test(email);
-    if (!emailIsValid) {
-      setStyleErrorEmail(true);
-    }
-
-    await signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate("CustomerSelection");
-      })
-      .catch((error) => {
-        setStyleErrorEmail(true);
-        console.log(error);
-      });
-  }
 
   /* =======================================================================================================
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
     ======================================================================================================= */
 
   return (
-    <SafeAreaView onLayout={onLayoutRootView} style={styles.loginContainer}>
-      <StatusBar style="light" />
+    <SafeAreaView style={styles.loginContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.inputArea}>
         {/* =======================================================================================================
       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Logo <View>
       ======================================================================================================= */}
-        <View style={{ marginBottom: 36 }}>
+        <View style={{marginBottom: 36}}>
           <Svg width={72} height={72} viewBox="0 0 64 64" fill="none">
             <Rect width={64} height={64} rx={25} fill="#00B2CB" />
             <Path
@@ -67,29 +41,23 @@ export function Login({ navigation }) {
         {/* =======================================================================================================
       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login <Form>
       ======================================================================================================= */}
-        <Text style={styleErrorEmail ? styles.textError : styles.textRight}>
+        {/* <Text style={styleErrorEmail ? styles.textError : styles.textRight}>
           Email ou senha incorretos
-        </Text>
+        </Text> */}
         <TextInput
-          style={styleErrorEmail ? styles.errorEmail : styles.input}
+          style={styles.input}
           autoComplete="email"
           placeholder="Email"
-          placeholderTextColor={"#00B2CB"}
-          onChangeText={setEmail}
+          placeholderTextColor={'#00B2CB'}
         />
         <TextInput
-          style={styleErrorEmail ? styles.errorEmail : styles.input}
+          style={styles.input}
           autoComplete="password"
           secureTextEntry={true}
-          onChangeText={setPassword}
           placeholder="Senha"
-          placeholderTextColor={"#00B2CB"}
+          placeholderTextColor={'#00B2CB'}
         />
-        <Pressable
-          onPress={() => {
-            navigation.navigate("ForgotPW");
-          }}
-        >
+        <Pressable onPress={() => navigate("ForgotPW")}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
@@ -102,23 +70,19 @@ export function Login({ navigation }) {
         fillColor="#00B2CB"
         unfillColor="transparent"
         text="Lembrar de mim"
-        iconStyle={{ borderColor: "#00B2CB" }}
-        innerIconStyle={{ borderWidth: 2 }}
+        iconStyle={{borderColor: '#00B2CB'}}
+        innerIconStyle={{borderWidth: 2}}
         textStyle={{
-          fontFamily: "Montserrat-Medium",
-          textDecorationLine: "none",
+          fontFamily: 'Montserrat-Medium',
+          textDecorationLine: 'none',
         }}
       />
-        <Pressable style={styles.logInbtn} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Entrar</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            navigation.navigate("Register");
-          }}
-        >
-          <Text style={styles.signUpText}>Cadastrar</Text>
-        </Pressable>
+      <Pressable onPress={() => navigate("CustomerSelection")} style={styles.logInbtn}>
+        <Text style={styles.buttonText}>Entrar</Text>
+      </Pressable>
+      <Pressable onPress={() => navigate("Register")}>
+        <Text style={styles.signUpText}>Cadastrar</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -128,58 +92,58 @@ export function Login({ navigation }) {
 const styles = StyleSheet.create({
   loginContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#121212",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#121212',
   },
   inputArea: {
-    alignItems: "center",
-    flexDirection: "column",
-    width: "90%",
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '90%',
     marginBottom: 24,
   },
   input: {
-    backgroundColor: "#1E1E1E",
-    width: "100%",
+    backgroundColor: '#1E1E1E',
+    width: '100%',
     height: 70,
-    color: "#00B2CB",
+    color: '#00B2CB',
     borderRadius: 10,
     padding: 12,
     marginBottom: 10,
     fontSize: 16,
-    fontFamily: "Montserrat-Medium",
+    fontFamily: 'Montserrat-Medium',
   },
   forgotPassword: {
-    color: "#00B2CB",
-    fontFamily: "Montserrat-Medium",
-    textDecorationLine: "underline",
+    color: '#00B2CB',
+    fontFamily: 'Montserrat-Medium',
+    textDecorationLine: 'underline',
   },
   logInbtn: {
-    backgroundColor: "#00B2CB",
-    width: "90%",
+    backgroundColor: '#00B2CB',
+    width: '90%',
     height: 80,
     borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 12,
   },
   buttonText: {
-    color: "white",
-    fontFamily: "Montserrat-Bold",
+    color: 'white',
+    fontFamily: 'Montserrat-Bold',
     fontSize: 24,
   },
   signUpText: {
-    color: "#00B2CB",
-    fontFamily: "Montserrat-Medium",
+    color: '#00B2CB',
+    fontFamily: 'Montserrat-Medium',
     fontSize: 18,
     marginTop: 12,
   },
   errorEmail: {
-    backgroundColor: "#1E1E1E",
-    width: "100%",
+    backgroundColor: '#1E1E1E',
+    width: '100%',
     height: 70,
-    color: "#00B2CB",
-    borderColor: "#CD0000",
+    color: '#00B2CB',
+    borderColor: '#CD0000',
     borderWidth: 2,
     borderRadius: 10,
     padding: 12,
@@ -187,11 +151,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   textRight: {
-    color: "#121212",
+    color: '#121212',
   },
   textError: {
-    color: "#CD0000",
+    color: '#CD0000',
     fontSize: 14,
-    fontFamily: "Montserrat-Medium",
+    fontFamily: 'Montserrat-Medium',
   },
 });
