@@ -13,11 +13,8 @@ import Svg, {Rect, Path} from 'react-native-svg';
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 
-// =======================================================================================================
-//       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Firebase Authentication ~~deprecated need to be updated
-// =======================================================================================================
-import auth from '@react-native-firebase/auth';
-
+// firebase
+import auth from "@react-native-firebase/auth";
 
 export function Login({navigation}) {
   const { navigate } = navigation;
