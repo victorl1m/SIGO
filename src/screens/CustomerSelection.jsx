@@ -9,12 +9,23 @@ import {
   StatusBar,
   ScrollView,
 } from 'react-native';
-import Svg, {Path} from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 export const CustomerSelection = ({navigation}) => {
-  const {navigate} = navigation;
+  const  {navigate } = navigation;
 
-  const userName = 'Victor Lima';
+  // load user information
+
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!user) navigate("Login");
+
+  }, [user]);
+
+  const userName = user.displayName;
   const userImage = 'https://i.imgur.com/GpduYfh.jpg';
   const indicator = '>';
 
