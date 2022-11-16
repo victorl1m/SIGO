@@ -23,6 +23,13 @@ export function Login({navigation}) {
   const { navigate } = navigation;
   const { alert } = Alert;
 
+  // redirect if there is a user logged in
+  const { user } = useContext(AuthContext); 
+
+  useEffect(() => {
+    if (user) navigate("CustomerSelection");
+  },[user]);
+
   /* =======================================================================================================
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
     ======================================================================================================= */
