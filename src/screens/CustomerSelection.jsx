@@ -9,15 +9,44 @@ import {
   SafeAreaView,
   StatusBar,
   ScrollView,
+  BackHandler,
+  Alert
 } from 'react-native';
-import {Modalize} from 'react-native-modalize';
-import Svg, {Path} from 'react-native-svg';
-import Customer from '../components/Customer';
+
+import Svg, { Path } from 'react-native-svg';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 export const CustomerSelection = ({navigation}) => {
-  const {navigate} = navigation;
+  const  { navigate } = navigation;
+  const { alert } = Alert;
 
-  const userName = 'Victor Lima';
+  // preventing back button
+  const backAction = () => {
+    alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
+
+  useEffect(() => {
+    if (!user) navigate("Login");
+
+    // adding Back button events
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, []);
+
+  // load user information
+  const { user } = useContext(AuthContext);
+
+  const userName = user.displayName;
   const userImage = 'https://i.imgur.com/GpduYfh.jpg';
   const indicator = '>';
   // =======================================================================================================

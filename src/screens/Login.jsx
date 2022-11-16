@@ -6,21 +6,44 @@ import {
   View,
   SafeAreaView,
   StatusBar,
+  Alert
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Svg, {Rect, Path} from 'react-native-svg';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
-// =======================================================================================================
-//       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Firebase Authentication ~~deprecated need to be updated
-// =======================================================================================================
+// firebase
+import auth from "@react-native-firebase/auth";
 
 export function Login({navigation}) {
-  // react navigator
   const { navigate } = navigation;
+  const { alert } = Alert;
+
+  // redirect if there is a user logged in
+  const { user } = useContext(AuthContext); 
+
+  useEffect(() => {
+    if (user) navigate("CustomerSelection");
+  },[user]);
 
   /* =======================================================================================================
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
     ======================================================================================================= */
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function handleLogin() {
+    if (email === '' && password === '') return alert("please fill in all fields");
+
+    await auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        navigate("CustomerSelection");
+      })
+      .catch(error => {
+        console.error(error.code);
+      });
+  }
 
   return (
     <SafeAreaView style={styles.loginContainer}>
@@ -45,12 +68,14 @@ export function Login({navigation}) {
           Email ou senha incorretos
         </Text> */}
         <TextInput
+          onChangeText={setEmail}
           style={styles.input}
           autoComplete="email"
           placeholder="Email"
           placeholderTextColor={'#00B2CB'}
         />
         <TextInput
+          onChangeText={setPassword}
           style={styles.input}
           autoComplete="password"
           secureTextEntry={true}
@@ -77,7 +102,7 @@ export function Login({navigation}) {
           textDecorationLine: 'none',
         }}
       />
-      <Pressable onPress={() => navigate("CustomerSelection")} style={styles.logInbtn}>
+      <Pressable onPress={handleLogin} style={styles.logInbtn}>
         <Text style={styles.buttonText}>Entrar</Text>
       </Pressable>
       <Pressable onPress={() => navigate("Register")}>

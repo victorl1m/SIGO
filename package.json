@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@react-native-firebase/app": "^16.4.4",
+    "@react-native-firebase/auth": "^16.4.4",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.1",
     "react": "18.1.0",
