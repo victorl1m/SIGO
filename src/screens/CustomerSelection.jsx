@@ -1,3 +1,4 @@
+import {useRef} from 'react';
 import {
   View,
   Text,
@@ -9,7 +10,9 @@ import {
   StatusBar,
   ScrollView,
 } from 'react-native';
+import {Modalize} from 'react-native-modalize';
 import Svg, {Path} from 'react-native-svg';
+import Customer from '../components/Customer';
 
 export const CustomerSelection = ({navigation}) => {
   const {navigate} = navigation;
@@ -17,7 +20,6 @@ export const CustomerSelection = ({navigation}) => {
   const userName = 'Victor Lima';
   const userImage = 'https://i.imgur.com/GpduYfh.jpg';
   const indicator = '>';
-
   // =======================================================================================================
   //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Greetings, John Doe!
   // =======================================================================================================
@@ -31,7 +33,11 @@ export const CustomerSelection = ({navigation}) => {
     var greeting = 'Boa noite';
   }
   // =======================================================================================================
-  //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀View Component
+  //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modalize addCustomer
+  // =======================================================================================================
+
+  // =======================================================================================================
+  //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀View Component
   // =======================================================================================================
   return (
     <ScrollView style={styles.container}>
@@ -42,6 +48,17 @@ export const CustomerSelection = ({navigation}) => {
             <Text style={styles.indicator}>{indicator}</Text>
             <Text style={styles.headerText}>Seus trabalhos</Text>
           </View>
+          <Pressable>
+            <Svg
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <Path
+                d="M2.179 10.201c.055-.298.393-.734.934-.59a.752.752 0 01.543.86c-.077.529-.141.853-.141 1.529 0 4.47 3.601 8.495 8.502 8.495 2.173 0 4.241-.84 5.792-2.284l-1.251-.341a.751.751 0 01.389-1.449l3.225.864a.752.752 0 01.53.919l-.875 3.241a.75.75 0 11-1.449-.388l.477-1.77a10.028 10.028 0 01-6.838 2.708c-5.849 0-9.968-4.8-10.002-9.93a9.987 9.987 0 01.164-1.864zm19.672 3.6c-.054.298-.392.734-.933.59a.75.75 0 01-.543-.86c.068-.48.139-.848.139-1.53 0-4.479-3.609-8.495-8.5-8.495A8.526 8.526 0 006.22 5.791l1.251.341a.75.75 0 11-.388 1.448l-3.225-.864a.75.75 0 01-.53-.918l.875-3.241a.75.75 0 111.449.388l-.478 1.769a10.034 10.034 0 016.839-2.708c5.865 0 10.002 4.83 10.002 9.995a9.97 9.97 0 01-.164 1.8z"
+              />
+            </Svg>
+          </Pressable>
           <Pressable
             onPress={() => {
               navigate('Profile');
@@ -69,21 +86,31 @@ export const CustomerSelection = ({navigation}) => {
           placeholder="Pesquisar"
           placeholderTextColor={'white'}
           style={styles.searchbox}></TextInput>
-        <Pressable
-          onPress={() => {
-            navigate('AddCustomer');
-          }}>
+        <Pressable style={styles.searchIconArea}>
           <Svg
-            style={styles.addIcon}
-            width={32}
-            height={32}
-            viewBox="0 0 28 28"
-            xmlns="http://www.w3.org/2000/svg">
+            xmlns="http://www.w3.org/2000/svg"
+            width={16}
+            height={16}
+            style={styles.searchIcon}
+            fill="none"
+            viewBox="0 0 24 24">
             <Path
-              d="M15.114 25.719a7.533 7.533 0 01-1.04-1.35c-.655.085-1.348.131-2.074.131-5.111 0-8.5-2.111-8.5-4.785V19l.007-.145A1.5 1.5 0 015 17.5h8.624A7.486 7.486 0 0114.5 16H5a3 3 0 00-3 3v.715C2 23.433 6.21 26 12 26c1.101 0 2.145-.098 3.114-.281zM18 8A6 6 0 106 8a6 6 0 0012 0zM7.5 8a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zm13 19a6.5 6.5 0 100-13 6.5 6.5 0 000 13zm0-11a.5.5 0 01.5.5V20h3.5a.5.5 0 010 1H21v3.5a.5.5 0 01-1 0V21h-3.5a.5.5 0 010-1H20v-3.5a.5.5 0 01.5-.5z"
-              fill="white"
-            />
+              d="M23.809 21.646l-6.205-6.205a9.68 9.68 0 001.857-5.711C19.461 4.365 15.096 0 9.73 0 4.365 0 0 4.365 0 9.73c0 5.366 4.365 9.73 9.73 9.73a9.678 9.678 0 005.487-1.698L21.455 24l2.354-2.354zM2.854 9.73c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877A6.884 6.884 0 012.854 9.73z"
+              fill="#fff"></Path>
           </Svg>
+        </Pressable>
+      </View>
+      <View style={styles.customerBtnArea}>
+        <Pressable style={styles.addCustomerBtn}>
+          <Svg
+            width={24}
+            height={24}
+            fill="black"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <Path d="M12.002 2C17.52 2 22 6.48 22 11.998c0 5.517-4.48 9.997-9.998 9.997-5.517 0-9.997-4.48-9.997-9.997C2.005 6.48 6.485 2 12.002 2zm0 1.5c-4.69 0-8.497 3.808-8.497 8.498s3.807 8.497 8.497 8.497 8.498-3.807 8.498-8.497S16.692 3.5 12.002 3.5zm-.747 7.75h-3.5a.75.75 0 000 1.5h3.5v3.5a.75.75 0 001.5 0v-3.5h3.5a.75.75 0 000-1.5h-3.5v-3.5a.75.75 0 00-1.5 0z" />
+          </Svg>
+          <Text style={styles.addCustomerText}>Adicionar cliente</Text>
         </Pressable>
       </View>
       <Customer />
@@ -106,8 +133,9 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   additionalArea: {
+    width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   yourJobs: {
@@ -169,6 +197,30 @@ const styles = StyleSheet.create({
     marginRight: 4,
     alignItems: 'center',
   },
+  addCustomerBtn: {
+    borderColor: 'transparent',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    width: 180,
+    margin: 6,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderRadius: 15,
+    padding: 6,
+  },
+  addCustomerText: {
+    color: 'black',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 14,
+    marginLeft: 4,
+    marginRight: 4,
+  },
+  customerBtnArea: {
+    flexDirection: 'row',
+    margin: 6,
+  },
   btnText: {
     color: 'white',
     fontFamily: 'Montserrat-Bold',
@@ -182,121 +234,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e1e1e',
     borderRadius: 15,
     padding: 12,
-    margin: 10,
-    width: '80%',
+    marginTop: 12,
+    width: '95%',
     color: 'white',
     fontFamily: 'Montserrat-Regular',
     fontSize: 14,
   },
-});
-
-// =======================================================================================================
-//       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Customer Component
-// =======================================================================================================
-
-export default function Customer() {
-  const customerName = 'Jane Doe';
-  const customerImage = 'https://i.pravatar.cc/150?img=1';
-  const totalJobs = '3';
-  const totalTasks = '12';
-  const jobValue = 'R$ 100.000,00';
-
-  return (
-    <SafeAreaView style={customer.container}>
-      <View style={customer.customerArea}>
-        <Image style={customer.image} source={{uri: customerImage}} />
-        <Text style={customer.nameText}>{customerName}</Text>
-      </View>
-
-      <View style={customer.jobsArea}>
-        <View style={customer.typeBg}>
-          <Text style={customer.jobsNumber}>{totalJobs}</Text>
-          <Text style={customer.jobsText}>Obras</Text>
-        </View>
-
-        <View style={customer.typeBg}>
-          <Text style={customer.tasksNumber}>{totalTasks}</Text>
-          <Text style={customer.tasksText}>Tarefas restantes</Text>
-        </View>
-
-        <View style={customer.typeBg}>
-          <Text style={customer.valueNumber}>{jobValue}</Text>
-          <Text style={customer.valueText}>Valor total</Text>
-        </View>
-      </View>
-    </SafeAreaView>
-  );
-}
-
-const customer = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    padding: 12,
-    backgroundColor: '#1e1e1e',
-    borderRadius: 15,
-    marginHorizontal: 12,
-  },
-  text: {
-    color: 'white',
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 18,
-  },
-  image: {
-    width: 32,
-    height: 32,
+  searchIconArea: {
+    backgroundColor: '#00b2bc',
+    width: 36,
+    height: 36,
+    position: 'absolute',
+    right: 18,
     borderRadius: 24,
-    marginRight: 12,
-  },
-  nameText: {
-    color: 'white',
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 18,
-  },
-  customerArea: {
-    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  jobsArea: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginLeft: 12,
-    marginTop: 12,
-  },
-  typeBg: {
-    backgroundColor: '#121212',
+  searchIcon: {
+    position: 'absolute',
     borderRadius: 15,
-    padding: 8,
-    alignItems: 'center',
-  },
-  jobsNumber: {
-    color: '#FFA500',
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 14,
-  },
-  tasksNumber: {
-    color: 'yellow',
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 14,
-  },
-  valueNumber: {
-    color: 'green',
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 14,
-  },
-  jobsText: {
-    color: '#FFA500',
-    fontFamily: 'Montserrat-Medium',
-    fontSize: 14,
-  },
-  tasksText: {
-    color: 'yellow',
-    fontFamily: 'Montserrat-Medium',
-    fontSize: 14,
-  },
-  valueText: {
-    color: 'green',
-    fontFamily: 'Montserrat-Medium',
-    fontSize: 14,
   },
 });
