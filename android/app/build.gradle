@@ -135,6 +135,20 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+  signingConfigs {
+    release {
+      storeFile file('sign.keystore')
+      storePassword '7418529Aa'
+      keyAlias 'youke'
+      keyPassword '7418529Aa'
+    }
+  }
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+    }
+  }
+
     defaultConfig {
         applicationId "com.sigo"
         minSdkVersion rootProject.ext.minSdkVersion
