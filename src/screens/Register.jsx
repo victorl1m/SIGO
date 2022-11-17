@@ -7,8 +7,39 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
+import { useState } from 'react';
 
-export function Register() {
+// firebase
+import auth from "@react-native-firebase/auth";
+
+export function Register({ navigation }) {
+  const { navigate } = navigation;
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function handleRegister() {
+    // Capitalize name
+    const unformatted = `${firstName} ${lastName}`
+    const formatted = unformatted.split(' ').map(name => {
+      return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    }).join(' ');
+
+    await auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        auth().currentUser.updateProfile({
+          displayName: formatted,
+        });
+        navigate("CustomerSelection");
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+
   return (
     <SafeAreaView style={styles.registerContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
@@ -18,6 +49,7 @@ export function Register() {
           Preencha os campos abaixo {'\n'} para criar sua conta
         </Text>
         <TextInput
+          onChangeText={setFirstName}
           style={styles.registerInput}
           placeholder="Nome"
           placeholderTextColor="#AAAAAA"
@@ -26,6 +58,7 @@ export function Register() {
           autoCorrect={false}
         />
         <TextInput
+          onChangeText={setLastName}
           style={styles.registerInput}
           placeholder="Sobrenome"
           placeholderTextColor="#AAAAAA"
@@ -34,6 +67,7 @@ export function Register() {
           autoCorrect={false}
         />
         <TextInput
+          onChangeText={setEmail}
           style={styles.registerInput}
           placeholder="Email"
           placeholderTextColor="#AAAAAA"
@@ -42,6 +76,7 @@ export function Register() {
           autoCorrect={false}
         />
         <TextInput
+          onChangeText={setPassword}
           style={styles.registerInput}
           placeholder="Senha"
           placeholderTextColor="#AAAAAA"
@@ -53,7 +88,7 @@ export function Register() {
           placeholderTextColor="#AAAAAA"
           secureTextEntry={true}
         />
-        <Pressable style={styles.signUpbtn}>
+        <Pressable style={styles.signUpbtn} onPress={handleRegister}>
           <Text style={styles.buttonText}>Cadastrar</Text>
         </Pressable>
       </View>
