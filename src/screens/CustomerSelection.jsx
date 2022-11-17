@@ -46,7 +46,7 @@ export const CustomerSelection = ({navigation}) => {
   // load user information
   const { user } = useContext(AuthContext);
 
-  const userName = user.displayName;
+  const userName = user?.displayName;
   const userImage = 'https://i.imgur.com/GpduYfh.jpg';
   const indicator = '>';
   // =======================================================================================================
@@ -142,7 +142,7 @@ export const CustomerSelection = ({navigation}) => {
           <Text style={styles.addCustomerText}>Adicionar cliente</Text>
         </Pressable>
       </View>
-      <Customer />
+      {/* <Customer /> */}
     </ScrollView>
   );
 };

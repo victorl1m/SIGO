@@ -6,9 +6,32 @@ import {
   View,
   SafeAreaView,
   StatusBar,
+  Alert
 } from 'react-native';
+import { useState } from 'react';
 
-export function ForgotPW() {
+//firebase
+import auth from "@react-native-firebase/auth";
+
+export function ForgotPW({ navigation }) {
+  const { navigate } = navigation;
+  const { alert }= Alert;
+
+  const [email, setEmail] = useState('');
+
+  async function handleForgot() {
+    await auth().sendPasswordResetEmail(email)
+      .then(() => {
+        alert("sent", "check your email box");
+      })
+      .catch((error) => {
+        alert(error.message);
+      })
+      .finally(() => {
+        navigate("Login");
+      })
+  }
+
   return (
     <SafeAreaView style={styles.forgotContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
@@ -19,13 +42,14 @@ export function ForgotPW() {
           senha
         </Text>
         <TextInput
+          onChangeText={setEmail}
           style={styles.forgotInput}
           placeholder="Email"
           placeholderTextColor="#AAAAAA"
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}></TextInput>
-        <Pressable style={styles.forgotBtn}>
+        <Pressable style={styles.forgotBtn} onPress={handleForgot}>
           <Text style={styles.buttonText}>Recuperar acesso</Text>
         </Pressable>
       </View>
