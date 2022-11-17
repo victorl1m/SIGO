@@ -28,11 +28,12 @@ export function Register({ navigation }) {
     }).join(' ');
 
     await auth().createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        auth().currentUser.updateProfile({
+      .then(async () => {
+        await auth().currentUser.updateProfile({
           displayName: formatted,
-        });
-        navigate("CustomerSelection");
+        }).then(() => {
+          navigate("CustomerSelection");
+        })
       })
       .catch(error => {
         console.error(error);
