@@ -1,4 +1,3 @@
-import {useRef} from 'react';
 import {
   View,
   Text,
@@ -6,7 +5,6 @@ import {
   StyleSheet,
   Pressable,
   Image,
-  SafeAreaView,
   StatusBar,
   ScrollView,
   BackHandler,
