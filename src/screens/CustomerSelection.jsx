@@ -10,41 +10,42 @@ import {
   StatusBar,
   ScrollView,
   BackHandler,
-  Alert
+  Alert,
 } from 'react-native';
 
-import Svg, { Path } from 'react-native-svg';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import Svg, {Path} from 'react-native-svg';
+import {useContext, useEffect} from 'react';
+import {AuthContext} from '../contexts/AuthContext';
+import Customer from '../components/Customer';
 
 export const CustomerSelection = ({navigation}) => {
-  const  { navigate } = navigation;
-  const { alert } = Alert;
+  const {navigate} = navigation;
+  const {alert} = Alert;
 
   // preventing back button
   const backAction = () => {
-    alert("Hold on!", "Are you sure you want to go back?", [
+    alert('Hold on!', 'Are you sure you want to go back?', [
       {
-        text: "Cancel",
+        text: 'Cancel',
         onPress: () => null,
       },
-      { text: "YES", onPress: () => BackHandler.exitApp() }
+      {text: 'YES', onPress: () => BackHandler.exitApp()},
     ]);
     return true;
   };
 
   useEffect(() => {
-    if (!user) navigate("Login");
+    if (!user) navigate('Login');
 
     // adding Back button events
-    BackHandler.addEventListener("hardwareBackPress", backAction);
+    BackHandler.addEventListener('hardwareBackPress', backAction);
 
     return () =>
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
 
   // load user information
-  const { user } = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
 
   const userName = user?.displayName;
   const userImage = 'https://i.imgur.com/GpduYfh.jpg';
@@ -83,9 +84,7 @@ export const CustomerSelection = ({navigation}) => {
               height={24}
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
-              <Path
-                d="M2.179 10.201c.055-.298.393-.734.934-.59a.752.752 0 01.543.86c-.077.529-.141.853-.141 1.529 0 4.47 3.601 8.495 8.502 8.495 2.173 0 4.241-.84 5.792-2.284l-1.251-.341a.751.751 0 01.389-1.449l3.225.864a.752.752 0 01.53.919l-.875 3.241a.75.75 0 11-1.449-.388l.477-1.77a10.028 10.028 0 01-6.838 2.708c-5.849 0-9.968-4.8-10.002-9.93a9.987 9.987 0 01.164-1.864zm19.672 3.6c-.054.298-.392.734-.933.59a.75.75 0 01-.543-.86c.068-.48.139-.848.139-1.53 0-4.479-3.609-8.495-8.5-8.495A8.526 8.526 0 006.22 5.791l1.251.341a.75.75 0 11-.388 1.448l-3.225-.864a.75.75 0 01-.53-.918l.875-3.241a.75.75 0 111.449.388l-.478 1.769a10.034 10.034 0 016.839-2.708c5.865 0 10.002 4.83 10.002 9.995a9.97 9.97 0 01-.164 1.8z"
-              />
+              <Path d="M2.179 10.201c.055-.298.393-.734.934-.59a.752.752 0 01.543.86c-.077.529-.141.853-.141 1.529 0 4.47 3.601 8.495 8.502 8.495 2.173 0 4.241-.84 5.792-2.284l-1.251-.341a.751.751 0 01.389-1.449l3.225.864a.752.752 0 01.53.919l-.875 3.241a.75.75 0 11-1.449-.388l.477-1.77a10.028 10.028 0 01-6.838 2.708c-5.849 0-9.968-4.8-10.002-9.93a9.987 9.987 0 01.164-1.864zm19.672 3.6c-.054.298-.392.734-.933.59a.75.75 0 01-.543-.86c.068-.48.139-.848.139-1.53 0-4.479-3.609-8.495-8.5-8.495A8.526 8.526 0 006.22 5.791l1.251.341a.75.75 0 11-.388 1.448l-3.225-.864a.75.75 0 01-.53-.918l.875-3.241a.75.75 0 111.449.388l-.478 1.769a10.034 10.034 0 016.839-2.708c5.865 0 10.002 4.83 10.002 9.995a9.97 9.97 0 01-.164 1.8z" />
             </Svg>
           </Pressable>
           <Pressable
@@ -130,7 +129,11 @@ export const CustomerSelection = ({navigation}) => {
         </Pressable>
       </View>
       <View style={styles.customerBtnArea}>
-        <Pressable style={styles.addCustomerBtn}>
+        <Pressable
+          onPress={() => {
+            navigate('AddCustomer');
+          }}
+          style={styles.addCustomerBtn}>
           <Svg
             width={24}
             height={24}
@@ -142,7 +145,7 @@ export const CustomerSelection = ({navigation}) => {
           <Text style={styles.addCustomerText}>Adicionar cliente</Text>
         </Pressable>
       </View>
-      {/* <Customer /> */}
+      <Customer />
     </ScrollView>
   );
 };
