@@ -7,13 +7,13 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
-import { useState } from 'react';
+import {useState} from 'react';
 
 // firebase
-import auth from "@react-native-firebase/auth";
+import auth from '@react-native-firebase/auth';
 
-export function Register({ navigation }) {
-  const { navigate } = navigation;
+export function Register({navigation}) {
+  const {navigate} = navigation;
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -22,10 +22,13 @@ export function Register({ navigation }) {
 
   async function handleRegister() {
     // Capitalize name
-    const unformatted = `${firstName} ${lastName}`
-    const formatted = unformatted.split(' ').map(name => {
-      return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-    }).join(' ');
+    const unformatted = `${firstName} ${lastName}`;
+    const formatted = unformatted
+      .split(' ')
+      .map(name => {
+        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+      })
+      .join(' ');
 
     await auth().createUserWithEmailAndPassword(email, password)
       .then(async ({ user }) => {
@@ -37,7 +40,6 @@ export function Register({ navigation }) {
         console.error(error);
       });
   }
-
 
   return (
     <SafeAreaView style={styles.registerContainer}>

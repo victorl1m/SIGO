@@ -14,33 +14,25 @@ import {AddCustomer} from '../screens/AddCustomer';
 
 // routes
 export function StackRoutes() {
-  const config = {
-    animation: 'timing',
-  };
-
   return (
-    <Navigator>
-      <Screen
-        name="CustomerSelection"
-        component={CustomerSelection}
-        options={{
-          gestureDirection: 'horizontal',
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
-          headerShown: false,
-        }}
-      />
+    <Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        animation: 'slide_from_right',
+        animationDuration: 150,
+      }}>
       <Screen
         name="Login"
         component={Login}
         options={{
-          gestureDirection: 'horizontal',
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
+          headerShown: false,
+        }}
+      />
+      <Screen
+        name="CustomerSelection"
+        component={CustomerSelection}
+        options={{
           headerShown: false,
         }}
       />
@@ -48,23 +40,20 @@ export function StackRoutes() {
         name="Profile"
         component={Profile}
         options={{
+          animation: 'slide_from_bottom',
           gestureDirection: 'horizontal',
-          transitionSpec: {
-            open: config,
-            close: config,
+          title: '',
+          headerStyle: {
+            backgroundColor: '#121212',
           },
-          headerShown: false,
+          headerTintColor: 'white',
+          headerShown: true,
         }}
       />
       <Screen
         name="Register"
         component={Register}
         options={{
-          gestureDirection: 'horizontal',
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
           headerStyle: {
             backgroundColor: '#121212',
           },
@@ -75,11 +64,6 @@ export function StackRoutes() {
         name="ForgotPW"
         component={ForgotPW}
         options={{
-          gestureDirection: 'horizontal',
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
           headerShown: false,
         }}
       />
@@ -87,11 +71,6 @@ export function StackRoutes() {
         name="Home"
         component={Home}
         options={{
-          gestureDirection: 'horizontal',
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
           headerShown: false,
         }}
       />
@@ -99,12 +78,14 @@ export function StackRoutes() {
         name="AddCustomer"
         component={AddCustomer}
         options={{
+          animation: 'slide_from_bottom',
           gestureDirection: 'horizontal',
-          transitionSpec: {
-            open: config,
-            close: config,
+          title: '',
+          headerStyle: {
+            backgroundColor: '#121212',
           },
-          headerShown: false,
+          headerTintColor: 'white',
+          headerShown: true,
         }}
       />
     </Navigator>

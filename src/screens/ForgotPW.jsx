@@ -6,30 +6,32 @@ import {
   View,
   SafeAreaView,
   StatusBar,
-  Alert
+  Alert,
 } from 'react-native';
-import { useState } from 'react';
+import {useState} from 'react';
 
 //firebase
-import auth from "@react-native-firebase/auth";
+import auth from '@react-native-firebase/auth';
+import Toast from 'react-native-simple-toast';
 
-export function ForgotPW({ navigation }) {
-  const { navigate } = navigation;
-  const { alert }= Alert;
+export function ForgotPW({navigation}) {
+  const {navigate} = navigation;
+  const {alert} = Alert;
 
   const [email, setEmail] = useState('');
 
   async function handleForgot() {
-    await auth().sendPasswordResetEmail(email)
+    await auth()
+      .sendPasswordResetEmail(email)
       .then(() => {
-        alert("sent", "check your email box");
+        Toast.show('Verifique seu email para redefinir sua senha', Toast.LONG);
       })
-      .catch((error) => {
+      .catch(error => {
         alert(error.message);
       })
       .finally(() => {
-        navigate("Login");
-      })
+        navigate('Login');
+      });
   }
 
   return (

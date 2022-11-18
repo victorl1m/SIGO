@@ -1,5 +1,12 @@
-import Svg, {Path} from 'react-native-svg';
-import {View, Text, StyleSheet, SafeAreaView, Image, StatusBar, ScrollView,} from 'react-native';
+import Svg, {Path, Use} from 'react-native-svg';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  StatusBar,
+  ScrollView,
+} from 'react-native';
 
 export function Profile() {
   const pictureProfile =
@@ -8,21 +15,6 @@ export function Profile() {
   return (
     <ScrollView style={styles.profileContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
-      <View style={styles.goBack}>
-        <Svg
-          style={styles.goBackIcon}
-          width={16}
-          height={16}
-          viewBox="0 0 18 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <Path
-            d="M6.474.215L.22 6.474a.744.744 0 00-.22.53c0 .192.073.384.22.53l6.252 6.257a.742.742 0 00.527.217.753.753 0 00.534-1.278L2.557 7.754h14.692a.75.75 0 000-1.5H2.557l4.978-4.979A.745.745 0 007.529.221.749.749 0 006.474.215z"
-            fill="#fff"
-          />
-        </Svg>
-        <Text style={styles.youProfile}>Seu perfil</Text>
-      </View>
       <View style={styles.profileData}>
         <Image source={{uri: pictureProfile}} style={styles.profileImage} />
         <Text style={styles.profileName}>Victor Lima</Text>
