@@ -11,6 +11,8 @@ import {
   Alert,
 } from 'react-native';
 
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+
 import Svg, {Path} from 'react-native-svg';
 import {useContext, useEffect} from 'react';
 import {AuthContext} from '../contexts/AuthContext';
@@ -51,6 +53,7 @@ export const CustomerSelection = ({navigation}) => {
   // =======================================================================================================
   //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Greetings, John Doe!
   // =======================================================================================================
+
   var hours = new Date().getHours();
 
   if (hours < 12) {
@@ -90,10 +93,8 @@ export const CustomerSelection = ({navigation}) => {
         </View>
       </View>
       <View style={styles.userArea}>
-        <View>
-          <Text style={styles.userText}>{greeting},</Text>
-          <Text style={styles.userName}>{userName} 👋</Text>
-        </View>
+        <Text style={styles.userText}>{greeting},</Text>
+        <Text style={styles.userName}>{userName} 👋</Text>
       </View>
       <View style={styles.btnOptions}>
         <Pressable style={styles.btnSelected}>
