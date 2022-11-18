@@ -20,6 +20,7 @@ export function StackRoutes() {
         gestureEnabled: true,
         gestureDirection: 'horizontal',
         animation: 'slide_from_right',
+        animationDuration: 300,
       }}>
       <Screen
         name="Login"
@@ -32,7 +33,6 @@ export function StackRoutes() {
         name="CustomerSelection"
         component={CustomerSelection}
         options={{
-          gestureDirection: 'horizontal',
           headerShown: false,
         }}
       />
