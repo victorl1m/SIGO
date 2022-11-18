@@ -17,7 +17,7 @@ import Svg, {Path} from 'react-native-svg';
 import {useCallback, useContext, useEffect} from 'react';
 import {AuthContext} from '../contexts/AuthContext';
 import Customer from '../components/Customer';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const CustomerSelection = ({navigation}) => {
   const {navigate} = navigation;
@@ -36,10 +36,13 @@ export const CustomerSelection = ({navigation}) => {
         return true;
       };
 
-      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
 
       return () => subscription.remove();
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 12,
     borderRadius: 15,
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   userText: {
     color: 'white',
