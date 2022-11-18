@@ -11,8 +11,6 @@ import {
   Alert,
 } from 'react-native';
 
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-
 import Svg, {Path} from 'react-native-svg';
 import {useCallback, useContext, useEffect} from 'react';
 import {AuthContext} from '../contexts/AuthContext';

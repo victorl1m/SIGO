@@ -1,12 +1,6 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  SafeAreaView,
-  Pressable,
-} from 'react-native';
-import {Svg, Path} from 'react-native-svg';
+import {View, Text, StyleSheet, Image, SafeAreaView} from 'react-native';
+import Svg, {Path} from 'react-native-svg';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 export default function Customer() {
   const customerName = 'Jane Doe';
@@ -22,11 +16,12 @@ export default function Customer() {
         <Text style={customer.nameText}>{customerName}</Text>
         <Pressable style={customer.accessBtn}>
           <Svg
-            width={24}
-            height={24}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="#00b2cb">
-            <Path d="M2.598 9H1.543C3.025 4.362 7.373 1 12.5 1 18.847 1 24 6.153 24 12.5S18.847 24 12.5 24c-5.127 0-9.475-3.362-10.957-8h1.055c1.443 4.076 5.334 7 9.902 7C18.295 23 23 18.295 23 12.5S18.295 2 12.5 2C7.932 2 4.041 4.923 2.598 9zm12.228 3l-4.604-3.747.666-.753 6.112 5-6.101 5-.679-.737L14.828 13H0v-1h14.826z" />
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="#00b2cb"
+            xmlns="http://www.w3.org/2000/svg">
+            <Path d="m11.998 5c-4.078 0-7.742 3.093-9.853 6.483-.096.159-.145.338-.145.517s.048.358.144.517c2.112 3.39 5.776 6.483 9.854 6.483 4.143 0 7.796-3.09 9.864-6.493.092-.156.138-.332.138-.507s-.046-.351-.138-.507c-2.068-3.403-5.721-6.493-9.864-6.493zm.002 3c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4zm0 1.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5-2.5-1.12-2.5-2.5 1.12-2.5 2.5-2.5z" />
           </Svg>
         </Pressable>
       </View>
@@ -112,7 +107,7 @@ const customer = StyleSheet.create({
     fontSize: 14,
   },
   accessBtn: {
-    marginLeft: 184,
+    marginLeft: 'auto',
   },
   tasksText: {
     color: 'yellow',
