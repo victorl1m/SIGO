@@ -30,16 +30,11 @@ export function Register({navigation}) {
       })
       .join(' ');
 
-    await auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(async () => {
-        await auth()
-          .currentUser.updateProfile({
-            displayName: formatted,
-          })
-          .then(() => {
-            navigate('CustomerSelection');
-          });
+    await auth().createUserWithEmailAndPassword(email, password)
+      .then(async ({ user }) => {
+        await user.updateProfile({
+          displayName: formatted,
+        })
       })
       .catch(error => {
         console.error(error);
