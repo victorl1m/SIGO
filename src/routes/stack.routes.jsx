@@ -11,6 +11,7 @@ import {Profile} from '../screens/Profile';
 import {ForgotPW} from '../screens/ForgotPW';
 import {CustomerSelection} from '../screens/CustomerSelection';
 import {AddCustomer} from '../screens/AddCustomer';
+import {CustomerScreen} from '../screens/CustomerScreen';
 
 // routes
 export function StackRoutes() {
@@ -26,6 +27,20 @@ export function StackRoutes() {
         name="Login"
         component={Login}
         options={{
+          headerShown: false,
+        }}
+      />
+      <Screen
+        name="CustomerScreen"
+        component={CustomerScreen}
+        options={{
+          animation: 'slide_from_bottom',
+          gestureDirection: 'horizontal',
+          title: '',
+          headerStyle: {
+            backgroundColor: '#121212',
+          },
+          headerTintColor: 'white',
           headerShown: false,
         }}
       />

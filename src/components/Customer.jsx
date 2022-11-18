@@ -13,7 +13,6 @@ export default function Customer() {
         <Image style={customer.image} source={{uri: customerImage}} />
         <Text style={customer.nameText}>{customerName}</Text>
       </View>
-
       <View style={customer.jobsArea}>
         <View style={customer.typeBg}>
           <Text style={customer.jobsNumber}>{totalJobs}</Text>
