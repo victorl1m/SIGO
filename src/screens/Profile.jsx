@@ -1,9 +1,8 @@
-import Svg, {Path} from 'react-native-svg';
+import Svg, {Path, Use} from 'react-native-svg';
 import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   Image,
   StatusBar,
   ScrollView,

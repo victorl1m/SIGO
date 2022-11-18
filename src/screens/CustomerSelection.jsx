@@ -46,8 +46,8 @@ export const CustomerSelection = ({navigation}) => {
   const {user} = useContext(AuthContext);
 
   const userName = user?.displayName;
-  const userImage = 'https://i.imgur.com/GpduYfh.jpg';
-  const indicator = '>';
+  const userImage =
+    'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
   // =======================================================================================================
   //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Greetings, John Doe!
   // =======================================================================================================
@@ -70,7 +70,6 @@ export const CustomerSelection = ({navigation}) => {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <View style={styles.yourJobs}>
-            <Text style={styles.indicator}>{indicator}</Text>
             <Text style={styles.headerText}>Seus trabalhos</Text>
           </View>
           <Pressable>
@@ -174,9 +173,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  indicator: {
-    color: '#00b2bc',
-  },
   headerText: {
     fontFamily: 'Montserrat-Bold',
     fontSize: 14,
@@ -262,6 +258,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 12,
     marginTop: 12,
+    marginBottom: 12,
     width: '95%',
     color: 'white',
     fontFamily: 'Montserrat-Regular',
