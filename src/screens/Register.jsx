@@ -28,11 +28,9 @@ export function Register({ navigation }) {
     }).join(' ');
 
     await auth().createUserWithEmailAndPassword(email, password)
-      .then(async () => {
-        await auth().currentUser.updateProfile({
+      .then(async ({ user }) => {
+        await user.updateProfile({
           displayName: formatted,
-        }).then(() => {
-          navigate("CustomerSelection");
         })
       })
       .catch(error => {

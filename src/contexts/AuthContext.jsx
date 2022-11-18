@@ -8,11 +8,9 @@ export function AuthProvider({ children }) {
 
     // auth state
     useEffect(() => {
-        auth().onAuthStateChanged(user => {
+        auth().onUserChanged(user => {
             setUser(user);
         })
-
-        console.log(user);
     },[user])
     
     return (
