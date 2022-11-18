@@ -6,26 +6,26 @@ import {
   View,
   SafeAreaView,
   StatusBar,
-  Alert
+  Alert,
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Svg, {Rect, Path} from 'react-native-svg';
-import { useEffect, useState, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import {useEffect, useState, useContext} from 'react';
+import {AuthContext} from '../contexts/AuthContext';
+import Toast from 'react-native-simple-toast';
 
 // firebase
-import auth from "@react-native-firebase/auth";
+import auth from '@react-native-firebase/auth';
 
 export function Login({navigation}) {
-  const { navigate } = navigation;
-  const { alert } = Alert;
+  const {navigate} = navigation;
 
   // redirect if there is a user logged in
-  const { user } = useContext(AuthContext); 
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
-    if (user) navigate("CustomerSelection");
-  },[user]);
+    if (user) navigate('CustomerSelection');
+  }, [user]);
 
   /* =======================================================================================================
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
@@ -34,11 +34,13 @@ export function Login({navigation}) {
   const [password, setPassword] = useState('');
 
   async function handleLogin() {
-    if (email === '' && password === '') return alert("please fill in all fields");
+    if (email === '' && password === '')
+      return Toast.show('Preencha todos os campos para se autenticar');
 
-    await auth().signInWithEmailAndPassword(email, password)
+    await auth()
+      .signInWithEmailAndPassword(email, password)
       .then(() => {
-        navigate("CustomerSelection");
+        navigate('CustomerSelection');
       })
       .catch(error => {
         console.error(error.code);
@@ -82,7 +84,7 @@ export function Login({navigation}) {
           placeholder="Senha"
           placeholderTextColor={'#00B2CB'}
         />
-        <Pressable onPress={() => navigate("ForgotPW")}>
+        <Pressable onPress={() => navigate('ForgotPW')}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
@@ -90,22 +92,10 @@ export function Login({navigation}) {
       {/* =======================================================================================================
       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login <Form>
       ======================================================================================================= */}
-      <BouncyCheckbox
-        size={25}
-        fillColor="#00B2CB"
-        unfillColor="transparent"
-        text="Lembrar de mim"
-        iconStyle={{borderColor: '#00B2CB'}}
-        innerIconStyle={{borderWidth: 2}}
-        textStyle={{
-          fontFamily: 'Montserrat-Medium',
-          textDecorationLine: 'none',
-        }}
-      />
       <Pressable onPress={handleLogin} style={styles.logInbtn}>
         <Text style={styles.buttonText}>Entrar</Text>
       </Pressable>
-      <Pressable onPress={() => navigate("Register")}>
+      <Pressable onPress={() => navigate('Register')}>
         <Text style={styles.signUpText}>Cadastrar</Text>
       </Pressable>
     </SafeAreaView>
