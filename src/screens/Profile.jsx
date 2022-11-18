@@ -1,5 +1,13 @@
 import Svg, {Path} from 'react-native-svg';
-import {View, Text, StyleSheet, SafeAreaView, Image, StatusBar, ScrollView,} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  StatusBar,
+  ScrollView,
+} from 'react-native';
 
 export function Profile() {
   const pictureProfile =

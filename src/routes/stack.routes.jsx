@@ -25,13 +25,14 @@ export function StackRoutes() {
         name="Login"
         component={Login}
         options={{
-          headerShown: false,
+          headerShown: true,
         }}
       />
       <Screen
         name="CustomerSelection"
         component={CustomerSelection}
         options={{
+          gestureDirection: 'horizontal',
           headerShown: false,
         }}
       />
@@ -70,6 +71,16 @@ export function StackRoutes() {
         name="AddCustomer"
         component={AddCustomer}
         options={{
+          gestureDirection: 'horizontal',
+          transitionSpec: {
+            open: config,
+            close: config,
+          },
+          title: '',
+          headerStyle: {
+            backgroundColor: '#121212',
+          },
+          headerTintColor: '#AAAAAA',
           headerShown: false,
         }}
       />
