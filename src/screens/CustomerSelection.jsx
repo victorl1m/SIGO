@@ -14,34 +14,36 @@ import {
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 import Svg, {Path} from 'react-native-svg';
-import {useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import {AuthContext} from '../contexts/AuthContext';
 import Customer from '../components/Customer';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const CustomerSelection = ({navigation}) => {
   const {navigate} = navigation;
   const {alert} = Alert;
 
-  // preventing back button
-  const backAction = () => {
-    alert('Hold on!', 'Are you sure you want to go back?', [
-      {
-        text: 'Cancel',
-        onPress: () => null,
-      },
-      {text: 'YES', onPress: () => BackHandler.exitApp()},
-    ]);
-    return true;
-  };
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        alert('Hold on!', 'Are you sure you want to go back?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+          },
+          {text: 'YES', onPress: () => BackHandler.exitApp()},
+        ]);
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => subscription.remove();
+    }, [])
+  );
 
   useEffect(() => {
     if (!user) navigate('Login');
-
-    // adding Back button events
-    BackHandler.addEventListener('hardwareBackPress', backAction);
-
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
 
   // load user information
