@@ -5,7 +5,7 @@
 *   <a href="https://github.com/Marcos-Segantine">Marcos Segantine</a>
 *   <a href="https://github.com/HyathoZ">João Victor</a>
 *   <a href="https://github.com/Luiz-NP">Luiz Gustavo</a>
-*   <a href="https://github.com/xsabatox">Victor Sábato</a>
+*   <a href="https://github.com/xsabatox">Victor Sábato Rocha</a>
 
 <h2>Project Screenshots:</h2>
 
