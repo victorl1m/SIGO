@@ -29,7 +29,7 @@ export function StackRoutes() {
             open: config,
             close: config,
           },
-          headerShown: false,
+          headerShown: true,
         }}
       />
       <Screen
@@ -104,7 +104,11 @@ export function StackRoutes() {
             open: config,
             close: config,
           },
-          headerShown: false,
+          title: '',
+          headerStyle: {
+            backgroundColor: '#121212',
+          },
+          headerTintColor: '#AAAAAA',
         }}
       />
     </Navigator>
