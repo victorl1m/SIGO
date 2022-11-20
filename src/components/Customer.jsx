@@ -2,8 +2,8 @@ import {View, Text, StyleSheet, Image, SafeAreaView} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
-export default function Customer() {
-  const customerName = 'Jane Doe';
+export default function Customer({ name }) {
+  const customerName = name;
   const customerImage = 'https://i.pravatar.cc/150?img=1';
   const totalJobs = '3';
   const totalTasks = '12';
