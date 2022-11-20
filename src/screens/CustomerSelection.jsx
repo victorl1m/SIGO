@@ -12,15 +12,27 @@ import {
 } from 'react-native';
 
 import Svg, {Path} from 'react-native-svg';
-import {useCallback, useContext, useEffect} from 'react';
-import {AuthContext} from '../contexts/AuthContext';
+import {useCallback, useContext, useEffect, useState} from 'react';
 import Customer from '../components/Customer';
 import {useFocusEffect} from '@react-navigation/native';
+
+// importing axios api to send the customer data
+import { api } from '../api/axios';
+
+// auth context
+import {AuthContext} from '../contexts/AuthContext';
 
 export const CustomerSelection = ({navigation}) => {
   const {navigate} = navigation;
   const {alert} = Alert;
 
+  // pulling user from auth context
+  const { user, newest } = useContext(AuthContext);
+
+  // setting customers data
+  const [customers, setCustomers] = useState([]);
+
+  // defining back button behavior
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
@@ -40,15 +52,23 @@ export const CustomerSelection = ({navigation}) => {
       );
 
       return () => subscription.remove();
-    }, []),
+    }, [])
   );
 
   useEffect(() => {
+    // checking if user is logged in
     if (!user) navigate('Login');
-  }, []);
+    const architectId = user.uid;
 
-  // load user information
-  const {user} = useContext(AuthContext);
+    // pulling customer information
+    api.get(`/getUserCustomers/${architectId}`)
+    .then(res => {
+      setCustomers(res.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }, [newest]);
 
   const userName = user?.displayName;
   const userImage =
@@ -143,12 +163,34 @@ export const CustomerSelection = ({navigation}) => {
           <Text style={styles.addCustomerText}>Adicionar cliente</Text>
         </Pressable>
       </View>
-      <Customer />
+      { 
+        // rendering customers
+        customers.length > 0
+        ? customers.map(customer => (
+          <Pressable style={styles.customerSpacing} key={customer.id} onPress={()=> navigate("CustomerScreen")}>
+            <Customer name={customer.customer_name} />
+          </Pressable>
+          ))
+        : <Text style={styles.noUsers}>sem clientes...</Text>
+      }
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  // arruma dps
+
+  // noUsers => linha 169
+  noUsers: {
+    color: '#FFF',
+    fontSize: 25,
+    marginLeft: 20
+  },
+  // customerSpacing => linha 172
+  customerSpacing: {
+    marginBottom: 20
+  },
+  
   container: {
     flex: 1,
     backgroundColor: '#121212',

@@ -21,7 +21,7 @@ export const AddCustomer = ({ navigation }) => {
   const { alert } = Alert;
 
   // pulling user from auth context
-  const { user } = useContext(AuthContext);
+  const { user, newest, setNewest } = useContext(AuthContext);
 
   // defining states to store the information
   const [firstName, setFirstName] = useState('');
@@ -45,10 +45,10 @@ export const AddCustomer = ({ navigation }) => {
       architectId: user?.uid,
       customerName: formatted
     })
-    .then(res => {
-      console.log(res.data);
+    .then(() => {
       alert("user created!");
       navigate("CustomerSelection");
+      setNewest(!newest);
     })
     .catch(error => {
       console.log(error);
