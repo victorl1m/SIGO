@@ -12,9 +12,12 @@ export function AuthProvider({ children }) {
             setUser(user);
         })
     },[user])
+
+    // change whenever there is a new customer
+    const [newest, setNewest] = useState(false);
     
     return (
-        <AuthContext.Provider value={{ user }}>
+        <AuthContext.Provider value={{ user, newest, setNewest }}>
             {children}
         </AuthContext.Provider>
     )
