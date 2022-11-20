@@ -1,0 +1,6 @@
+#!/bin/bash
+# @TODO: Remove once issue is fixed in react-native.
+set -e
+# Remove all params and leave only the path to the script.
+script=$(echo "$@" | awk '{print $2}')
+gnome-terminal -- "$script"
