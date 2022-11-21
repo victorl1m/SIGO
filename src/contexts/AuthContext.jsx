@@ -14,10 +14,10 @@ export function AuthProvider({ children }) {
     },[user])
 
     // change whenever there is a new customer
-    const [newest, setNewest] = useState(false);
+    const [update, setUpdate] = useState(false);
     
     return (
-        <AuthContext.Provider value={{ user, newest, setNewest }}>
+        <AuthContext.Provider value={{ user, update, setUpdate }}>
             {children}
         </AuthContext.Provider>
     )
