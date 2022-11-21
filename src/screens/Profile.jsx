@@ -7,8 +7,19 @@ import {
   StatusBar,
   ScrollView,
 } from 'react-native';
+import { useContext } from 'react';
+
+// auth context
+import { AuthContext } from '../contexts/AuthContext';
 
 export function Profile() {
+  // pulling user from auth context
+  const { user } = useContext(AuthContext);
+
+  const userName = user.displayName;
+  const userEmail = user.email;
+  console.log(user)
+  
   const pictureProfile =
     'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
 
@@ -17,8 +28,8 @@ export function Profile() {
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.profileData}>
         <Image source={{uri: pictureProfile}} style={styles.profileImage} />
-        <Text style={styles.profileName}>Victor Lima</Text>
-        <Text style={styles.profileEmail}>trackedby1@gmail.com</Text>
+        <Text style={styles.profileName}>{ userName }</Text>
+        <Text style={styles.profileEmail}>{ userEmail }</Text>
       </View>
       <View style={styles.boxBtn}>
         <Svg
