@@ -27,7 +27,7 @@ export const CustomerSelection = ({navigation}) => {
   const {alert} = Alert;
 
   // pulling user from auth context
-  const { user, newest } = useContext(AuthContext);
+  const { user, update } = useContext(AuthContext);
 
   // setting customers data
   const [customers, setCustomers] = useState([]);
@@ -68,7 +68,7 @@ export const CustomerSelection = ({navigation}) => {
     .catch(error => {
       console.log(error);
     });
-  }, [newest]);
+  }, [update]);
 
   const userName = user?.displayName;
   const userImage =
@@ -167,7 +167,14 @@ export const CustomerSelection = ({navigation}) => {
         // rendering customers
         customers.length > 0
         ? customers.map(customer => (
-          <Pressable style={styles.customerSpacing} key={customer.id} onPress={()=> navigate("CustomerScreen")}>
+          <Pressable 
+            style={styles.customerSpacing} 
+            key={customer.id} 
+            onPress={()=> navigate("CustomerScreen", { 
+              customerId: customer.id,
+              customerName: customer.customer_name
+            })}
+          >
             <Customer name={customer.customer_name} />
           </Pressable>
           ))
@@ -180,13 +187,13 @@ export const CustomerSelection = ({navigation}) => {
 const styles = StyleSheet.create({
   // arruma dps
 
-  // noUsers => linha 169
+  // noUsers => linha 178
   noUsers: {
     color: '#FFF',
     fontSize: 25,
     marginLeft: 20
   },
-  // customerSpacing => linha 172
+  // customerSpacing => linha 171
   customerSpacing: {
     marginBottom: 20
   },
