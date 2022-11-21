@@ -8,6 +8,7 @@ import {
   Pressable,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
 import { useEffect, useState, useContext } from 'react';
 
@@ -22,12 +23,15 @@ import {AuthContext} from '../contexts/AuthContext';
 import Jobs from '../components/Jobs';
 
 export const CustomerScreen = ({ route, navigation }) => {
+  const { navigate } = navigation;
+  const { alert } = Alert;
+
   // getting customer information by route
   const name = route.params.customerName;
   const customerId = route.params.customerId;
 
   // pulling update state from auth context
-  const { update } = useContext(AuthContext);
+  const { update, setUpdate } = useContext(AuthContext);
 
   const [constructions, setConstructions] = useState([]);
 
@@ -44,6 +48,27 @@ export const CustomerScreen = ({ route, navigation }) => {
 
   const customerName = name;
   const pictureProfile = 'https://i.pravatar.cc/150?img=1';
+
+  function handleRemoveCustomer() {
+    alert("Hold on!", "Do you really want to delete this user?",  [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+      },
+      {text: 'YES', onPress: () => {
+
+        api.delete(`/deleteCustomer/${customerId}`)
+        .then(() => {
+          alert("User Deleted.");
+          setUpdate(!update);
+          navigate("CustomerSelection");
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      }},
+    ]);
+  }
 
   return (
     <View style={styles.container}>
@@ -75,9 +100,9 @@ export const CustomerScreen = ({ route, navigation }) => {
               viewBox="0 0 24 24">
               <Path d="M1.439 16.873L0 24l7.128-1.437L24.001 5.691l-5.69-5.69L1.439 16.873zm4.702 3.848l-3.582.724.721-3.584 2.861 2.86zM21.172 5.689L7.555 19.307l-2.86-2.861L15.52 5.62l2.846 2.846 1.414-1.414-2.846-2.846 1.377-1.377 2.861 2.86z" />
             </Svg>
-            <Text style={styles.editText}>Editar obra</Text>
+            <Text style={styles.editText}>Editar Perfil</Text>
           </Pressable>
-          <Pressable style={styles.removeJobsBtn}>
+          <Pressable style={styles.removeJobsBtn} onPress={handleRemoveCustomer}>
             <Svg
               width={24}
               height={24}
@@ -86,7 +111,7 @@ export const CustomerScreen = ({ route, navigation }) => {
               xmlns="http://www.w3.org/2000/svg">
               <Path d="M12.002 2.005c5.518 0 9.998 4.48 9.998 9.997C22 17.52 17.52 22 12.002 22c-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497S7.312 20.5 12.002 20.5s8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm4.253 7.75h-8.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5z" />
             </Svg>
-            <Text style={styles.removeText}>Remover obra</Text>
+            <Text style={styles.removeText}>Remover Usuário</Text>
           </Pressable>
         </ScrollView>
       </View>
@@ -105,7 +130,7 @@ export const CustomerScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   // arruma dps
 
-  // noUsers => linha 178
+  // noConstructions => linha 
   noConstructions: {
     color: '#FFF',
     fontSize: 25,
