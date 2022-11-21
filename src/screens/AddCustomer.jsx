@@ -6,9 +6,55 @@ import {
   SafeAreaView,
   StatusBar,
   Pressable,
+  Alert,
 } from 'react-native';
+import { useContext, useState } from 'react';
 
-export const AddCustomer = () => {
+// importing axios api to send the customer data
+import { api } from '../api/axios';
+
+// auth context
+import { AuthContext } from '../contexts/AuthContext';
+
+export const AddCustomer = ({ navigation }) => {
+  const { navigate } = navigation;
+  const { alert } = Alert;
+
+  // pulling user from auth context
+  const { user, update, setUpdate } = useContext(AuthContext);
+
+  // defining states to store the information
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  // function that sends data to the node server through axios
+  function handleCreateCustumer() {
+    // Capitalize name
+    const unformatted = `${firstName} ${lastName}`;
+    const formatted = unformatted
+      .split(' ')
+      .map(name => {
+        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+      })
+      .join(' ');
+      
+    // send data
+    api.post("/createNewCustomer", {
+      architectId: user?.uid,
+      customerName: formatted
+    })
+    .then(() => {
+      alert("user created!");
+      navigate("CustomerSelection");
+      setUpdate(!update);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
@@ -20,11 +66,13 @@ export const AddCustomer = () => {
 
         <View style={styles.form}>
           <TextInput
+            onChangeText={setFirstName}
             style={styles.inputNameLastName}
             placeholder="Nome"
             placeholderTextColor="#BEBEBE"
           />
           <TextInput
+            onChangeText={setLastName}
             style={styles.inputNameLastName}
             placeholder="Sobrenome"
             placeholderTextColor="#BEBEBE"
@@ -35,6 +83,7 @@ export const AddCustomer = () => {
             placeholderTextColor="#BEBEBE"
           />
           <TextInput
+            onChangeText={setEmail}
             style={styles.inputEmail}
             placeholder="Email"
             placeholderTextColor="#BEBEBE"
@@ -50,7 +99,7 @@ export const AddCustomer = () => {
             placeholderTextColor="#BEBEBE"
           />
         </View>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={handleCreateCustumer}>
           <Text style={styles.textButton}>Cadastrar</Text>
         </Pressable>
       </View>
