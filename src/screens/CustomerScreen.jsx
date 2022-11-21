@@ -9,15 +9,42 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
+import { useEffect, useState, useContext } from 'react';
 
 import {Svg, Path} from 'react-native-svg';
 
-const customerName = 'Jane Doe';
-const pictureProfile = 'https://i.pravatar.cc/150?img=1';
+// importing axios api to send the customer data
+import { api } from '../api/axios';
+
+// auth context
+import {AuthContext} from '../contexts/AuthContext';
 
 import Jobs from '../components/Jobs';
 
-export const CustomerScreen = () => {
+export const CustomerScreen = ({ route, navigation }) => {
+  // getting customer information by route
+  const name = route.params.customerName;
+  const customerId = route.params.customerId;
+
+  // pulling update state from auth context
+  const { update } = useContext(AuthContext);
+
+  const [constructions, setConstructions] = useState([]);
+
+  useEffect(() => {
+    // pulling customer constructions
+    api.get(`/getConstructions/${customerId}`)
+    .then(res => {
+      setConstructions(res.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }, [update]);
+
+  const customerName = name;
+  const pictureProfile = 'https://i.pravatar.cc/150?img=1';
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
@@ -63,12 +90,28 @@ export const CustomerScreen = () => {
           </Pressable>
         </ScrollView>
       </View>
-      <Jobs />
+      { 
+        // rendering customers
+        constructions.length > 0
+        ? constructions.map(customer => (
+            <Jobs />
+          ))
+        : <Text style={styles.noConstructions}>sem construções...</Text>
+      }
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  // arruma dps
+
+  // noUsers => linha 178
+  noConstructions: {
+    color: '#FFF',
+    fontSize: 25,
+    marginLeft: 20
+  },
+
   container: {
     flexDirection: 'column',
     backgroundColor: '#121212',
