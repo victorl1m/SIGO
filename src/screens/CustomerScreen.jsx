@@ -46,7 +46,8 @@ export const CustomerScreen = ({route, navigation}) => {
   }, [update]);
 
   const customerName = name;
-  const pictureProfile = 'https://i.pravatar.cc/150?img=1';
+  const pictureProfile =
+    'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
 
   function handleRemoveCustomer() {
     alert('Hold on!', 'Do you really want to delete this user?', [
@@ -81,15 +82,18 @@ export const CustomerScreen = ({route, navigation}) => {
         <Image source={{uri: pictureProfile}} style={styles.profileImage} />
       </View>
       <View>
-        <ScrollView horizontal={true} style={styles.actionArea}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          style={styles.actionArea}>
           <Pressable
             onPress={() => {
               navigate('AddJob');
             }}
             style={styles.addJobsBtn}>
             <Svg
-              width={24}
-              height={24}
+              width={16}
+              height={16}
               fill="white"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
@@ -99,12 +103,12 @@ export const CustomerScreen = ({route, navigation}) => {
           </Pressable>
           <Pressable style={styles.editJobsBtn}>
             <Svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={24}
-              height={24}
+              width={16}
+              height={16}
               fill="black"
-              viewBox="0 0 24 24">
-              <Path d="M1.439 16.873L0 24l7.128-1.437L24.001 5.691l-5.69-5.69L1.439 16.873zm4.702 3.848l-3.582.724.721-3.584 2.861 2.86zM21.172 5.689L7.555 19.307l-2.86-2.861L15.52 5.62l2.846 2.846 1.414-1.414-2.846-2.846 1.377-1.377 2.861 2.86z" />
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <Path d="m11.25 6c.398 0 .75.352.75.75 0 .414-.336.75-.75.75-1.505 0-7.75 0-7.75 0v12h17v-8.75c0-.414.336-.75.75-.75s.75.336.75.75v9.25c0 .621-.522 1-1 1h-18c-.48 0-1-.379-1-1v-13c0-.481.38-1 1-1zm-2.011 6.526c-1.045 3.003-1.238 3.45-1.238 3.84 0 .441.385.626.627.626.272 0 1.108-.301 3.829-1.249zm.888-.889 3.22 3.22 8.408-8.4c.163-.163.245-.377.245-.592 0-.213-.082-.427-.245-.591-.58-.578-1.458-1.457-2.039-2.036-.163-.163-.377-.245-.591-.245-.213 0-.428.082-.592.245z" />
             </Svg>
             <Text style={styles.editText}>Editar Perfil</Text>
           </Pressable>
@@ -112,8 +116,8 @@ export const CustomerScreen = ({route, navigation}) => {
             style={styles.removeJobsBtn}
             onPress={handleRemoveCustomer}>
             <Svg
-              width={24}
-              height={24}
+              width={16}
+              height={16}
               viewBox="0 0 24 24"
               fill="white"
               xmlns="http://www.w3.org/2000/svg">
@@ -128,7 +132,19 @@ export const CustomerScreen = ({route, navigation}) => {
         constructions.length > 0 ? (
           constructions.map(customer => <Jobs />)
         ) : (
-          <Text style={styles.noConstructions}>sem construções...</Text>
+          <View style={styles.noConstructionsContainer}>
+            <Svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="#00b2cb">
+              <Path d="M11 24h-6v-17h6v17zm-2-4l-2 1v1l2-1v-1zm2-18h10l3 3v1h-5v6h1v3.396c-1.66.085-2.782.652-3 1.604-.131.574.145 1.553 1.12 1.699.665.1 1.325-.24 1.657-.825.335-.661 1.201-.158.932.45-.429 1.023-1.526 1.676-2.709 1.676-1.656 0-3-1.344-3-3 0-1.305.835-2.417 2-2.829v-2.171h1v-6h-14v3h-4v-7h5v-2h6v2zm-2 15l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1z" />
+            </Svg>
+            <Text style={styles.noConstructions}>
+              Nenhuma obra foi encontrada.
+            </Text>
+          </View>
         )
       }
     </View>
@@ -136,13 +152,17 @@ export const CustomerScreen = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  // arruma dps
-
-  // noConstructions => linha
+  noConstructionsContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    height: 300,
+  },
+  // noUsers => linha 178
   noConstructions: {
-    color: '#FFF',
-    fontSize: 25,
-    marginLeft: 20,
+    fontFamily: 'Montserrat-Bold',
+    color: '#00b2cb',
+    fontSize: 12,
   },
 
   container: {
@@ -173,16 +193,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   addJobsBtn: {
-    borderColor: 'transparent',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
     width: 140,
     margin: 2,
     backgroundColor: '#00B2CB',
-    borderWidth: 2,
-    borderRadius: 15,
+    borderRadius: 10,
     height: 35,
   },
   editJobsBtn: {
@@ -190,25 +207,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
     width: 120,
     margin: 2,
     backgroundColor: 'white',
-    borderWidth: 2,
-    borderRadius: 15,
+    borderRadius: 10,
     height: 35,
   },
   removeJobsBtn: {
-    borderColor: 'transparent',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
     width: 140,
     margin: 2,
     backgroundColor: '#D92121',
-    borderWidth: 2,
-    borderRadius: 15,
+    borderRadius: 10,
     height: 35,
   },
   addText: {
@@ -234,8 +246,7 @@ const styles = StyleSheet.create({
   },
   actionArea: {
     flexDirection: 'row',
-    marginVertical: 12,
-    marginLeft: 12,
+    marginTop: 12,
   },
   textButton: {
     color: 'white',

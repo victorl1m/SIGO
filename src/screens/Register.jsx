@@ -54,12 +54,14 @@ export function Register({navigation}) {
 
           switch (error.message) {
             case '[auth/weak-password] The given password is invalid. [ Password should be at least 6 characters ]':
-              setMessageError('Formato de senha invalido. Precisa ter no mínimo 6 digitos');
+              setMessageError(
+                'Formato de senha invalido. Precisa ter no mínimo 6 digitos',
+              );
               setEmailError(false);
               setPasswordError(true);
               break;
             case '[auth/invalid-email] The email address is badly formatted.':
-              setMessageError('Formato de email invalido');
+              setMessageError('Formato de email inválido');
               setPasswordError(false);
               setEmailError(true);
               break;

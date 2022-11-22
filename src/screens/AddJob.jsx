@@ -1,13 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  StatusBar,
-  Pressable,
-  ScrollView,
-  Image,
-  Alert,
-} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Pressable} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
 export const AddJob = ({navigation}) => {
