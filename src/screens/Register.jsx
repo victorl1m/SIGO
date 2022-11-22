@@ -54,8 +54,7 @@ export function Register({navigation}) {
           style={styles.registerInput}
           placeholder="Nome"
           placeholderTextColor="#AAAAAA"
-          keyboardType="name"
-          autoCapitalize="none"
+          autoCapitalize="words"
           autoCorrect={false}
         />
         <TextInput
@@ -63,8 +62,7 @@ export function Register({navigation}) {
           style={styles.registerInput}
           placeholder="Sobrenome"
           placeholderTextColor="#AAAAAA"
-          keyboardType="last-name"
-          autoCapitalize="none"
+          autoCapitalize="words"
           autoCorrect={false}
         />
         <TextInput
@@ -82,12 +80,14 @@ export function Register({navigation}) {
           placeholder="Senha"
           placeholderTextColor="#AAAAAA"
           secureTextEntry={true}
+          keyboardType="visible-password"
         />
         <TextInput
           style={styles.registerInput}
           placeholder="Confirmar senha"
           placeholderTextColor="#AAAAAA"
           secureTextEntry={true}
+          keyboardType="visible-password"
         />
         <Pressable style={styles.signUpbtn} onPress={handleRegister}>
           <Text style={styles.buttonText}>Cadastrar</Text>
