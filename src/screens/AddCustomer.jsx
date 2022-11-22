@@ -30,7 +30,7 @@ export const AddCustomer = ({ navigation }) => {
   const [phone, setPhone] = useState('');
 
   // function that sends data to the node server through axios
-  function handleCreateCustumer() {
+  function handleCreateCustomer() {
     // Capitalize name
     const unformatted = `${firstName} ${lastName}`;
     const formatted = unformatted
@@ -103,7 +103,7 @@ export const AddCustomer = ({ navigation }) => {
             keyboardType="numeric"
           />
         </View>
-        <Pressable style={styles.button} onPress={handleCreateCustumer}>
+        <Pressable style={styles.button} onPress={handleCreateCustomer}>
           <Text style={styles.textButton}>Cadastrar</Text>
         </Pressable>
       </View>
