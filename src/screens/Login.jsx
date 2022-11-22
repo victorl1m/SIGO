@@ -6,9 +6,7 @@ import {
   View,
   SafeAreaView,
   StatusBar,
-  Alert,
 } from 'react-native';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Svg, {Rect, Path} from 'react-native-svg';
 import {useEffect, useState, useContext} from 'react';
 import {AuthContext} from '../contexts/AuthContext';

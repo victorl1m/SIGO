@@ -8,7 +8,7 @@ import {
   ScrollView,
   Pressable
 } from 'react-native';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 // auth context
 import { AuthContext } from '../contexts/AuthContext';
