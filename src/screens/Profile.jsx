@@ -6,22 +6,35 @@ import {
   Image,
   StatusBar,
   ScrollView,
+  Pressable
 } from 'react-native';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 // auth context
 import { AuthContext } from '../contexts/AuthContext';
 
-export function Profile() {
+// firebase auth
+import auth from "@react-native-firebase/auth";
+
+export function Profile({ navigation }) {
+  const { navigate } = navigation;
+
   // pulling user from auth context
   const { user } = useContext(AuthContext);
 
-  const userName = user.displayName;
-  const userEmail = user.email;
-  console.log(user)
+  const userName = user?.displayName;
+  const userEmail = user?.email;
   
   const pictureProfile =
     'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
+
+  function handleLogout() {
+    auth().signOut()
+      .then(() => {
+        console.log("User signed out!");
+        navigate("Login");
+      })
+  }
 
   return (
     <ScrollView style={styles.profileContainer}>
@@ -91,6 +104,14 @@ export function Profile() {
         </Svg>
         <Text style={styles.optionText}>Alterar tema</Text>
       </View>
+      <Pressable onPress={handleLogout}>
+      <View style={styles.boxBtn}>
+        
+        {/* svg here */}
+
+        <Text style={styles.optionText}>Log out</Text>
+      </View>
+      </Pressable>
       <Text style={styles.privacyAndTerms}>Privacidade & Termos</Text>
     </ScrollView>
   );
