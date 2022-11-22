@@ -8,63 +8,67 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import { useEffect, useState, useContext } from 'react';
+import {useEffect, useState, useContext} from 'react';
 
 import {Svg, Path} from 'react-native-svg';
 
 // importing axios api to send the customer data
-import { api } from '../api/axios';
+import {api} from '../api/axios';
 
 // auth context
 import {AuthContext} from '../contexts/AuthContext';
 
 import Jobs from '../components/Jobs';
 
-export const CustomerScreen = ({ route, navigation }) => {
-  const { navigate } = navigation;
-  const { alert } = Alert;
+export const CustomerScreen = ({route, navigation}) => {
+  const {navigate} = navigation;
+  const {alert} = Alert;
 
   // getting customer information by route
   const name = route.params.customerName;
   const customerId = route.params.customerId;
 
   // pulling update state from auth context
-  const { update, setUpdate } = useContext(AuthContext);
+  const {update, setUpdate} = useContext(AuthContext);
 
   const [constructions, setConstructions] = useState([]);
 
   useEffect(() => {
     // pulling customer constructions
-    api.get(`/getConstructions/${customerId}`)
-    .then(res => {
-      setConstructions(res.data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    api
+      .get(`/getConstructions/${customerId}`)
+      .then(res => {
+        setConstructions(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }, [update]);
 
   const customerName = name;
   const pictureProfile = 'https://i.pravatar.cc/150?img=1';
 
   function handleRemoveCustomer() {
-    alert("Hold on!", "Do you really want to delete this user?",  [
+    alert('Hold on!', 'Do you really want to delete this user?', [
       {
         text: 'Cancel',
         onPress: () => null,
       },
-      {text: 'YES', onPress: () => {
-
-        api.delete(`/deleteCustomer/${customerId}`)
-        .then(() => {
-          alert("User Deleted.");
-          setUpdate(!update);
-          navigate("CustomerSelection");
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-      }},
+      {
+        text: 'YES',
+        onPress: () => {
+          api
+            .delete(`/deleteCustomer/${customerId}`)
+            .then(() => {
+              alert('User Deleted.');
+              setUpdate(!update);
+              navigate('CustomerSelection');
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        },
+      },
     ]);
   }
 
@@ -78,7 +82,11 @@ export const CustomerScreen = ({ route, navigation }) => {
       </View>
       <View>
         <ScrollView horizontal={true} style={styles.actionArea}>
-          <Pressable style={styles.addJobsBtn}>
+          <Pressable
+            onPress={() => {
+              navigate('AddJob');
+            }}
+            style={styles.addJobsBtn}>
             <Svg
               width={24}
               height={24}
@@ -100,7 +108,9 @@ export const CustomerScreen = ({ route, navigation }) => {
             </Svg>
             <Text style={styles.editText}>Editar Perfil</Text>
           </Pressable>
-          <Pressable style={styles.removeJobsBtn} onPress={handleRemoveCustomer}>
+          <Pressable
+            style={styles.removeJobsBtn}
+            onPress={handleRemoveCustomer}>
             <Svg
               width={24}
               height={24}
@@ -113,13 +123,13 @@ export const CustomerScreen = ({ route, navigation }) => {
           </Pressable>
         </ScrollView>
       </View>
-      { 
+      {
         // rendering customers
-        constructions.length > 0
-        ? constructions.map(customer => (
-            <Jobs />
-          ))
-        : <Text style={styles.noConstructions}>sem construções...</Text>
+        constructions.length > 0 ? (
+          constructions.map(customer => <Jobs />)
+        ) : (
+          <Text style={styles.noConstructions}>sem construções...</Text>
+        )
       }
     </View>
   );
@@ -128,11 +138,11 @@ export const CustomerScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   // arruma dps
 
-  // noConstructions => linha 
+  // noConstructions => linha
   noConstructions: {
     color: '#FFF',
     fontSize: 25,
-    marginLeft: 20
+    marginLeft: 20,
   },
 
   container: {

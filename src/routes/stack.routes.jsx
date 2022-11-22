@@ -12,6 +12,7 @@ import {ForgotPW} from '../screens/ForgotPW';
 import {CustomerSelection} from '../screens/CustomerSelection';
 import {AddCustomer} from '../screens/AddCustomer';
 import {CustomerScreen} from '../screens/CustomerScreen';
+import {AddJob} from '../screens/AddJob';
 
 // routes
 export function StackRoutes() {
@@ -78,6 +79,13 @@ export function StackRoutes() {
       <Screen
         name="ForgotPW"
         component={ForgotPW}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Screen
+        name="AddJob"
+        component={AddJob}
         options={{
           headerShown: false,
         }}
