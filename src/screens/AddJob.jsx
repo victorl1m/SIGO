@@ -8,24 +8,18 @@ import {
 import {TextInput} from 'react-native-gesture-handler';
 import React, {useState} from 'react';
 
-import {View, Text, StyleSheet, StatusBar, Pressable} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
-
-
 export const AddJob = ({navigation}) => {
   
   const {navigate} = navigation;
-  const [CEP, setCEP] = useState();
+  const [addressInfo, setAddressInfo] = useState();
   
   function getAddress(CEP) {
-    fetch(`https://viacep.com.br/ws/${CEP}/json/`).then(response => response.json())
-    .then(response => {
-      console.log(response.uf)
-      console.log(response.localidade)
-      console.log(response.logradouro)
-      const uf = response.uf
-      const city = response.localidade
-      const street = response.logradouro
+    fetch(`https://viacep.com.br/ws/${CEP}/json/`).then(res => res.json())
+    .then(res => {
+      setAddressInfo(res);
+      console.log(res)
+      console.log(res.localidade)
+      console.log(res.logradouro)
     })
   }
 
@@ -41,26 +35,29 @@ export const AddJob = ({navigation}) => {
         placeholder="Nome da Obra"
       />
       <TextInput
-        onChangeText={myCEP => setCEP(myCEP)}
+        onChangeText={setAddressInfo}
         style={styles.input}
         placeholderTextColor={'white'}
         placeholder="CEP"
-        onBlur={() => getAddress(CEP)}
+        onBlur={() => getAddress(addressInfo)}
       />
       <TextInput
         style={styles.input}
         placeholderTextColor={'white'}
         placeholder="Estado"
-        input value={uf}
-      /><TextInput
+        value={addressInfo?.uf}
+      />
+      <TextInput
         style={styles.input}
         placeholderTextColor={'white'}
         placeholder="Cidade"
+        value={addressInfo?.localidade}
       />
       <TextInput
         style={styles.input}
         placeholderTextColor={'white'}
         placeholder="Logradouro"
+        value={addressInfo?.logradouro}
       />
       <TextInput
         style={styles.input}
