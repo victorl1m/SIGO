@@ -6,9 +6,7 @@ import {
   View,
   SafeAreaView,
   StatusBar,
-  Alert,
 } from 'react-native';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Svg, {Rect, Path} from 'react-native-svg';
 import {useEffect, useState, useContext} from 'react';
 import {AuthContext} from '../contexts/AuthContext';
@@ -41,6 +39,8 @@ export function Login({navigation}) {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         navigate('CustomerSelection');
+        setEmail('');
+        setPassword('');
       })
       .catch(error => {
         console.error(error.code);
@@ -71,6 +71,7 @@ export function Login({navigation}) {
         </Text> */}
         <TextInput
           onChangeText={setEmail}
+          value={email}
           style={styles.input}
           autoComplete="email"
           placeholder="Email"
@@ -78,6 +79,7 @@ export function Login({navigation}) {
         />
         <TextInput
           onChangeText={setPassword}
+          value={password}
           style={styles.input}
           autoComplete="password"
           secureTextEntry={true}
