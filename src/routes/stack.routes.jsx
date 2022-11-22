@@ -24,6 +24,20 @@ export function StackRoutes() {
         animationDuration: 150,
       }}>
       <Screen
+        name="AddCustomer"
+        component={AddCustomer}
+        options={{
+          animation: 'slide_from_bottom',
+          gestureDirection: 'horizontal',
+          title: '',
+          headerStyle: {
+            backgroundColor: '#121212',
+          },
+          headerTintColor: 'white',
+          headerShown: true,
+        }}
+      />
+      <Screen
         name="Login"
         component={Login}
         options={{
@@ -87,20 +101,6 @@ export function StackRoutes() {
         component={Home}
         options={{
           headerShown: false,
-        }}
-      />
-      <Screen
-        name="AddCustomer"
-        component={AddCustomer}
-        options={{
-          animation: 'slide_from_bottom',
-          gestureDirection: 'horizontal',
-          title: '',
-          headerStyle: {
-            backgroundColor: '#121212',
-          },
-          headerTintColor: 'white',
-          headerShown: true,
         }}
       />
     </Navigator>
