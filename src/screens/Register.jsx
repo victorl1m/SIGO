@@ -19,6 +19,12 @@ export function Register({navigation}) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [comfirmPassword, setComfirmPassword] = useState('');
+
+  const [error, setError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   async function handleRegister() {
     // Capitalize name
@@ -30,15 +36,43 @@ export function Register({navigation}) {
       })
       .join(' ');
 
-    await auth().createUserWithEmailAndPassword(email, password)
-      .then(async ({ user }) => {
-        await user.updateProfile({
-          displayName: formatted,
+    if (password !== comfirmPassword) {
+      setError(true);
+      setMessageError('Senhas não correspondem');
+      setEmailError(false);
+      setPasswordError(true);
+    } else {
+      await auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(async ({user}) => {
+          await user.updateProfile({
+            displayName: formatted,
+          });
         })
-      })
-      .catch(error => {
-        console.error(error);
-      });
+        .catch(error => {
+          setError(true);
+
+          switch (error.message) {
+            case '[auth/weak-password] The given password is invalid. [ Password should be at least 6 characters ]':
+              setMessageError('Formato de senha invalido. Precisa ter no mínimo 6 digitos');
+              setEmailError(false);
+              setPasswordError(true);
+              break;
+            case '[auth/invalid-email] The email address is badly formatted.':
+              setMessageError('Formato de email invalido');
+              setPasswordError(false);
+              setEmailError(true);
+              break;
+            case '[auth/email-already-in-use] The email address is already in use by another account.':
+              setMessageError('Este email já esta em uso');
+              setPasswordError(false);
+              setEmailError(true);
+              break;
+            default:
+              break;
+          }
+        });
+    }
   }
 
   return (
@@ -67,7 +101,7 @@ export function Register({navigation}) {
         />
         <TextInput
           onChangeText={setEmail}
-          style={styles.registerInput}
+          style={emailError ? styles.registerInputError : styles.registerInput}
           placeholder="Email"
           placeholderTextColor="#AAAAAA"
           keyboardType="email-address"
@@ -76,14 +110,19 @@ export function Register({navigation}) {
         />
         <TextInput
           onChangeText={setPassword}
-          style={styles.registerInput}
+          style={
+            passwordError ? styles.registerInputError : styles.registerInput
+          }
           placeholder="Senha"
           placeholderTextColor="#AAAAAA"
           secureTextEntry={true}
           keyboardType="visible-password"
         />
         <TextInput
-          style={styles.registerInput}
+          onChangeText={setComfirmPassword}
+          style={
+            passwordError ? styles.registerInputError : styles.registerInput
+          }
           placeholder="Confirmar senha"
           placeholderTextColor="#AAAAAA"
           secureTextEntry={true}
@@ -93,15 +132,21 @@ export function Register({navigation}) {
           <Text style={styles.buttonText}>Cadastrar</Text>
         </Pressable>
       </View>
+
+      <View style={error ? styles.foudError : styles.noError}>
+        <Text style={styles.errorMessage}>{messageError}</Text>
+        <Pressable
+          style={styles.comfirmErrorButton}
+          onPress={() => setError(false)}>
+          <Text style={styles.comfirmErrorButtonOk}>Ok</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   registerContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#121212',
   },
   registerArea: {
@@ -160,5 +205,53 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Montserrat-Medium',
     color: '#00B2CB',
+  },
+
+  registerInputError: {
+    backgroundColor: '#1E1E1E',
+    width: '90%',
+    height: 70,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+    fontSize: 16,
+    fontFamily: 'Montserrat-Medium',
+    color: '#00B2CB',
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  noError: {
+    display: 'none',
+  },
+  foudError: {
+    position: 'absolute',
+    top: '30%',
+    right: '10%',
+    backgroundColor: '#121212',
+    width: 300,
+    minHeight: 200,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorMessage: {
+    fontSize: 17,
+    fontFamily: 'Montserrat-Bold',
+    color: 'white',
+    textAlign: 'center',
+  },
+  comfirmErrorButton: {
+    backgroundColor: '#00B2CB',
+    width: '50%',
+    marginTop: 40,
+    flex: 0.3,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  comfirmErrorButtonOk: {
+    color: 'white',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 17,
   },
 });
