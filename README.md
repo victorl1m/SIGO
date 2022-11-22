@@ -7,7 +7,7 @@
 *   <a href="https://github.com/Luiz-NP">Luiz Gustavo</a>
 *   <a href="https://github.com/xsabatox">Victor Sábato Rocha</a>
 
-<h2>Project Screenshots:</h2>
+<h2>Project Screenshots:</h2>   OUTDATED!!!!!
 
 <img src="https://i.imgur.com/JBLOtze.png" alt="project-screenshot" width="200" height="400/">
 
