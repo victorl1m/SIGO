@@ -1,4 +1,3 @@
-
 import {
   View,
   Text,
@@ -22,10 +21,10 @@ function getAddress(CEP) {
     const street = response.logradouro
   })
 }
-=======
+
 import {View, Text, StyleSheet, StatusBar, Pressable} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
->>>>>>> 09c8748fffc68c1930baca49fe1760a815307bd3
+
 
 export const AddJob = ({navigation}) => {
   
