@@ -17,7 +17,7 @@ import Customer from '../components/Customer';
 import {useFocusEffect} from '@react-navigation/native';
 
 // importing axios api to send the customer data
-import { api } from '../api/axios';
+import {api} from '../api/axios';
 
 // auth context
 import {AuthContext} from '../contexts/AuthContext';
@@ -27,7 +27,7 @@ export const CustomerSelection = ({navigation}) => {
   const {alert} = Alert;
 
   // pulling user from auth context
-  const { user, update } = useContext(AuthContext);
+  const {user, update} = useContext(AuthContext);
 
   // setting customers data
   const [customers, setCustomers] = useState([]);
@@ -52,7 +52,7 @@ export const CustomerSelection = ({navigation}) => {
       );
 
       return () => subscription.remove();
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
@@ -61,13 +61,14 @@ export const CustomerSelection = ({navigation}) => {
     const architectId = user.uid;
 
     // pulling customer information
-    api.get(`/getUserCustomers/${architectId}`)
-    .then(res => {
-      setCustomers(res.data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    api
+      .get(`/getUserCustomers/${architectId}`)
+      .then(res => {
+        setCustomers(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }, [update]);
 
   const userName = user?.displayName;
@@ -131,7 +132,8 @@ export const CustomerSelection = ({navigation}) => {
         <TextInput
           placeholder="Pesquisar"
           placeholderTextColor={'white'}
-          style={styles.searchbox}></TextInput>
+          style={styles.searchbox}
+        />
         <Pressable style={styles.searchIconArea}>
           <Svg
             xmlns="http://www.w3.org/2000/svg"
@@ -163,22 +165,25 @@ export const CustomerSelection = ({navigation}) => {
           <Text style={styles.addCustomerText}>Adicionar cliente</Text>
         </Pressable>
       </View>
-      { 
+      {
         // rendering customers
-        customers.length > 0
-        ? customers.map(customer => (
-          <Pressable 
-            style={styles.customerSpacing} 
-            key={customer.id} 
-            onPress={()=> navigate("CustomerScreen", { 
-              customerId: customer.id,
-              customerName: customer.customer_name
-            })}
-          >
-            <Customer name={customer.customer_name} />
-          </Pressable>
+        customers.length > 0 ? (
+          customers.map(customer => (
+            <Pressable
+              style={styles.customerSpacing}
+              key={customer.id}
+              onPress={() =>
+                navigate('CustomerScreen', {
+                  customerId: customer.id,
+                  customerName: customer.customer_name,
+                })
+              }>
+              <Customer name={customer.customer_name} />
+            </Pressable>
           ))
-        : <Text style={styles.noUsers}>sem clientes...</Text>
+        ) : (
+          <Text style={styles.noUsers}>sem clientes...</Text>
+        )
       }
     </ScrollView>
   );
@@ -191,13 +196,13 @@ const styles = StyleSheet.create({
   noUsers: {
     color: '#FFF',
     fontSize: 25,
-    marginLeft: 20
+    marginLeft: 20,
   },
   // customerSpacing => linha 171
   customerSpacing: {
-    marginBottom: 20
+    marginBottom: 20,
   },
-  
+
   container: {
     flex: 1,
     backgroundColor: '#121212',
