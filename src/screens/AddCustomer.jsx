@@ -97,6 +97,7 @@ export const AddCustomer = ({ navigation }) => {
             keyboardType="numeric"
           />
           <TextInput
+            onChangeText={setPhone}
             style={styles.inputCelular}
             placeholder="Celular"
             placeholderTextColor="#BEBEBE"
