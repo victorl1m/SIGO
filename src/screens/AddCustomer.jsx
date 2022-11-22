@@ -70,12 +70,14 @@ export const AddCustomer = ({ navigation }) => {
             style={styles.inputNameLastName}
             placeholder="Nome"
             placeholderTextColor="#BEBEBE"
+            autoCapitalize="words"
           />
           <TextInput
             onChangeText={setLastName}
             style={styles.inputNameLastName}
             placeholder="Sobrenome"
             placeholderTextColor="#BEBEBE"
+            autoCapitalize="words"
           />
           <TextInput
             style={styles.inputCpf}
