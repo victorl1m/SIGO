@@ -3,24 +3,10 @@ import {
   Text,
   StyleSheet,
   StatusBar,
-  Pressable,
-  ScrollView,
-  Image,
-  Alert,
+  Pressable
 } from 'react-native';
-import {State, TextInput} from 'react-native-gesture-handler';
+import {TextInput} from 'react-native-gesture-handler';
 import React, {useState} from 'react';
-function getAddress(CEP) {
-  fetch(`https://viacep.com.br/ws/${CEP}/json/`).then(response => response.json())
-  .then(response => {
-    console.log(response.uf)
-    console.log(response.localidade)
-    console.log(response.logradouro)
-    var uf = response.uf
-    const city = response.localidade
-    const street = response.logradouro
-  })
-}
 
 import {View, Text, StyleSheet, StatusBar, Pressable} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
@@ -30,6 +16,18 @@ export const AddJob = ({navigation}) => {
   
   const {navigate} = navigation;
   const [CEP, setCEP] = useState();
+  
+  function getAddress(CEP) {
+    fetch(`https://viacep.com.br/ws/${CEP}/json/`).then(response => response.json())
+    .then(response => {
+      console.log(response.uf)
+      console.log(response.localidade)
+      console.log(response.logradouro)
+      const uf = response.uf
+      const city = response.localidade
+      const street = response.logradouro
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -53,6 +51,7 @@ export const AddJob = ({navigation}) => {
         style={styles.input}
         placeholderTextColor={'white'}
         placeholder="Estado"
+        input value={uf}
       /><TextInput
         style={styles.input}
         placeholderTextColor={'white'}
@@ -73,18 +72,6 @@ export const AddJob = ({navigation}) => {
         placeholderTextColor={'white'}
         placeholder="Complemento"
       />
-      {/* Entrada de telefone não é necessária no jobSite */}
-      {/* <TextInput
-        style={styles.input}
-        placeholderTextColor={'white'}
-        placeholder="Telefone"
-      /> */}
-      {/* Entrada de email não é necessária no jobSite */}
-      {/* <TextInput
-        style={styles.input}
-        placeholderTextColor={'white'}
-        placeholder="Email"
-      /> */}
       <TextInput
         style={styles.input}
         placeholderTextColor={'white'}
