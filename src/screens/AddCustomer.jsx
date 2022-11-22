@@ -81,22 +81,26 @@ export const AddCustomer = ({ navigation }) => {
             style={styles.inputCpf}
             placeholder="CPF"
             placeholderTextColor="#BEBEBE"
+            keyboardType="numeric"
           />
           <TextInput
             onChangeText={setEmail}
             style={styles.inputEmail}
             placeholder="Email"
             placeholderTextColor="#BEBEBE"
+            keyboardType="email-address"
           />
           <TextInput
             style={styles.inputDDD}
             placeholder="DDD"
             placeholderTextColor="#BEBEBE"
+            keyboardType="numeric"
           />
           <TextInput
             style={styles.inputCelular}
             placeholder="Celular"
             placeholderTextColor="#BEBEBE"
+            keyboardType="numeric"
           />
         </View>
         <Pressable style={styles.button} onPress={handleCreateCustumer}>
