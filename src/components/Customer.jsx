@@ -4,7 +4,8 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 export default function Customer({name}) {
   const customerName = name;
-  const customerImage = 'https://i.pravatar.cc/150?img=1';
+  const customerImage =
+    'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
   const totalJobs = '-';
   const totalTasks = '-';
   const jobValue = '-';

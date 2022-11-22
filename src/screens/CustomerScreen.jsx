@@ -80,6 +80,7 @@ export const CustomerScreen = ({route, navigation}) => {
         <Text style={styles.customerText}>{customerName}</Text>
         <Text style={styles.subText}>Menu de Obras</Text>
         <Image source={{uri: pictureProfile}} style={styles.profileImage} />
+        
       </View>
       <View>
         <ScrollView

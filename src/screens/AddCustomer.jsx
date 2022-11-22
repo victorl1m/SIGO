@@ -8,20 +8,20 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import { useContext, useState } from 'react';
+import {useContext, useState} from 'react';
 
 // importing axios api to send the customer data
-import { api } from '../api/axios';
+import {api} from '../api/axios';
 
 // auth context
-import { AuthContext } from '../contexts/AuthContext';
+import {AuthContext} from '../contexts/AuthContext';
 
-export const AddCustomer = ({ navigation }) => {
-  const { navigate } = navigation;
-  const { alert } = Alert;
+export const AddCustomer = ({navigation}) => {
+  const {navigate} = navigation;
+  const {alert} = Alert;
 
   // pulling user from auth context
-  const { user, update, setUpdate } = useContext(AuthContext);
+  const {user, update, setUpdate} = useContext(AuthContext);
 
   // defining states to store the information
   const [firstName, setFirstName] = useState('');
@@ -39,20 +39,21 @@ export const AddCustomer = ({ navigation }) => {
         return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
       })
       .join(' ');
-      
+
     // send data
-    api.post("/createNewCustomer", {
-      architectId: user?.uid,
-      customerName: formatted
-    })
-    .then(() => {
-      alert("user created!");
-      navigate("CustomerSelection");
-      setUpdate(!update);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    api
+      .post('/createNewCustomer', {
+        architectId: user?.uid,
+        customerName: formatted,
+      })
+
+      .then(() => {
+        navigate('CustomerSelection');
+        setUpdate(!update);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   return (
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-  
+
   inputCpf: {
     backgroundColor: '#1E1E1E',
     color: '#00B2CB',
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-  
+
   inputEmail: {
     backgroundColor: '#1E1E1E',
     color: '#00B2CB',
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-  
+
   inputDDD: {
     backgroundColor: '#1E1E1E',
     color: '#00B2CB',
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-  
+
   inputCelular: {
     backgroundColor: '#1E1E1E',
     color: '#00B2CB',
