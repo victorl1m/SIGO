@@ -93,12 +93,12 @@ export const CustomerScreen = ({route, navigation}) => {
               }}
               style={styles.addJobsBtn}>
               <Svg
-                width={16}
-                height={16}
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
                 fill="white"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <Path d="M12.002 2C17.52 2 22 6.48 22 11.998c0 5.517-4.48 9.997-9.998 9.997-5.517 0-9.997-4.48-9.997-9.997C2.005 6.48 6.485 2 12.002 2zm0 1.5c-4.69 0-8.497 3.808-8.497 8.498s3.807 8.497 8.497 8.497 8.498-3.807 8.498-8.497S16.692 3.5 12.002 3.5zm-.747 7.75h-3.5a.75.75 0 000 1.5h3.5v3.5a.75.75 0 001.5 0v-3.5h3.5a.75.75 0 000-1.5h-3.5v-3.5a.75.75 0 00-1.5 0z" />
+                viewBox="0 0 24 24">
+                <Path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z" />
               </Svg>
               <Text style={styles.addText}>Adicionar obra</Text>
             </Pressable>
@@ -119,10 +119,10 @@ export const CustomerScreen = ({route, navigation}) => {
               <Svg
                 width={16}
                 height={16}
-                viewBox="0 0 24 24"
                 fill="white"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
-                <Path d="M12.002 2.005c5.518 0 9.998 4.48 9.998 9.997C22 17.52 17.52 22 12.002 22c-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497S7.312 20.5 12.002 20.5s8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm4.253 7.75h-8.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5z" />
+                <Path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm4.253 9.25h-8.5c-.414 0-.75.336-.75.75s.336.75.75.75h8.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75z" />
               </Svg>
               <Text style={styles.removeText}>Remover cliente</Text>
             </Pressable>
@@ -240,21 +240,21 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Montserrat-Bold',
     fontSize: 14,
-    marginLeft: 2,
+    marginLeft: 4,
     marginRight: 2,
   },
   editText: {
     color: 'black',
     fontFamily: 'Montserrat-Bold',
     fontSize: 14,
-    marginLeft: 2,
+    marginLeft: 4,
     marginRight: 2,
   },
   removeText: {
     color: 'white',
     fontFamily: 'Montserrat-Bold',
     fontSize: 14,
-    marginLeft: 2,
+    marginLeft: 4,
     marginRight: 2,
   },
   ConfigText: {
