@@ -83,13 +83,6 @@ export function StackRoutes() {
         }}
       />
       <Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Screen
         name="AddCustomer"
         component={AddCustomer}
         options={{
@@ -101,6 +94,13 @@ export function StackRoutes() {
           },
           headerTintColor: 'white',
           headerShown: true,
+        }}
+      />
+      <Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
         }}
       />
     </Navigator>

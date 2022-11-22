@@ -156,9 +156,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-
+  
   inputCpf: {
     backgroundColor: '#1E1E1E',
+    color: '#00B2CB',
     fontFamily: 'Montserrat-Regular',
     width: '100%',
     marginTop: 6,
@@ -167,9 +168,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-
+  
   inputEmail: {
     backgroundColor: '#1E1E1E',
+    color: '#00B2CB',
     fontFamily: 'Montserrat-Regular',
     width: '100%',
     marginTop: 6,
@@ -178,9 +180,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-
+  
   inputDDD: {
     backgroundColor: '#1E1E1E',
+    color: '#00B2CB',
     fontFamily: 'Montserrat-Regular',
     width: '29%',
     marginTop: 6,
@@ -189,9 +192,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-
+  
   inputCelular: {
     backgroundColor: '#1E1E1E',
+    color: '#00B2CB',
     fontFamily: 'Montserrat-Regular',
     width: '69%',
     marginTop: 6,

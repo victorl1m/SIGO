@@ -1,9 +1,7 @@
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
-  SafeAreaView,
   StatusBar,
   Pressable,
   ScrollView,
