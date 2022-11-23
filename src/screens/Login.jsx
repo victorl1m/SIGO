@@ -4,18 +4,15 @@ import {
   Text,
   TextInput,
   View,
-  SafeAreaView,
   StatusBar,
+  Modal,
 } from 'react-native';
 import Svg, {Rect, Path} from 'react-native-svg';
 import {useEffect, useState, useContext, useRef} from 'react';
 import {AuthContext} from '../contexts/AuthContext';
 
 import Toast from 'react-native-simple-toast';
-import {Modalize} from 'react-native-modalize';
-
 import auth from '@react-native-firebase/auth';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export const Login = ({navigation}) => {
   const {navigate} = navigation;
@@ -32,6 +29,22 @@ export const Login = ({navigation}) => {
     ======================================================================================================= */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function handleForgot() {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        Toast.show(
+          'Verifique sua caixa de entrada/spam para redefinir sua senha',
+          Toast.LONG,
+        );
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
 
   function handleLogin() {
     if (email === '' && password === '')
@@ -58,12 +71,6 @@ export const Login = ({navigation}) => {
         console.log(error.message);
       });
   }
-
-  const modalizeRef = useRef(null);
-
-  const onOpen = () => {
-    modalizeRef.current?.open();
-  };
 
   return (
     <View style={styles.loginContainer}>
@@ -104,7 +111,7 @@ export const Login = ({navigation}) => {
           placeholder="Senha"
           placeholderTextColor={'#00B2CB'}
         />
-        <Pressable onPress={onOpen}>
+        <Pressable onPress={() => setModalVisible(!modalVisible)}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
@@ -118,13 +125,40 @@ export const Login = ({navigation}) => {
       <Pressable onPress={() => navigate('Register')}>
         <Text style={styles.signUpText}>Cadastrar</Text>
       </Pressable>
-      <Modalize
-        avoidKeyboardLikeIOS
-        ref={modalizeRef}
-        snapPoint={350}
-        modalHeight={800}>
-        <ModalForgotPassword />
-      </Modalize>
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        transparent={true}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={modal.forgotContainer}>
+          <StatusBar barStyle="light-content" backgroundColor="#121212" />
+          <View style={modal.forgotArea}>
+            <Text style={modal.forgotTitle}>Esqueci minha senha</Text>
+            <Text style={modal.forgotSubtitle}>
+              Preencha o campo abaixo com seu e-mail {'\n'} para recuperar a sua
+              senha
+            </Text>
+            <TextInput
+              onChangeText={setEmail}
+              style={modal.forgotInput}
+              placeholder="Email"
+              placeholderTextColor="#AAAAAA"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}></TextInput>
+            <Pressable
+              onPress={() => {
+                handleForgot();
+                setModalVisible(!modalVisible);
+              }}
+              style={modal.forgotBtn}>
+              <Text style={modal.buttonText}>Recuperar acesso</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -202,56 +236,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export function ModalForgotPassword() {
-  const [email, setEmail] = useState('');
-  const modalizeRef = useRef(null);
-
-  function handleForgot() {
-    auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        Toast.show('Verifique seu email para redefinir sua senha', Toast.LONG);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
-  }
-  return (
-    <View style={modal.forgotContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#121212" />
-      <View style={modal.forgotArea}>
-        <Text style={modal.forgotTitle}>Esqueci minha senha</Text>
-        <Text style={modal.forgotSubtitle}>
-          Preencha o campo abaixo com seu e-mail {'\n'} para recuperar a sua
-          senha
-        </Text>
-        <TextInput
-          onChangeText={setEmail}
-          style={modal.forgotInput}
-          placeholder="Email"
-          placeholderTextColor="#AAAAAA"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}></TextInput>
-        <Pressable
-          onPress={() => {
-            modalizeRef.current?.close();
-          }}
-          style={modal.forgotBtn}>
-          <Text style={modal.buttonText}>Recuperar acesso</Text>
-        </Pressable>
-      </View>
-    </View>
-  );
-}
-
 const modal = StyleSheet.create({
   forgotContainer: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#121212',
     paddingVertical: 24,
+    width: '100%',
+    marginTop: 'auto',
+    height: 400,
+    borderRadius: 25,
   },
   forgotArea: {
     alignItems: 'center',

@@ -6,7 +6,6 @@ import {
   Pressable,
   ScrollView,
   Image,
-  Alert,
   Modal,
 } from 'react-native';
 
@@ -102,7 +101,9 @@ export const CustomerScreen = ({route, navigation}) => {
               </Svg>
               <Text style={styles.editText}>Editar Perfil</Text>
             </Pressable>
-            <Pressable style={styles.removeJobsBtn}>
+            <Pressable
+              onPress={() => setModalVisible(!modalVisible)}
+              style={styles.removeJobsBtn}>
               <Svg
                 width={16}
                 height={16}
@@ -111,18 +112,13 @@ export const CustomerScreen = ({route, navigation}) => {
                 xmlns="http://www.w3.org/2000/svg">
                 <Path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm4.253 9.25h-8.5c-.414 0-.75.336-.75.75s.336.75.75.75h8.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75z" />
               </Svg>
-              <Text
-                onPress={() => setModalVisible(!modalVisible)}
-                style={styles.removeText}>
-                Remover cliente
-              </Text>
+              <Text style={styles.removeText}>Remover cliente</Text>
             </Pressable>
             <Modal
               animationType="slide"
               visible={modalVisible}
               transparent={true}
               onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
                 setModalVisible(!modalVisible);
               }}>
               <View style={modal.modalContainer}>
