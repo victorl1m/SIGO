@@ -32,6 +32,9 @@ export const Login = ({navigation}) => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [error, setError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+
   function handleForgot() {
     auth()
       .sendPasswordResetEmail(email)
@@ -57,7 +60,16 @@ export const Login = ({navigation}) => {
         setPassword('');
       })
       .catch(error => {
-        console.error(error.code);
+        console.error(error.message, "<<< Message");
+
+        setError(true);
+
+        if (
+          error.message ===
+          '[auth/invalid-email] The email address is badly formatted.'
+        ) {
+          setMessageError('Email inválido.');
+        }
       });
   }
 
@@ -101,6 +113,7 @@ export const Login = ({navigation}) => {
           autoComplete="email"
           placeholder="Email"
           placeholderTextColor={'#00B2CB'}
+          keyboardType="email-address"
         />
         <TextInput
           onChangeText={setPassword}
@@ -110,6 +123,7 @@ export const Login = ({navigation}) => {
           secureTextEntry={true}
           placeholder="Senha"
           placeholderTextColor={'#00B2CB'}
+          autoCapitalize="none"
         />
         <Pressable onPress={() => setModalVisible(!modalVisible)}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
@@ -159,6 +173,14 @@ export const Login = ({navigation}) => {
           </View>
         </View>
       </Modal>
+      <View style={error ? styles.foudError : styles.noError}>
+        <Text style={styles.errorMessage}>{messageError}</Text>
+        <Pressable
+          style={styles.comfirmErrorButton}
+          onPress={() => setError(false)}>
+          <Text style={styles.comfirmErrorButtonOk}>Ok</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -233,6 +255,54 @@ const styles = StyleSheet.create({
     color: '#CD0000',
     fontSize: 14,
     fontFamily: 'Montserrat-Medium',
+  },
+
+  registerInputError: {
+    backgroundColor: '#1E1E1E',
+    width: '90%',
+    height: 70,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+    fontSize: 16,
+    fontFamily: 'Montserrat-Medium',
+    color: '#00B2CB',
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  noError: {
+    display: 'none',
+  },
+  foudError: {
+    position: 'absolute',
+    top: '30%',
+    right: '10%',
+    backgroundColor: '#121212',
+    width: 300,
+    minHeight: 200,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorMessage: {
+    fontSize: 17,
+    fontFamily: 'Montserrat-Bold',
+    color: 'white',
+    textAlign: 'center',
+  },
+  comfirmErrorButton: {
+    backgroundColor: '#00B2CB',
+    width: '50%',
+    marginTop: 40,
+    flex: 0.3,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  comfirmErrorButtonOk: {
+    color: 'white',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 17,
   },
 });
 
