@@ -8,33 +8,54 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import {useEffect, useState, useContext} from 'react';
 
-import {Svg, Path} from 'react-native-svg';
+import {useEffect, useState, useContext, useRef} from 'react';
 
-// importing axios api to send the customer data
+import {Svg, Path} from 'react-native-svg'; // svg import
+
+//    =======================================================================================================
+// ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ importing axios api to send the customer data
+//    =======================================================================================================
 import {api} from '../api/axios';
-
-// auth context
+//    =======================================================================================================
+// ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ auth context
+//    =======================================================================================================
 import {AuthContext} from '../contexts/AuthContext';
+//    =======================================================================================================
+// ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modalize functions, toast for popup messages after remove
+//    =======================================================================================================
+import {Modalize} from 'react-native-modalize';
+import {Construction} from '../components/Construction'; // modal construction
+import Toast from 'react-native-simple-toast';
 
-import { Construction } from '../components/Construction';
-
+// route and navigation are props from react navigation
 export const CustomerScreen = ({route, navigation}) => {
-  const {navigate} = navigation;
-  const {alert} = Alert;
+  //    =======================================================================================================
+  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modalize consts
+  //    =======================================================================================================
+  const modalizeRef = useRef(null);
 
-  // getting customer information by route
+  const onOpen = () => {
+    modalizeRef.current?.open();
+  };
+
+  const {navigate} = navigation;
+  //    =======================================================================================================
+  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀getting customer information by route
+  //    =======================================================================================================
   const name = route.params?.customerName;
   const customerId = route.params?.customerId;
-
-  // pulling update state from auth context
+  //    =======================================================================================================
+  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀pulling update state from auth context
+  //    =======================================================================================================
   const {update, setUpdate} = useContext(AuthContext);
 
   const [constructions, setConstructions] = useState([]);
 
   useEffect(() => {
-    // pulling customer constructions
+    //    =======================================================================================================
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀get customer constructions
+    //    =======================================================================================================
     api
       .get(`/getConstructions/${customerId}`)
       .then(res => {
@@ -44,43 +65,42 @@ export const CustomerScreen = ({route, navigation}) => {
         console.log(error);
       });
   }, [update]);
-
+  //    =======================================================================================================
+  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀const for handle name and picture customer data
+  //    =======================================================================================================
   const customerName = name;
   const pictureProfile =
     'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
 
+  //    =======================================================================================================
+  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀PLEASE DONT DELETE THIS!!!!!!!!!
+  //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀Handle the delete customer function
+  //    =======================================================================================================
   function handleRemoveCustomer() {
-    alert('Hold on!', 'Do you really want to delete this user?', [
-      {
-        text: 'Cancel',
-        onPress: () => null,
-      },
-      {
-        text: 'YES',
-        onPress: () => {
-          api
-            .delete(`/deleteCustomer/${customerId}`)
-            .then(() => {
-              alert('User Deleted.');
-              setUpdate(!update);
-              navigate('CustomerSelection');
-            })
-            .catch(error => {
-              console.log(error);
-            });
-        },
-      },
-    ]);
+    api
+      .delete(`/deleteCustomer/${customerId}`) // delete customer by id
+      .then(() => {
+        // if success
+        setUpdate(!update); // update the customer list
+        navigate('CustomerSelection'); // navigate to customer selection screen
+        Toast.show('Usuário deletado com sucesso'); // show toast message after delete customer
+      })
+      .catch(error => {
+        // error handler
+        console.log(error); // show error in console
+      });
   }
 
   return (
+    //    =======================================================================================================
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Customer top area
+    //    =======================================================================================================
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.customerContainer}>
         <Text style={styles.customerText}>{customerName}</Text>
         <Text style={styles.subText}>Menu de Obras</Text>
         <Image source={{uri: pictureProfile}} style={styles.profileImage} />
-        
       </View>
       <View>
         <ScrollView
@@ -88,9 +108,12 @@ export const CustomerScreen = ({route, navigation}) => {
           horizontal={true}
           style={styles.actionArea}>
           <View style={styles.actionContainer}>
+            {/* =======================================================================================================
+          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Add construction button (invokes the add screen  )
+             ======================================================================================================= */}
             <Pressable
               onPress={() => {
-                navigate('AddJob', { customerId: customerId });
+                navigate('AddJob', {customerId: customerId});
               }}
               style={styles.addJobsBtn}>
               <Svg
@@ -103,6 +126,9 @@ export const CustomerScreen = ({route, navigation}) => {
               </Svg>
               <Text style={styles.addText}>Adicionar obra</Text>
             </Pressable>
+            {/* =======================================================================================================
+          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Edit construction button (invokes the modalize component || coming soon)
+             ======================================================================================================= */}
             <Pressable style={styles.editJobsBtn}>
               <Svg
                 width={16}
@@ -114,9 +140,10 @@ export const CustomerScreen = ({route, navigation}) => {
               </Svg>
               <Text style={styles.editText}>Editar Perfil</Text>
             </Pressable>
-            <Pressable
-              style={styles.removeJobsBtn}
-              onPress={handleRemoveCustomer}>
+            {/* =======================================================================================================
+          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀R⠀⠀⠀⠀⠀emove jobs button invokes the modalize component
+             ======================================================================================================= */}
+            <Pressable style={styles.removeJobsBtn} onPress={onOpen}>
               <Svg
                 width={16}
                 height={16}
@@ -130,33 +157,50 @@ export const CustomerScreen = ({route, navigation}) => {
           </View>
         </ScrollView>
       </View>
-      {
-        // rendering customers
-        constructions.length > 0 ? (
-          constructions.map(construction => (
-          <Construction key={construction.id} constructionName={construction.construction_name}/>
-          ))
-        ) : (
-          <View style={styles.noConstructionsContainer}>
-            <Svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="#00b2cb">
-              <Path d="M11 24h-6v-17h6v17zm-2-4l-2 1v1l2-1v-1zm2-18h10l3 3v1h-5v6h1v3.396c-1.66.085-2.782.652-3 1.604-.131.574.145 1.553 1.12 1.699.665.1 1.325-.24 1.657-.825.335-.661 1.201-.158.932.45-.429 1.023-1.526 1.676-2.709 1.676-1.656 0-3-1.344-3-3 0-1.305.835-2.417 2-2.829v-2.171h1v-6h-14v3h-4v-7h5v-2h6v2zm-2 15l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1z" />
-            </Svg>
-            <Text style={styles.noConstructions}>
-              Nenhuma obra foi encontrada.
-            </Text>
-          </View>
-        )
-      }
+      {/* =======================================================================================================
+          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modalize (Remove Customer Prompt)
+      ======================================================================================================= */}
+      <Modalize ref={modalizeRef} snapPoint={300} modalHeight={400}>
+        <modalDeleteCustomer />
+      </Modalize>
+      {/* =======================================================================================================
+          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Rendering Customers
+      ======================================================================================================= */}
+      {constructions.length > 0 ? (
+        constructions.map(construction => (
+          <Construction
+            key={construction.id}
+            constructionName={construction.construction_name}
+          />
+        ))
+      ) : (
+        // =======================================================================================================
+        //     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Check if there is no construction
+        // =======================================================================================================
+        <View style={styles.noConstructionsContainer}>
+          <Svg
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#00b2cb">
+            <Path d="M11 24h-6v-17h6v17zm-2-4l-2 1v1l2-1v-1zm2-18h10l3 3v1h-5v6h1v3.396c-1.66.085-2.782.652-3 1.604-.131.574.145 1.553 1.12 1.699.665.1 1.325-.24 1.657-.825.335-.661 1.201-.158.932.45-.429 1.023-1.526 1.676-2.709 1.676-1.656 0-3-1.344-3-3 0-1.305.835-2.417 2-2.829v-2.171h1v-6h-14v3h-4v-7h5v-2h6v2zm-2 15l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1zm0-3l-2 1v1l2-1v-1z" />
+          </Svg>
+          <Text style={styles.noConstructions}>
+            Nenhuma obra foi encontrada.
+          </Text>
+        </View>
+      )}
     </View>
   );
 };
-
+// =======================================================================================================
+//     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Stylesheet
+// =======================================================================================================
 const styles = StyleSheet.create({
+  // =======================================================================================================
+  //     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀No construction stylesheet
+  // =======================================================================================================
   noConstructionsContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -170,7 +214,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 12,
   },
-
+  // =======================================================================================================
+  //     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Customer stylesheet
+  // =======================================================================================================
   container: {
     flexDirection: 'column',
     backgroundColor: '#121212',
@@ -198,6 +244,9 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     marginTop: 12,
   },
+  // =======================================================================================================
+  //     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Action area stylesheet
+  // =======================================================================================================
   addJobsBtn: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -229,16 +278,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 35,
   },
-  ConfigBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 140,
-    margin: 2,
-    backgroundColor: '#8e8e8e',
-    borderRadius: 10,
-    height: 35,
-  },
   addText: {
     color: 'white',
     fontFamily: 'Montserrat-Bold',
@@ -260,16 +299,9 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     marginRight: 2,
   },
-  ConfigText: {
-    color: 'white',
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 12,
-    marginLeft: 2,
-    marginRight: 2,
-  },
   actionArea: {
     flexDirection: 'row',
-    marginTop: 12,
+    marginVertical: 12,
   },
   actionContainer: {
     flexDirection: 'row',

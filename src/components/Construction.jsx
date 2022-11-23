@@ -1,9 +1,9 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
 
-export function Construction({ constructionName }) {
+export function Construction({constructionName}) {
   const constructionCity = 'São Paulo';
   const constructionState = 'SP';
-  const constructionImage = 'https://i.pravatar.cc/150?img=1';
+  const constructionImage = 'https://picsum.photos/200/300';
 
   return (
     <View style={styles.container}>
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e1e1e',
     borderRadius: 15,
     marginHorizontal: 12,
+    marginVertical: 6,
   },
   image: {
     width: 64,
