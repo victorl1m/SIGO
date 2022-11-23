@@ -8,14 +8,15 @@ import {
   StatusBar,
 } from 'react-native';
 import Svg, {Rect, Path} from 'react-native-svg';
-import {useEffect, useState, useContext} from 'react';
+import {useEffect, useState, useContext, useRef} from 'react';
 import {AuthContext} from '../contexts/AuthContext';
-import Toast from 'react-native-simple-toast';
 
-// firebase
+import Toast from 'react-native-simple-toast';
+import {Modalize} from 'react-native-modalize';
+
 import auth from '@react-native-firebase/auth';
 
-export function Login({navigation}) {
+export const Login = ({navigation}) => {
   const {navigate} = navigation;
 
   // redirect if there is a user logged in
@@ -31,11 +32,10 @@ export function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleLogin() {
+  function handleLogin() {
     if (email === '' && password === '')
       return Toast.show('Preencha todos os campos para se autenticar');
-
-    await auth()
+    auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         navigate('CustomerSelection');
@@ -47,8 +47,25 @@ export function Login({navigation}) {
       });
   }
 
+  function handleForgot() {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        Toast.show('Verifique seu email para redefinir sua senha', Toast.LONG);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
+
+  const modalizeRef = useRef(null);
+
+  const onOpen = () => {
+    modalizeRef.current?.open();
+  };
+
   return (
-    <SafeAreaView style={styles.loginContainer}>
+    <View style={styles.loginContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.inputArea}>
         {/* =======================================================================================================
@@ -86,7 +103,7 @@ export function Login({navigation}) {
           placeholder="Senha"
           placeholderTextColor={'#00B2CB'}
         />
-        <Pressable onPress={() => navigate('ForgotPW')}>
+        <Pressable onPress={onOpen}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
@@ -100,9 +117,16 @@ export function Login({navigation}) {
       <Pressable onPress={() => navigate('Register')}>
         <Text style={styles.signUpText}>Cadastrar</Text>
       </Pressable>
-    </SafeAreaView>
+      <Modalize
+        avoidKeyboardLikeIOS
+        ref={modalizeRef}
+        snapPoint={350}
+        modalHeight={800}>
+        <modalForgotPassword />
+      </Modalize>
+    </View>
   );
-}
+};
 // ==========================================================================================================
 //  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Stylesheet {styles}
 // ==========================================================================================================

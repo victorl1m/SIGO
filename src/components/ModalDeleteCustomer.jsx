@@ -1,8 +1,23 @@
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import {api} from '../api/axios';
 
-export default function modalDeleteCustomer() {
+export default function ModalDeleteCustomer() {
+  function handleRemoveCustomer() {
+    api
+      .delete(`/deleteCustomer/${customerId}`) // delete customer by id
+      .then(() => {
+        // if success
+        setUpdate(!update); // update the customer list
+        navigate('CustomerSelection'); // navigate to customer selection screen
+        Toast.show('Usuário deletado com sucesso'); // show toast message after delete customer
+      })
+      .catch(error => {
+        // error handler
+        console.log(error); // show error in console
+      });
+  }
   return (
     <View style={modal.modalContainer}>
       <Svg
