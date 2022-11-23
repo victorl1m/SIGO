@@ -101,7 +101,7 @@ export const CustomerScreen = ({route, navigation}) => {
                 viewBox="0 0 24 24">
                 <Path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z" />
               </Svg>
-              <Text style={styles.addText}>Adicionar obra</Text>
+              <Text style={styles.addText}>Adicionar</Text>
             </Pressable>
             <Pressable style={styles.editJobsBtn}>
               <Svg
@@ -112,7 +112,7 @@ export const CustomerScreen = ({route, navigation}) => {
                 xmlns="http://www.w3.org/2000/svg">
                 <Path d="m11.25 6c.398 0 .75.352.75.75 0 .414-.336.75-.75.75-1.505 0-7.75 0-7.75 0v12h17v-8.75c0-.414.336-.75.75-.75s.75.336.75.75v9.25c0 .621-.522 1-1 1h-18c-.48 0-1-.379-1-1v-13c0-.481.38-1 1-1zm-2.011 6.526c-1.045 3.003-1.238 3.45-1.238 3.84 0 .441.385.626.627.626.272 0 1.108-.301 3.829-1.249zm.888-.889 3.22 3.22 8.408-8.4c.163-.163.245-.377.245-.592 0-.213-.082-.427-.245-.591-.58-.578-1.458-1.457-2.039-2.036-.163-.163-.377-.245-.591-.245-.213 0-.428.082-.592.245z" />
               </Svg>
-              <Text style={styles.editText}>Editar obra</Text>
+              <Text style={styles.editText}>Editar</Text>
             </Pressable>
             <Pressable
               style={styles.removeJobsBtn}
@@ -125,7 +125,7 @@ export const CustomerScreen = ({route, navigation}) => {
                 xmlns="http://www.w3.org/2000/svg">
                 <Path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm4.253 9.25h-8.5c-.414 0-.75.336-.75.75s.336.75.75.75h8.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75z" />
               </Svg>
-              <Text style={styles.removeText}>Remover obra</Text>
+              <Text style={styles.removeText}>Remover</Text>
             </Pressable>
           </View>
         </ScrollView>
