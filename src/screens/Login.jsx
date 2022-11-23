@@ -4,18 +4,17 @@ import {
   Text,
   TextInput,
   View,
-  SafeAreaView,
   StatusBar,
+  Modal,
 } from 'react-native';
 import Svg, {Rect, Path} from 'react-native-svg';
-import {useEffect, useState, useContext} from 'react';
+import {useEffect, useState, useContext, useRef} from 'react';
 import {AuthContext} from '../contexts/AuthContext';
-import Toast from 'react-native-simple-toast';
 
-// firebase
+import Toast from 'react-native-simple-toast';
 import auth from '@react-native-firebase/auth';
 
-export function Login({navigation}) {
+export const Login = ({navigation}) => {
   const {navigate} = navigation;
 
   // redirect if there is a user logged in
@@ -31,11 +30,26 @@ export function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleLogin() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function handleForgot() {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        Toast.show(
+          'Verifique sua caixa de entrada/spam para redefinir sua senha',
+          Toast.LONG,
+        );
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
+
+  function handleLogin() {
     if (email === '' && password === '')
       return Toast.show('Preencha todos os campos para se autenticar');
-
-    await auth()
+    auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         navigate('CustomerSelection');
@@ -47,8 +61,19 @@ export function Login({navigation}) {
       });
   }
 
+  function handleForgot() {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        Toast.show('Verifique seu email para redefinir sua senha', Toast.LONG);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
+
   return (
-    <SafeAreaView style={styles.loginContainer}>
+    <View style={styles.loginContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.inputArea}>
         {/* =======================================================================================================
@@ -86,7 +111,7 @@ export function Login({navigation}) {
           placeholder="Senha"
           placeholderTextColor={'#00B2CB'}
         />
-        <Pressable onPress={() => navigate('ForgotPW')}>
+        <Pressable onPress={() => setModalVisible(!modalVisible)}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
         </Pressable>
       </View>
@@ -100,9 +125,43 @@ export function Login({navigation}) {
       <Pressable onPress={() => navigate('Register')}>
         <Text style={styles.signUpText}>Cadastrar</Text>
       </Pressable>
-    </SafeAreaView>
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        transparent={true}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={modal.forgotContainer}>
+          <StatusBar barStyle="light-content" backgroundColor="#121212" />
+          <View style={modal.forgotArea}>
+            <Text style={modal.forgotTitle}>Esqueci minha senha</Text>
+            <Text style={modal.forgotSubtitle}>
+              Preencha o campo abaixo com seu e-mail {'\n'} para recuperar a sua
+              senha
+            </Text>
+            <TextInput
+              onChangeText={setEmail}
+              style={modal.forgotInput}
+              placeholder="Email"
+              placeholderTextColor="#AAAAAA"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}></TextInput>
+            <Pressable
+              onPress={() => {
+                handleForgot();
+                setModalVisible(!modalVisible);
+              }}
+              style={modal.forgotBtn}>
+              <Text style={modal.buttonText}>Recuperar acesso</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
-}
+};
 // ==========================================================================================================
 //  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Stylesheet {styles}
 // ==========================================================================================================
@@ -174,5 +233,63 @@ const styles = StyleSheet.create({
     color: '#CD0000',
     fontSize: 14,
     fontFamily: 'Montserrat-Medium',
+  },
+});
+
+const modal = StyleSheet.create({
+  forgotContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1e1e1e',
+    paddingVertical: 24,
+    width: '100%',
+    marginTop: 'auto',
+    height: 350,
+    borderRadius: 25,
+  },
+  forgotArea: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1e1e1e',
+    width: '100%',
+    height: '100%',
+    marginVertical: 24,
+  },
+  forgotTitle: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 30,
+    color: '#00B2CB',
+  },
+  forgotSubtitle: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+    color: 'white',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  forgotInput: {
+    backgroundColor: '#121212',
+    width: '90%',
+    height: 70,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+    fontSize: 16,
+    fontFamily: 'Montserrat-Medium',
+    color: '#00B2CB',
+  },
+  forgotBtn: {
+    backgroundColor: '#00B2CB',
+    width: '90%',
+    height: 80,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+  },
+  buttonText: {
+    color: 'white',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 24,
   },
 });

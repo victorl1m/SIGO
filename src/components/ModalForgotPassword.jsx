@@ -4,38 +4,16 @@ import {
   Text,
   TextInput,
   View,
-  SafeAreaView,
   StatusBar,
-  Alert,
 } from 'react-native';
-import {useState} from 'react';
 
-//firebase
-import auth from '@react-native-firebase/auth';
-import Toast from 'react-native-simple-toast';
+import React from 'react';
 
-export function ForgotPW({navigation}) {
-  const {navigate} = navigation;
-  const {alert} = Alert;
-
+export default function ModalForgotPassword() {
   const [email, setEmail] = useState('');
 
-  async function handleForgot() {
-    await auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        Toast.show('Verifique seu email para redefinir sua senha', Toast.LONG);
-      })
-      .catch(error => {
-        alert(error.message);
-      })
-      .finally(() => {
-        navigate('Login');
-      });
-  }
-
   return (
-    <SafeAreaView style={styles.forgotContainer}>
+    <View style={styles.forgotContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.forgotArea}>
         <Text style={styles.forgotTitle}>Esqueci minha senha</Text>
@@ -51,20 +29,21 @@ export function ForgotPW({navigation}) {
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}></TextInput>
-        <Pressable style={styles.forgotBtn} onPress={handleForgot}>
+        <Pressable style={styles.forgotBtn}>
           <Text style={styles.buttonText}>Recuperar acesso</Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  registerContainer: {
+  forgotContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#121212',
+    paddingVertical: 24,
   },
   forgotArea: {
     alignItems: 'center',
@@ -72,6 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#121212',
     width: '100%',
     height: '100%',
+    marginVertical: 24,
   },
   forgotTitle: {
     fontFamily: 'Montserrat-Bold',

@@ -77,13 +77,6 @@ export function StackRoutes() {
         }}
       />
       <Screen
-        name="ForgotPW"
-        component={ForgotPW}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Screen
         name="AddJob"
         component={AddJob}
         options={{

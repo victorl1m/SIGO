@@ -6,51 +6,26 @@ import {
   Pressable,
   ScrollView,
   Image,
-  Alert,
+  Modal,
 } from 'react-native';
 
 import {useEffect, useState, useContext, useRef} from 'react';
-
 import {Svg, Path} from 'react-native-svg'; // svg import
-
-//    =======================================================================================================
-// ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ importing axios api to send the customer data
-//    =======================================================================================================
 import {api} from '../api/axios';
-//    =======================================================================================================
-// ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ auth context
-//    =======================================================================================================
 import {AuthContext} from '../contexts/AuthContext';
-//    =======================================================================================================
-// ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modalize functions, toast for popup messages after remove
-//    =======================================================================================================
-import {Modalize} from 'react-native-modalize';
-import {Construction} from '../components/Construction'; // modal construction
+import {Construction} from '../components/Construction';
 import Toast from 'react-native-simple-toast';
 
-// route and navigation are props from react navigation
 export const CustomerScreen = ({route, navigation}) => {
+  const pictureProfile =
+    'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
+
   const [constructions, setConstructions] = useState([]);
   const [customerName, setCustomerName] = useState([]);
-  //    =======================================================================================================
-  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀getting customer information by route
-  //    =======================================================================================================
   const customerId = route.params?.customerId;
-  //    =======================================================================================================
-  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀pulling update state from auth context
-  //    =======================================================================================================
   const {update, setUpdate} = useContext(AuthContext);
-  //    =======================================================================================================
-  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modalize consts
-  //    =======================================================================================================
-  const modalizeRef = useRef(null);
-
-  const onOpen = () => {
-    modalizeRef.current?.open();
-  };
 
   const {navigate} = navigation;
-
 
   useEffect(() => {
     api
@@ -60,10 +35,7 @@ export const CustomerScreen = ({route, navigation}) => {
       })
       .catch(error => {
         console.log(error);
-      })
-    //    =======================================================================================================
-    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀get customer constructions
-    //    =======================================================================================================
+      });
     api
       .get(`/getConstructions/${customerId}`)
       .then(res => {
@@ -73,35 +45,23 @@ export const CustomerScreen = ({route, navigation}) => {
         console.log(error);
       });
   }, [update]);
-  //    =======================================================================================================
-  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀const for handle name and picture customer data
-  //    =======================================================================================================
-  const pictureProfile =
-    'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
 
-  //    =======================================================================================================
-  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀PLEASE DONT DELETE THIS!!!!!!!!!
-  //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀Handle the delete customer function
-  //    =======================================================================================================
+  const [modalVisible, setModalVisible] = useState(false);
+
   function handleRemoveCustomer() {
     api
-      .delete(`/deleteCustomer/${customerId}`) // delete customer by id
+      .delete(`/deleteCustomer/${customerId}`)
       .then(() => {
         // if success
-        setUpdate(!update); // update the customer list
-        navigate('CustomerSelection'); // navigate to customer selection screen
-        Toast.show('Usuário deletado com sucesso'); // show toast message after delete customer
+        setUpdate(!update);
+        navigate('CustomerSelection');
+        Toast.show('Cliente deletado com sucesso');
       })
       .catch(error => {
-        // error handler
-        console.log(error); // show error in console
+        console.log(error);
       });
   }
-
   return (
-    //    =======================================================================================================
-    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Customer top area
-    //    =======================================================================================================
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.customerContainer}>
@@ -115,9 +75,6 @@ export const CustomerScreen = ({route, navigation}) => {
           horizontal={true}
           style={styles.actionArea}>
           <View style={styles.actionContainer}>
-            {/* =======================================================================================================
-          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Add construction button (invokes the add screen  )
-             ======================================================================================================= */}
             <Pressable
               onPress={() => {
                 navigate('AddJob', {customerId: customerId});
@@ -133,9 +90,6 @@ export const CustomerScreen = ({route, navigation}) => {
               </Svg>
               <Text style={styles.addText}>Adicionar obra</Text>
             </Pressable>
-            {/* =======================================================================================================
-          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Edit construction button (invokes the modalize component || coming soon)
-             ======================================================================================================= */}
             <Pressable style={styles.editJobsBtn}>
               <Svg
                 width={16}
@@ -147,10 +101,9 @@ export const CustomerScreen = ({route, navigation}) => {
               </Svg>
               <Text style={styles.editText}>Editar Perfil</Text>
             </Pressable>
-            {/* =======================================================================================================
-          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀R⠀⠀⠀⠀⠀emove jobs button invokes the modalize component
-             ======================================================================================================= */}
-            <Pressable style={styles.removeJobsBtn} onPress={onOpen}>
+            <Pressable
+              onPress={() => setModalVisible(!modalVisible)}
+              style={styles.removeJobsBtn}>
               <Svg
                 width={16}
                 height={16}
@@ -161,18 +114,43 @@ export const CustomerScreen = ({route, navigation}) => {
               </Svg>
               <Text style={styles.removeText}>Remover cliente</Text>
             </Pressable>
+            <Modal
+              animationType="slide"
+              visible={modalVisible}
+              transparent={true}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}>
+              <View style={modal.modalContainer}>
+                <Svg
+                  width={72}
+                  height={72}
+                  fill="red"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <Path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" />
+                </Svg>
+                <Text style={modal.modalText}>Remover cliente</Text>
+                <Text style={modal.modalSubText}>
+                  Deseja realmente remover o cliente?
+                </Text>
+                <View style={modal.modalBtnContainer}>
+                  <Pressable
+                    style={modal.modalBtnCancel}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={modal.modalBtnTextCancel}>Cancelar</Text>
+                  </Pressable>
+                  <Pressable
+                    style={modal.modalBtnContinue}
+                    onPress={() => handleRemoveCustomer()}>
+                    <Text style={modal.modalBtnTextContinue}>Remover</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </Modal>
           </View>
         </ScrollView>
       </View>
-      {/* =======================================================================================================
-          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modalize (Remove Customer Prompt)
-      ======================================================================================================= */}
-      <Modalize ref={modalizeRef} snapPoint={300} modalHeight={400}>
-        <modalDeleteCustomer />
-      </Modalize>
-      {/* =======================================================================================================
-          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Rendering Customers
-      ======================================================================================================= */}
       {constructions.length > 0 ? (
         constructions.map(construction => (
           <Construction
@@ -181,9 +159,6 @@ export const CustomerScreen = ({route, navigation}) => {
           />
         ))
       ) : (
-        // =======================================================================================================
-        //     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Check if there is no construction
-        // =======================================================================================================
         <View style={styles.noConstructionsContainer}>
           <Svg
             width="48"
@@ -201,34 +176,30 @@ export const CustomerScreen = ({route, navigation}) => {
     </View>
   );
 };
-// =======================================================================================================
-//     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Stylesheet
-// =======================================================================================================
 const styles = StyleSheet.create({
-  // =======================================================================================================
-  //     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀No construction stylesheet
-  // =======================================================================================================
   noConstructionsContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
     height: 300,
   },
-  // noUsers => linha 178
   noConstructions: {
     fontFamily: 'Montserrat-Bold',
     color: '#00b2cb',
     fontSize: 12,
     marginTop: 12,
   },
-  // =======================================================================================================
-  //     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Customer stylesheet
-  // =======================================================================================================
   container: {
     flexDirection: 'column',
     backgroundColor: '#121212',
     width: '100%',
     height: '100%',
+  },
+  profileImage: {
+    height: 160,
+    width: 160,
+    borderRadius: 200,
+    marginTop: 12,
   },
   customerText: {
     color: '#00b2cb',
@@ -244,16 +215,8 @@ const styles = StyleSheet.create({
     margin: 12,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  profileImage: {
-    height: 160,
-    width: 160,
-    borderRadius: 200,
     marginTop: 12,
   },
-  // =======================================================================================================
-  //     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Action area stylesheet
-  // =======================================================================================================
   addJobsBtn: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -319,5 +282,64 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Montserrat-Bold',
     fontSize: 16,
+  },
+});
+
+const modal = StyleSheet.create({
+  modalContainer: {
+    marginTop: 'auto',
+    alignItems: 'center',
+    width: '100%',
+    height: 250,
+    padding: 24,
+    backgroundColor: '#1e1e1e',
+    borderRadius: 25,
+  },
+  modalText: {
+    fontSize: 24,
+    fontFamily: 'Montserrat-Bold',
+    color: 'white',
+  },
+  modalSubText: {
+    fontSize: 16,
+    fontFamily: 'Montserrat-Regular',
+    textAlign: 'center',
+    marginTop: 6,
+    color: 'white',
+  },
+  modalBtnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 24,
+    justifyContent: 'center',
+  },
+  modalBtnContinue: {
+    backgroundColor: 'red',
+    width: '48%',
+    height: 48,
+    borderRadius: 8,
+    marginHorizontal: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalBtnTextContinue: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
+  },
+  modalBtnCancel: {
+    backgroundColor: 'white',
+    width: '48%',
+    height: 48,
+    borderRadius: 8,
+    marginHorizontal: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalBtnTextCancel: {
+    color: 'black',
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
   },
 });

@@ -1,8 +1,30 @@
-import {Text, View} from 'react-native';
-import Svg, {Path} from 'react-native-svg';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+// =======================================================================================================
+//     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modal Delete Customer
+// =======================================================================================================
+export default function ModalDeleteCustomer({route}) {
+  const customerId = route.params?.customerId;
 
-export default function modalDeleteCustomer() {
+  function handleRemoveCustomer() {
+    // function to remove customer
+    api
+      .delete(`/deleteCustomer/${customerId}`) // delete customer by id
+      .then(() => {
+        // if success
+        setUpdate(!update); // update the customer list
+        navigate('CustomerSelection'); // navigate to customer selection screen
+        Toast.show('Usuário deletado com sucesso'); // show toast message after delete customer
+      })
+      .catch(error => {
+        // error handler
+        console.log(error); // show error in console
+      });
+  }
+
+  modalizeRef = useRef(null); // modalize ref
+
+  function closeModal() {
+    modalizeRef.current?.close(); // close modal
+  }
   return (
     <View style={modal.modalContainer}>
       <Svg
@@ -19,16 +41,10 @@ export default function modalDeleteCustomer() {
       </Text>
       <View style={modal.modalBtnContainer}>
         <Pressable
-          style={modal.modalBtnCancel}
-          onPress={() => {
-            modalizeRef.current?.close();
-          }}>
-          <Text style={modal.modalBtnTextCancel}>Cancelar</Text>
-        </Pressable>
-        <Pressable
           style={modal.modalBtnContinue}
           onPress={() => {
             handleRemoveCustomer();
+            closeModal();
           }}>
           <Text style={modal.modalBtnTextContinue}>Remover</Text>
         </Pressable>
@@ -60,27 +76,15 @@ const modal = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     marginTop: 24,
-  },
-  modalBtnCancel: {
-    backgroundColor: '#1e1e1e',
-    width: '48%',
-    height: 48,
-    borderRadius: 8,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   modalBtnContinue: {
     backgroundColor: 'red',
-    width: '48%',
+    width: '90%',
     height: 48,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  modalBtnTextCancel: {
-    color: '#fff',
-    fontSize: 16,
-    fontFamily: 'Montserrat-Bold',
   },
   modalBtnTextContinue: {
     color: '#fff',

@@ -11,7 +11,7 @@ export default function Customer({name}) {
   const jobValue = '-';
 
   return (
-    <SafeAreaView style={customer.container}>
+    <View style={customer.container}>
       <View style={customer.customerArea}>
         <Image style={customer.image} source={{uri: customerImage}} />
         <Text style={customer.nameText}>{customerName}</Text>
@@ -42,7 +42,7 @@ export default function Customer({name}) {
           <Text style={customer.valueText}>Valor total</Text>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -53,6 +53,7 @@ const customer = StyleSheet.create({
     backgroundColor: '#1e1e1e',
     borderRadius: 15,
     marginHorizontal: 12,
+    marginBottom: 8,
   },
   text: {
     color: 'white',
