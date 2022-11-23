@@ -35,7 +35,7 @@ export const CustomerSelection = ({navigation}) => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        BackHandler.exitApp();
+        setModalVisible(!modalVisible)
       };
 
       const subscription = BackHandler.addEventListener(
