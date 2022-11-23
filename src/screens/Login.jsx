@@ -28,6 +28,9 @@ export const Login = ({navigation}) => {
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Login Container
     ======================================================================================================= */
   const [email, setEmail] = useState('');
+
+  const [emailForgot, setEmailForgot] = useState('');
+
   const [password, setPassword] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,7 +40,7 @@ export const Login = ({navigation}) => {
 
   function handleForgot() {
     auth()
-      .sendPasswordResetEmail(email)
+      .sendPasswordResetEmail(emailForgot)
       .then(() => {
         Toast.show(
           'Verifique sua caixa de entrada/spam para redefinir sua senha',
@@ -50,7 +53,7 @@ export const Login = ({navigation}) => {
   }
 
   function handleLogin() {
-    if (email === '' && password === '')
+    if (email === '' || password === '')
       return Toast.show('Preencha todos os campos para se autenticar');
     auth()
       .signInWithEmailAndPassword(email, password)
@@ -60,20 +63,24 @@ export const Login = ({navigation}) => {
         setPassword('');
       })
       .catch(error => {
-        console.error(error.message, "<<< Message");
-
-        setError(true);
-
         if (
-          error.message ===
-          '[auth/invalid-email] The email address is badly formatted.'
+          error.code === 'auth/user-not-found' ||
+          error.code === 'auth/wrong-password'
         ) {
-          setMessageError('Email inválido.');
+          const error = 'Email ou senha incorretos';
+          Toast.show(error);
+        }
+        if (error.code === 'auth/invalid-email') {
+          const error = 'Email inválido';
+          Toast.show(error);
         }
       });
   }
 
   function handleForgot() {
+    if (emailForgot === '')
+      return Toast.show('Preencha o campo para redefinir sua senha');
+
     auth()
       .sendPasswordResetEmail(email)
       .then(() => {
@@ -155,9 +162,10 @@ export const Login = ({navigation}) => {
               senha
             </Text>
             <TextInput
-              onChangeText={setEmail}
+              onChangeText={setEmailForgot}
               style={modal.forgotInput}
               placeholder="Email"
+              value={emailForgot}
               placeholderTextColor="#AAAAAA"
               keyboardType="email-address"
               autoCapitalize="none"
