@@ -6,21 +6,48 @@ import {
   Pressable
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import { useState, useContext } from 'react';
 
-export const AddJob = ({navigation}) => {
+// importing axios api to send the customer data
+import { api } from '../api/axios';
+
+// auth context
+import { AuthContext } from '../contexts/AuthContext';
+
+export const AddJob = ({ route, navigation }) => {
+  const customerId = route.params.customerId;
+  const customerName = route.params?.customerName;
   
   const {navigate} = navigation;
-  const [addressInfo, setAddressInfo] = useState();
+
+  // pulling user from auth context
+  const {update, setUpdate} = useContext(AuthContext);
+
+  const [constructionName, setConstructionName] = useState('')
+  const [addressInfo, setAddressInfo] = useState('');
   
   function getAddress(CEP) {
     fetch(`https://viacep.com.br/ws/${CEP}/json/`).then(res => res.json())
     .then(res => {
       setAddressInfo(res);
-      console.log(res)
-      console.log(res.localidade)
-      console.log(res.logradouro)
+    });
+  }
+
+  function createConstruction() {
+    api.post("/createNewConstruction", {
+      customerId,
+      constructionName
     })
+    .then(() => {
+      navigate('CustomerScreen', { 
+        customerId: customerId,
+        customerName: customerName
+      });
+      setUpdate(!update);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   return (
@@ -30,9 +57,11 @@ export const AddJob = ({navigation}) => {
       <Text style={styles.subText}>Informe os dados de sua obra</Text>
 
       <TextInput
+        onChangeText={setConstructionName}
         style={styles.input}
         placeholderTextColor={'white'}
         placeholder="Nome da Obra"
+        value={constructionName}
       />
       <TextInput
         onChangeText={setAddressInfo}
@@ -75,9 +104,7 @@ export const AddJob = ({navigation}) => {
         placeholder="Descrição"
       />
       <Pressable
-        onPress={() => {
-          navigate('CustomerScreen');
-        }}
+        onPress={createConstruction}
         style={styles.button}>
         <Text style={styles.buttonText}>Adicionar</Text>
       </Pressable>

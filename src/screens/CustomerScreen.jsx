@@ -18,15 +18,15 @@ import {api} from '../api/axios';
 // auth context
 import {AuthContext} from '../contexts/AuthContext';
 
-import Jobs from '../components/Jobs';
+import { Construction } from '../components/Construction';
 
 export const CustomerScreen = ({route, navigation}) => {
   const {navigate} = navigation;
   const {alert} = Alert;
 
   // getting customer information by route
-  const name = route.params.customerName;
-  const customerId = route.params.customerId;
+  const name = route.params?.customerName;
+  const customerId = route.params?.customerId;
 
   // pulling update state from auth context
   const {update, setUpdate} = useContext(AuthContext);
@@ -90,7 +90,7 @@ export const CustomerScreen = ({route, navigation}) => {
           <View style={styles.actionContainer}>
             <Pressable
               onPress={() => {
-                navigate('AddJob');
+                navigate('AddJob', { customerId: customerId });
               }}
               style={styles.addJobsBtn}>
               <Svg
@@ -133,7 +133,9 @@ export const CustomerScreen = ({route, navigation}) => {
       {
         // rendering customers
         constructions.length > 0 ? (
-          constructions.map(customer => <Jobs />)
+          constructions.map(construction => (
+          <Construction key={construction.id} constructionName={construction.construction_name}/>
+          ))
         ) : (
           <View style={styles.noConstructionsContainer}>
             <Svg

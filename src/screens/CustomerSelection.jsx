@@ -36,14 +36,7 @@ export const CustomerSelection = ({navigation}) => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        alert('Hold on!', 'Are you sure you want to go back?', [
-          {
-            text: 'Cancel',
-            onPress: () => null,
-          },
-          {text: 'YES', onPress: () => BackHandler.exitApp()},
-        ]);
-        return true;
+        BackHandler.exitApp()
       };
 
       const subscription = BackHandler.addEventListener(
