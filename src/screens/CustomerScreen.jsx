@@ -30,6 +30,16 @@ import Toast from 'react-native-simple-toast';
 
 // route and navigation are props from react navigation
 export const CustomerScreen = ({route, navigation}) => {
+  const [constructions, setConstructions] = useState([]);
+  const [customerName, setCustomerName] = useState([]);
+  //    =======================================================================================================
+  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀getting customer information by route
+  //    =======================================================================================================
+  const customerId = route.params?.customerId;
+  //    =======================================================================================================
+  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀pulling update state from auth context
+  //    =======================================================================================================
+  const {update, setUpdate} = useContext(AuthContext);
   //    =======================================================================================================
   // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Modalize consts
   //    =======================================================================================================
@@ -40,19 +50,17 @@ export const CustomerScreen = ({route, navigation}) => {
   };
 
   const {navigate} = navigation;
-  //    =======================================================================================================
-  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀getting customer information by route
-  //    =======================================================================================================
-  const name = route.params?.customerName;
-  const customerId = route.params?.customerId;
-  //    =======================================================================================================
-  // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀pulling update state from auth context
-  //    =======================================================================================================
-  const {update, setUpdate} = useContext(AuthContext);
 
-  const [constructions, setConstructions] = useState([]);
 
   useEffect(() => {
+    api
+      .get(`/getCustomers/${customerId}`)
+      .then(res => {
+        setCustomerName(res.data[0].customer_name);
+      })
+      .catch(error => {
+        console.log(error);
+      })
     //    =======================================================================================================
     // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀get customer constructions
     //    =======================================================================================================
@@ -68,7 +76,6 @@ export const CustomerScreen = ({route, navigation}) => {
   //    =======================================================================================================
   // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀const for handle name and picture customer data
   //    =======================================================================================================
-  const customerName = name;
   const pictureProfile =
     'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
 
