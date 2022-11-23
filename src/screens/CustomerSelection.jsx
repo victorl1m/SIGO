@@ -9,11 +9,8 @@ import {
   ScrollView,
   BackHandler,
   Alert,
+  Modal,
 } from 'react-native';
-
-import Svg, {Path} from 'react-native-svg';
-import {useCallback, useContext, useEffect, useState} from 'react';
-import Customer from '../components/Customer';
 import {useFocusEffect} from '@react-navigation/native';
 
 // importing axios api to send the customer data
@@ -21,10 +18,12 @@ import {api} from '../api/axios';
 
 // auth context
 import {AuthContext} from '../contexts/AuthContext';
+import {useCallback, useContext, useEffect, useState} from 'react';
+import Svg, {Path} from 'react-native-svg';
 
 export const CustomerSelection = ({navigation}) => {
   const {navigate} = navigation;
-  const {alert} = Alert;
+  const [modalVisible, setModalVisible] = useState(false);
 
   // pulling user from auth context
   const {user, update} = useContext(AuthContext);
@@ -79,6 +78,40 @@ export const CustomerSelection = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        transparent={true}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={modal.modalContainer}>
+          <Svg
+            width={72}
+            height={72}
+            fill="red"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <Path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" />
+          </Svg>
+          <Text style={modal.modalText}>Sair do aplicativo</Text>
+          <Text style={modal.modalSubText}>
+            Deseja realmente sair do aplicativo?
+          </Text>
+          <View style={modal.modalBtnContainer}>
+            <Pressable
+              style={modal.modalBtnCancel}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={modal.modalBtnTextCancel}>Cancelar</Text>
+            </Pressable>
+            <Pressable
+              style={modal.modalBtnContinue}
+              onPress={() => handleRemoveCustomer()}>
+              <Text style={modal.modalBtnTextContinue}>Remover</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <View style={styles.yourJobs}>
@@ -324,5 +357,64 @@ const styles = StyleSheet.create({
   btnOptions: {
     flexDirection: 'row',
     padding: 12,
+  },
+});
+
+const modal = StyleSheet.create({
+  modalContainer: {
+    marginTop: 'auto',
+    alignItems: 'center',
+    width: '100%',
+    height: 250,
+    padding: 24,
+    backgroundColor: '#1e1e1e',
+    borderRadius: 25,
+  },
+  modalText: {
+    fontSize: 24,
+    fontFamily: 'Montserrat-Bold',
+    color: 'white',
+  },
+  modalSubText: {
+    fontSize: 16,
+    fontFamily: 'Montserrat-Regular',
+    textAlign: 'center',
+    marginTop: 6,
+    color: 'white',
+  },
+  modalBtnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 24,
+    justifyContent: 'center',
+  },
+  modalBtnContinue: {
+    backgroundColor: 'red',
+    width: '48%',
+    height: 48,
+    borderRadius: 8,
+    marginHorizontal: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalBtnTextContinue: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
+  },
+  modalBtnCancel: {
+    backgroundColor: 'white',
+    width: '48%',
+    height: 48,
+    borderRadius: 8,
+    marginHorizontal: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalBtnTextCancel: {
+    color: 'black',
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
   },
 });
