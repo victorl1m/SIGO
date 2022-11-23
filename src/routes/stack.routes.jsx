@@ -49,6 +49,7 @@ export function StackRoutes() {
         name="CustomerSelection"
         component={CustomerSelection}
         options={{
+          gesturesEnabled: false,
           headerShown: false,
         }}
       />

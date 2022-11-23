@@ -6,34 +6,35 @@ import {
   Image,
   StatusBar,
   ScrollView,
-  Pressable
+  Pressable,
 } from 'react-native';
-import { useContext } from 'react';
+import {useContext} from 'react';
 
 // auth context
-import { AuthContext } from '../contexts/AuthContext';
+import {AuthContext} from '../contexts/AuthContext';
 
 // firebase auth
-import auth from "@react-native-firebase/auth";
+import auth from '@react-native-firebase/auth';
 
-export function Profile({ navigation }) {
-  const { navigate } = navigation;
+export function Profile({navigation}) {
+  const {navigate} = navigation;
 
   // pulling user from auth context
-  const { user } = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
 
   const userName = user?.displayName;
   const userEmail = user?.email;
-  
+
   const pictureProfile =
     'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
 
   function handleLogout() {
-    auth().signOut()
+    auth()
+      .signOut()
       .then(() => {
-        console.log("User signed out!");
-        navigate("Login");
-      })
+        console.log('User signed out!');
+        navigate('Login');
+      });
   }
 
   return (
@@ -41,8 +42,8 @@ export function Profile({ navigation }) {
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.profileData}>
         <Image source={{uri: pictureProfile}} style={styles.profileImage} />
-        <Text style={styles.profileName}>{ userName }</Text>
-        <Text style={styles.profileEmail}>{ userEmail }</Text>
+        <Text style={styles.profileName}>{userName}</Text>
+        <Text style={styles.profileEmail}>{userEmail}</Text>
       </View>
       <View style={styles.boxBtn}>
         <Svg
@@ -105,12 +106,19 @@ export function Profile({ navigation }) {
         <Text style={styles.optionText}>Alterar tema</Text>
       </View>
       <Pressable onPress={handleLogout}>
-      <View style={styles.boxBtn}>
-        
-        {/* svg here */}
+        <View style={styles.boxBtn}>
+          <Svg
+            width={20}
+            height={20}
+            style={styles.svgIcon}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="white">
+            <Path d="M11 21h8v-2l1-1v4h-9v2l-10-3v-18l10-3v2h9v5l-1-1v-3h-8v18zm10.053-9l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z" />
+          </Svg>
 
-        <Text style={styles.optionText}>Log out</Text>
-      </View>
+          <Text style={styles.optionText}>Log out</Text>
+        </View>
       </Pressable>
       <Text style={styles.privacyAndTerms}>Privacidade & Termos</Text>
     </ScrollView>
