@@ -15,6 +15,7 @@ import Toast from 'react-native-simple-toast';
 import {Modalize} from 'react-native-modalize';
 
 import auth from '@react-native-firebase/auth';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export const Login = ({navigation}) => {
   const {navigate} = navigation;
@@ -122,7 +123,7 @@ export const Login = ({navigation}) => {
         ref={modalizeRef}
         snapPoint={350}
         modalHeight={800}>
-        <modalForgotPassword />
+        <ModalForgotPassword />
       </Modalize>
     </View>
   );
@@ -198,5 +199,103 @@ const styles = StyleSheet.create({
     color: '#CD0000',
     fontSize: 14,
     fontFamily: 'Montserrat-Medium',
+  },
+});
+
+export function ModalForgotPassword() {
+  const [email, setEmail] = useState('');
+  const modalizeRef = useRef(null);
+
+  function handleForgot() {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        Toast.show('Verifique seu email para redefinir sua senha', Toast.LONG);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
+  return (
+    <View style={modal.forgotContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
+      <View style={modal.forgotArea}>
+        <Text style={modal.forgotTitle}>Esqueci minha senha</Text>
+        <Text style={modal.forgotSubtitle}>
+          Preencha o campo abaixo com seu e-mail {'\n'} para recuperar a sua
+          senha
+        </Text>
+        <TextInput
+          onChangeText={setEmail}
+          style={modal.forgotInput}
+          placeholder="Email"
+          placeholderTextColor="#AAAAAA"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}></TextInput>
+        <Pressable
+          onPress={() => {
+            modalizeRef.current?.close();
+          }}
+          style={modal.forgotBtn}>
+          <Text style={modal.buttonText}>Recuperar acesso</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+const modal = StyleSheet.create({
+  forgotContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#121212',
+    paddingVertical: 24,
+  },
+  forgotArea: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#121212',
+    width: '100%',
+    height: '100%',
+    marginVertical: 24,
+  },
+  forgotTitle: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 30,
+    color: '#00B2CB',
+  },
+  forgotSubtitle: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+    color: 'white',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  forgotInput: {
+    backgroundColor: '#1E1E1E',
+    width: '90%',
+    height: 70,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+    fontSize: 16,
+    fontFamily: 'Montserrat-Medium',
+    color: '#00B2CB',
+  },
+  forgotBtn: {
+    backgroundColor: '#00B2CB',
+    width: '90%',
+    height: 80,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+  },
+  buttonText: {
+    color: 'white',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 24,
   },
 });

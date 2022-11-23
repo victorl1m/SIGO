@@ -36,7 +36,7 @@ export const CustomerSelection = ({navigation}) => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        BackHandler.exitApp()
+        BackHandler.exitApp();
       };
 
       const subscription = BackHandler.addEventListener(
@@ -49,11 +49,9 @@ export const CustomerSelection = ({navigation}) => {
   );
 
   useEffect(() => {
-    // checking if user is logged in
     if (!user) navigate('Login');
     const architectId = user.uid;
 
-    // pulling customer information
     api
       .get(`/getUserCustomers/${architectId}`)
       .then(res => {
@@ -67,9 +65,6 @@ export const CustomerSelection = ({navigation}) => {
   const userName = user?.displayName;
   const userImage =
     'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
-  // =======================================================================================================
-  //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Greetings, John Doe!
-  // =======================================================================================================
 
   var hours = new Date().getHours();
 
@@ -81,16 +76,21 @@ export const CustomerSelection = ({navigation}) => {
     var greeting = 'Boa noite';
   }
 
-  // =======================================================================================================
-  //       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀View Component
-  // =======================================================================================================
   return (
     <ScrollView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <View style={styles.yourJobs}>
-            <Text style={styles.headerText}>Seus trabalhos</Text>
+            <Svg
+              width={16}
+              height={16}
+              fill="white"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <Path d="m10.5 17.25c0-.414.336-.75.75-.75h10c.414 0 .75.336.75.75s-.336.75-.75.75h-10c-.414 0-.75-.336-.75-.75zm-1.5-3.55c0-.53-.47-1-1-1h-5c-.53 0-1 .47-1 1v4.3c0 .53.47 1 1 1h5c.53 0 1-.47 1-1zm1.5-1.7c0-.414.336-.75.75-.75h10c.414 0 .75.336.75.75s-.336.75-.75.75h-10c-.414 0-.75-.336-.75-.75zm-1.5-6c0-.53-.47-1-1-1h-5c-.53 0-1 .47-1 1v4.3c0 .53.47 1 1 1h5c.53 0 1-.47 1-1zm1.5.75c0-.414.336-.75.75-.75h10c.414 0 .75.336.75.75s-.336.75-.75.75h-10c-.414 0-.75-.336-.75-.75z" />
+            </Svg>
+            <Text style={styles.headerText}>Seus clientes</Text>
           </View>
           <Pressable>
             <Svg
@@ -113,34 +113,6 @@ export const CustomerSelection = ({navigation}) => {
         <Text style={styles.userText}>{greeting},</Text>
         <Text style={styles.userName}>{userName} 👋</Text>
       </View>
-      <View style={styles.btnOptions}>
-        <Pressable style={styles.btnSelected}>
-          <Text style={styles.btnText}>Visão Geral</Text>
-        </Pressable>
-        <Pressable style={styles.btnOption}>
-          <Text style={styles.btnText}>Suas obras</Text>
-        </Pressable>
-      </View>
-      <View style={styles.additionalArea}>
-        <TextInput
-          placeholder="Pesquisar"
-          placeholderTextColor={'white'}
-          style={styles.searchbox}
-        />
-        <Pressable style={styles.searchIconArea}>
-          <Svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={16}
-            height={16}
-            style={styles.searchIcon}
-            fill="none"
-            viewBox="0 0 24 24">
-            <Path
-              d="M23.809 21.646l-6.205-6.205a9.68 9.68 0 001.857-5.711C19.461 4.365 15.096 0 9.73 0 4.365 0 0 4.365 0 9.73c0 5.366 4.365 9.73 9.73 9.73a9.678 9.678 0 005.487-1.698L21.455 24l2.354-2.354zM2.854 9.73c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877A6.884 6.884 0 012.854 9.73z"
-              fill="#fff"></Path>
-          </Svg>
-        </Pressable>
-      </View>
       <View style={styles.customerBtnArea}>
         <Pressable
           onPress={() => {
@@ -157,37 +129,48 @@ export const CustomerSelection = ({navigation}) => {
           </Svg>
           <Text style={styles.addCustomerText}>Adicionar cliente</Text>
         </Pressable>
+        <Pressable style={styles.changeViewBtn}>
+          <Svg
+            width={24}
+            height={24}
+            fill="white"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <Path d="m17.5 11c2.484 0 4.5 2.016 4.5 4.5s-2.016 4.5-4.5 4.5-4.5-2.016-4.5-4.5 2.016-4.5 4.5-4.5zm-5.346 6.999c-.052.001-.104.001-.156.001-4.078 0-7.742-3.093-9.854-6.483-.096-.159-.144-.338-.144-.517s.049-.358.145-.517c2.111-3.39 5.775-6.483 9.853-6.483 4.143 0 7.796 3.09 9.864 6.493.092.156.138.332.138.507s-.046.351-.138.507l-.008.013c-1.079-1.18-2.631-1.92-4.354-1.92-.58 0-1.141.084-1.671.24-.498-1.643-2.025-2.84-3.829-2.84-2.208 0-4 1.792-4 4 0 2.08 1.591 3.792 3.622 3.982-.014.171-.022.343-.022.518 0 .893.199 1.74.554 2.499zm3.071-2.023 1.442 1.285c.095.085.215.127.333.127.136 0 .271-.055.37-.162l2.441-2.669c.088-.096.131-.217.131-.336 0-.274-.221-.499-.5-.499-.136 0-.271.055-.37.162l-2.108 2.304-1.073-.956c-.096-.085-.214-.127-.333-.127-.277 0-.5.224-.5.499 0 .137.056.273.167.372zm-3.277-2.477c-1.356-.027-2.448-1.136-2.448-2.499 0-1.38 1.12-2.5 2.5-2.5 1.193 0 2.192.837 2.44 1.955-1.143.696-2.031 1.768-2.492 3.044z" />
+          </Svg>
+          <Text style={styles.changeViewText}>Mudar visualização</Text>
+        </Pressable>
       </View>
-      {
-        // rendering customers
-        customers.length > 0 ? (
-          customers.map(customer => (
-            <Pressable
-              style={styles.customerSpacing}
-              key={customer.id}
-              onPress={() =>
-                navigate('CustomerScreen', {
-                  customerId: customer.id,
-                  customerName: customer.customer_name,
-                })
-              }>
-              <Customer name={customer.customer_name} />
-            </Pressable>
-          ))
-        ) : (
-          <View style={styles.noUsersContainer}>
-            <Svg
-              viewBox="0 0 24 24"
-              width={48}
-              height={48}
-              fill="#00b2cb"
-              xmlns="http://www.w3.org/2000/svg">
-              <Path d="m17.5 11c2.484 0 4.5 2.016 4.5 4.5s-2.016 4.5-4.5 4.5-4.5-2.016-4.5-4.5 2.016-4.5 4.5-4.5zm-5.346 6.999c-.052.001-.104.001-.156.001-4.078 0-7.742-3.093-9.854-6.483-.096-.159-.144-.338-.144-.517s.049-.358.145-.517c2.111-3.39 5.775-6.483 9.853-6.483 4.143 0 7.796 3.09 9.864 6.493.092.156.138.332.138.507 0 .179-.062.349-.15.516-1.079-1.178-2.629-1.916-4.35-1.916-.58 0-1.141.084-1.671.24-.498-1.643-2.025-2.84-3.829-2.84-2.208 0-4 1.792-4 4 0 2.08 1.591 3.792 3.622 3.982-.014.171-.022.343-.022.518 0 .893.199 1.74.554 2.499zm6.053-2.499s.642-.642 1.061-1.061c.187-.187.187-.519 0-.707-.188-.187-.52-.187-.707 0-.419.419-1.061 1.061-1.061 1.061s-.642-.642-1.061-1.061c-.187-.187-.519-.187-.707 0-.187.188-.187.52 0 .707.419.419 1.061 1.061 1.061 1.061s-.642.642-1.061 1.061c-.187.187-.187.519 0 .707.188.187.52.187.707 0 .419-.419 1.061-1.061 1.061-1.061s.642.642 1.061 1.061c.187.187.519.187.707 0 .187-.188.187-.52 0-.707-.419-.419-1.061-1.061-1.061-1.061zm-6.259-2.001c-1.356-.027-2.448-1.136-2.448-2.499 0-1.38 1.12-2.5 2.5-2.5 1.193 0 2.192.837 2.44 1.955-1.143.696-2.031 1.768-2.492 3.044z" />
-            </Svg>
-            <Text style={styles.noUsers}>Nenhum cliente foi encontrado.</Text>
-          </View>
-        )
-      }
+      {customers.length > 0 ? (
+        customers.map(customer => (
+          <Pressable
+            style={styles.customerSpacing}
+            key={customer.id}
+            onPress={() =>
+              navigate('CustomerScreen', {
+                customerId: customer.id,
+                customerName: customer.customer_name,
+              })
+            }>
+            <Customer name={customer.customer_name} />
+          </Pressable>
+        ))
+      ) : (
+        <View style={styles.noUsersContainer}>
+          <Svg
+            viewBox="0 0 24 24"
+            width={48}
+            height={48}
+            fill="#00b2cb"
+            xmlns="http://www.w3.org/2000/svg">
+            <Path d="m17.5 11c2.484 0 4.5 2.016 4.5 4.5s-2.016 4.5-4.5 4.5-4.5-2.016-4.5-4.5 2.016-4.5 4.5-4.5zm-5.346 6.999c-.052.001-.104.001-.156.001-4.078 0-7.742-3.093-9.854-6.483-.096-.159-.144-.338-.144-.517s.049-.358.145-.517c2.111-3.39 5.775-6.483 9.853-6.483 4.143 0 7.796 3.09 9.864 6.493.092.156.138.332.138.507 0 .179-.062.349-.15.516-1.079-1.178-2.629-1.916-4.35-1.916-.58 0-1.141.084-1.671.24-.498-1.643-2.025-2.84-3.829-2.84-2.208 0-4 1.792-4 4 0 2.08 1.591 3.792 3.622 3.982-.014.171-.022.343-.022.518 0 .893.199 1.74.554 2.499zm6.053-2.499s.642-.642 1.061-1.061c.187-.187.187-.519 0-.707-.188-.187-.52-.187-.707 0-.419.419-1.061 1.061-1.061 1.061s-.642-.642-1.061-1.061c-.187-.187-.519-.187-.707 0-.187.188-.187.52 0 .707.419.419 1.061 1.061 1.061 1.061s-.642.642-1.061 1.061c-.187.187-.187.519 0 .707.188.187.52.187.707 0 .419-.419 1.061-1.061 1.061-1.061s.642.642 1.061 1.061c.187.187.519.187.707 0 .187-.188.187-.52 0-.707-.419-.419-1.061-1.061-1.061-1.061zm-6.259-2.001c-1.356-.027-2.448-1.136-2.448-2.499 0-1.38 1.12-2.5 2.5-2.5 1.193 0 2.192.837 2.44 1.955-1.143.696-2.031 1.768-2.492 3.044z" />
+          </Svg>
+          <Text style={styles.noUsersText}>Nenhum cliente foi encontrado.</Text>
+          <Text style={styles.noUsersSubtext}>
+            Adicione um cliente clicando no botão acima.
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -198,19 +181,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    height: 300,
+    height: 500,
   },
   // noUsers => linha 178
-  noUsers: {
+  noUsersText: {
     fontFamily: 'Montserrat-Bold',
     color: '#00b2cb',
     fontSize: 12,
   },
-  // customerSpacing => linha 171
-  customerSpacing: {
-    marginBottom: 20,
+  noUsersSubtext: {
+    fontFamily: 'Montserrat-Medium',
+    color: '#00b2cb',
+    fontSize: 12,
   },
-
   container: {
     flex: 1,
     backgroundColor: '#121212',
@@ -243,6 +226,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     fontSize: 14,
     color: '#FFFFFF',
+    marginLeft: 6,
   },
   userArea: {
     width: '100%',
@@ -293,9 +277,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 2,
     width: 180,
-    marginBottom: 12,
-    marginLeft: 6,
-    marginRight: 6,
+    margin: 6,
+    marginVertical: 12,
     backgroundColor: 'white',
     borderWidth: 2,
     borderRadius: 15,
@@ -308,9 +291,30 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     marginRight: 4,
   },
+  changeViewBtn: {
+    borderColor: 'transparent',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    width: 180,
+    margin: 6,
+    marginVertical: 12,
+    backgroundColor: '#00b2cb',
+    borderWidth: 2,
+    borderRadius: 15,
+    padding: 6,
+  },
+  changeViewText: {
+    color: 'white',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 14,
+    marginLeft: 4,
+    marginRight: 4,
+  },
   customerBtnArea: {
     flexDirection: 'row',
-    margin: 6,
+    marginHorizontal: 6,
   },
   btnText: {
     color: 'white',
@@ -320,30 +324,5 @@ const styles = StyleSheet.create({
   btnOptions: {
     flexDirection: 'row',
     padding: 12,
-  },
-  searchbox: {
-    backgroundColor: '#1e1e1e',
-    borderRadius: 15,
-    padding: 12,
-    marginTop: 12,
-    marginBottom: 12,
-    width: '95%',
-    color: 'white',
-    fontFamily: 'Montserrat-Regular',
-    fontSize: 14,
-  },
-  searchIconArea: {
-    backgroundColor: '#00b2bc',
-    width: 36,
-    height: 36,
-    position: 'absolute',
-    right: 18,
-    borderRadius: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  searchIcon: {
-    position: 'absolute',
-    borderRadius: 15,
   },
 });

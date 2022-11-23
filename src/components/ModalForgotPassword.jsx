@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -8,7 +7,11 @@ import {
   StatusBar,
 } from 'react-native';
 
+import React from 'react';
+
 export default function ModalForgotPassword() {
+  const [email, setEmail] = useState('');
+
   return (
     <View style={styles.forgotContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
@@ -26,14 +29,7 @@ export default function ModalForgotPassword() {
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}></TextInput>
-        <Pressable
-          style={styles.forgotBtn}
-          onPress={() => {
-            {
-              handleForgot();
-              modalizeRef.current?.close();
-            }
-          }}>
+        <Pressable style={styles.forgotBtn}>
           <Text style={styles.buttonText}>Recuperar acesso</Text>
         </Pressable>
       </View>
