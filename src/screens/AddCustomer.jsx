@@ -46,7 +46,6 @@ export const AddCustomer = ({navigation}) => {
         architectId: user?.uid,
         customerName: formatted,
       })
-
       .then(() => {
         navigate('CustomerSelection');
         setUpdate(!update);

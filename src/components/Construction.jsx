@@ -1,19 +1,18 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
 
-export default function Jobs() {
-  const jobName = 'Shopping Center';
-  const jobCity = 'São Paulo';
-  const jobState = 'SP';
-  const jobImage = 'https://i.pravatar.cc/150?img=1';
+export function Construction({ constructionName }) {
+  const constructionCity = 'São Paulo';
+  const constructionState = 'SP';
+  const constructionImage = 'https://i.pravatar.cc/150?img=1';
 
   return (
     <View style={styles.container}>
-      <View style={styles.jobsContainer}>
-        <Image style={styles.image} source={{uri: jobImage}} />
+      <View style={styles.constructionContainer}>
+        <Image style={styles.image} source={{uri: constructionImage}} />
         <View>
-          <Text style={styles.jobName}>{jobName}</Text>
-          <Text style={styles.jobLocal}>
-            {jobCity} - {jobState}
+          <Text style={styles.constructionName}>{constructionName}</Text>
+          <Text style={styles.constructionLocal}>
+            {constructionCity} - {constructionState}
           </Text>
         </View>
       </View>
@@ -34,19 +33,19 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     marginRight: 12,
   },
-  jobsContainer: {
+  constructionContainer: {
     flexDirection: 'row',
     backgroundColor: '#1e1e1e',
     width: '100%',
     height: 75,
     alignItems: 'center',
   },
-  jobName: {
+  constructionName: {
     color: 'white',
     fontFamily: 'Montserrat-Bold',
     fontSize: 18,
   },
-  jobLocal: {
+  constructionLocal: {
     color: '#00b2cb',
     fontFamily: 'Montserrat-Regular',
     fontSize: 12,
