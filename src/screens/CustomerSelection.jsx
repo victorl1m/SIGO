@@ -20,6 +20,7 @@ import {api} from '../api/axios';
 import {AuthContext} from '../contexts/AuthContext';
 import {useCallback, useContext, useEffect, useState} from 'react';
 import Svg, {Path} from 'react-native-svg';
+import Customer from '../components/Customer';
 
 export const CustomerSelection = ({navigation}) => {
   const {navigate} = navigation;
@@ -35,7 +36,8 @@ export const CustomerSelection = ({navigation}) => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        setModalVisible(!modalVisible)
+        setModalVisible(!modalVisible);
+        return true;
       };
 
       const subscription = BackHandler.addEventListener(
@@ -77,7 +79,7 @@ export const CustomerSelection = ({navigation}) => {
 
   return (
     <ScrollView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#121212" />
+      <StatusBar barStyle="light-content" backgroundColor={'#121212'} />
       <Modal
         animationType="slide"
         visible={modalVisible}
@@ -85,30 +87,35 @@ export const CustomerSelection = ({navigation}) => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View style={modal.modalContainer}>
-          <Svg
-            width={72}
-            height={72}
-            fill="red"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <Path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" />
-          </Svg>
-          <Text style={modal.modalText}>Sair do aplicativo</Text>
-          <Text style={modal.modalSubText}>
-            Deseja realmente sair do aplicativo?
-          </Text>
-          <View style={modal.modalBtnContainer}>
-            <Pressable
-              style={modal.modalBtnCancel}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={modal.modalBtnTextCancel}>Cancelar</Text>
-            </Pressable>
-            <Pressable
-              style={modal.modalBtnContinue}
-              onPress={() => handleRemoveCustomer()}>
-              <Text style={modal.modalBtnTextContinue}>Remover</Text>
-            </Pressable>
+        <View style={modal.shadow}>
+          <View style={modal.modalContainer}>
+            <Svg
+              width={58}
+              height={58}
+              fill="#00b2cb"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <Path d="m6 18h-3c-.48 0-1-.379-1-1v-14c0-.481.38-1 1-1h14c.621 0 1 .522 1 1v3h3c.621 0 1 .522 1 1v14c0 .621-.522 1-1 1h-14c-.48 0-1-.379-1-1zm9.259-8.11s-2.136.002-4.616.003c-.414 0-.75.336-.75.75-.001 2.479-.003 4.612-.003 4.612 0 .411.335.745.75.745.414 0 .75-.334.75-.745v-2.804l4.549 4.549c.293.293.768.293 1.061 0s.293-.768 0-1.061l-4.549-4.549h2.808c.409 0 .741-.336.741-.75s-.333-.75-.741-.75zm1.241-3.89v-2.5h-13v13h2.5v-9.5c0-.481.38-1 1-1z" />
+            </Svg>
+            <Text style={modal.modalText}>Sair do aplicativo</Text>
+            <Text style={modal.modalSubText}>
+              Deseja realmente sair do aplicativo?
+            </Text>
+            <View style={modal.modalBtnContainer}>
+              <Pressable
+                style={modal.modalBtnCancel}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={modal.modalBtnTextCancel}>Cancelar</Text>
+              </Pressable>
+              <Pressable
+                style={modal.modalBtnContinue}
+                onPress={() => {
+                  BackHandler.exitApp();
+                  setModalVisible(!modalVisible);
+                }}>
+                <Text style={modal.modalBtnTextContinue}>Sair</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </Modal>
@@ -361,6 +368,11 @@ const styles = StyleSheet.create({
 });
 
 const modal = StyleSheet.create({
+  shadow: {
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    shadowColor: '#000',
+  },
   modalContainer: {
     marginTop: 'auto',
     alignItems: 'center',
@@ -390,7 +402,7 @@ const modal = StyleSheet.create({
     justifyContent: 'center',
   },
   modalBtnContinue: {
-    backgroundColor: 'red',
+    backgroundColor: '#00b2cb',
     width: '48%',
     height: 48,
     borderRadius: 8,
