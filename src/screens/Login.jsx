@@ -114,6 +114,7 @@ export const Login = ({navigation}) => {
           placeholder="Email"
           placeholderTextColor={'#00B2CB'}
           keyboardType="email-address"
+          autoCapitalize="none"
         />
         <TextInput
           onChangeText={setPassword}
