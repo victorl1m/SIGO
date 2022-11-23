@@ -16,7 +16,6 @@ import { AuthContext } from '../contexts/AuthContext';
 
 export const AddJob = ({ route, navigation }) => {
   const customerId = route.params.customerId;
-  const customerName = route.params?.customerName;
   
   const {navigate} = navigation;
 
@@ -41,7 +40,6 @@ export const AddJob = ({ route, navigation }) => {
     .then(() => {
       navigate('CustomerScreen', { 
         customerId: customerId,
-        customerName: customerName
       });
       setUpdate(!update);
     })
