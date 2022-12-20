@@ -5,18 +5,25 @@ async function createTables(){
 
   await db.query(`CREATE TABLE tb_clients(
    client_id serial PRIMARY KEY,
-   client_cpf VARCHAR(50),
-   client_cnpj VARCHAR (50),
-   client_name VARCHAR (50) UNIQUE NOT NULL,
+   client_cpf VARCHAR(50) UNIQUE,
+   client_cnpj VARCHAR (50) UNIQUE,
+   client_name VARCHAR (100) UNIQUE,
    client_email VARCHAR (255),
-   client_phone VARCHAR,
-   client_zipcode VARCHAR (10),
+   client_phone VARCHAR (50),
+   client_zipcode VARCHAR (50),
    client_street VARCHAR (50),
-   client_number NUMERIC
+   client_number VARCHAR (50)
   )`)
 
   await db.query(`CREATE TABLE tb_contractors(
-    
+    contractor_id serial PRIMARY KEY,
+    contractor_cnpj VARCHAR (50) UNIQUE NOT NULL,
+    contractor_name VARCHAR (100),
+    contractor_email VARCHAR (255),
+    contractor_phone VARCHAR (50),
+    contractor_zipcode VARCHAR (50),
+    contractor_street VARCHAR (50),
+    contractor_number VARCHAR (50)
   )`)
 
   await db.query(`CREATE TABLE tb_exec_tasks(
