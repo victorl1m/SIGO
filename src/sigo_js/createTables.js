@@ -6,6 +6,8 @@ async function createTables(){
   await db.query(`CREATE TABLE tb_client(
    client_id serial PRIMARY KEY,
    client_name VARCHAR (50) UNIQUE NOT NULL,
+   client_email VARCHAR (255),
+   client_phone VARCHAR,
    client_zipcode VARCHAR (10),
    client_street VARCHAR (50),
    client_number NUMERIC
@@ -13,6 +15,8 @@ async function createTables(){
 
   await db.query(`CREATE TABLE tb_exec_tasks(
     jobsite_id integer NOT NULL PRIMARY KEY,
+    floor VARCHAR (50),
+    room VARCHAR (50),
     type VARCHAR (50),
     category VARCHAR (50),
     subcategory VARCHAR (50),
