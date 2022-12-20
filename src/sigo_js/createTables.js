@@ -5,6 +5,8 @@ async function createTables(){
 
   await db.query(`CREATE TABLE tb_client(
    client_id serial PRIMARY KEY,
+   client_cpf VARCHAR(50),
+   client_cnpj VARCHAR (50),
    client_name VARCHAR (50) UNIQUE NOT NULL,
    client_email VARCHAR (255),
    client_phone VARCHAR,
