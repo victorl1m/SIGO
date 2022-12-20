@@ -14,12 +14,14 @@ async function createTables(){
   )`)
 
   await db.query(`CREATE TABLE tb_exec_tasks(
-    jobsite_id integer NOT NULL PRIMARY KEY,
+    jobsite_id serial NOT NULL PRIMARY KEY,
     floor VARCHAR (50),
     room VARCHAR (50),
     type VARCHAR (50),
     category VARCHAR (50),
     subcategory VARCHAR (50),
+    assignee VARCHAR (50),
+    priority VARCHAR (50),
     status VARCHAR (50)
   )`)
 
