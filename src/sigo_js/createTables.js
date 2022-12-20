@@ -3,7 +3,7 @@ const db = require('./_database')
 async function createTables(){
   await db.connect()
 
-  await db.query(`CREATE TABLE tb_client(
+  await db.query(`CREATE TABLE tb_clients(
    client_id serial PRIMARY KEY,
    client_cpf VARCHAR(50),
    client_cnpj VARCHAR (50),
@@ -13,6 +13,10 @@ async function createTables(){
    client_zipcode VARCHAR (10),
    client_street VARCHAR (50),
    client_number NUMERIC
+  )`)
+
+  await db.query(`CREATE TABLE tb_contractors(
+    
   )`)
 
   await db.query(`CREATE TABLE tb_exec_tasks(
