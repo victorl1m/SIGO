@@ -83,7 +83,7 @@ async function createTables(){
   await db.end()
 
   console.log("createTables(): Done!");
-  
+
 }
 
 createTables()
