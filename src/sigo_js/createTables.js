@@ -1,6 +1,7 @@
 const db = require('./_database')
 
 async function createTables(){
+
   await db.connect()
 
   await db.query(`CREATE TABLE IF NOT EXISTS tb_client(
@@ -82,6 +83,7 @@ async function createTables(){
   await db.end()
 
   console.log("createTables(): Done!");
+  
 }
 
 createTables()
