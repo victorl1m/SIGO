@@ -1,10 +1,10 @@
-const db_user = 'postgres'
-const db_host = 'localhost'
-const db_name = 'postgres'
-const db_password = 'sigo'
-const db_port = '5432'
+const db_user = 'sabato';
+const db_host = 'localhost';
+const db_name = 'db_sigo';
+const db_password = '1234';
+const db_port = '5432';
 
-const pg = require('pg')
+const pg = require('pg');
 
 const client = new pg.Client({
   user: db_user,
@@ -12,6 +12,6 @@ const client = new pg.Client({
   database: db_name,
   password: db_password,
   port: db_port,
-})
+});
 
-module.exports = client
+module.exports = client;
