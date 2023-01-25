@@ -40,19 +40,23 @@ export const AddCustomer = ({navigation}) => {
       })
       .join(' ');
 
+      api.get("/getCustomers")
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err));
+
     // send data
-    api
-      .post('/createNewCustomer', {
-        architectId: user?.uid,
-        customerName: formatted,
-      })
-      .then(() => {
-        navigate('CustomerSelection');
-        setUpdate(!update);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // api
+    //   .post('/createNewCustomer', {
+    //     architectId: user?.uid,
+    //     customerName: formatted,
+    //   })
+    //   .then(() => {
+    //     navigate('CustomerSelection');
+    //     setUpdate(!update);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   }
 
   return (
