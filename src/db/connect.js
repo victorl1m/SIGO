@@ -9,6 +9,9 @@ const client = new Client({
   port: config.db_port,
 });
 
+module.exports = client;
+
+/*
 (async () => {
   try {
     await client.connect();
@@ -19,3 +22,4 @@ const client = new Client({
     console.log(error);
   }
 })();
+*/
