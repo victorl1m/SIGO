@@ -1,16 +1,15 @@
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   Pressable,
   Image,
   StatusBar,
   ScrollView,
   BackHandler,
-  Alert,
   Modal,
 } from 'react-native';
+
 import {useFocusEffect} from '@react-navigation/native';
 
 // importing axios api to send the customer data
@@ -18,9 +17,14 @@ import {api} from '../api/axios';
 
 // auth context
 import {AuthContext} from '../contexts/AuthContext';
+
 import {useCallback, useContext, useEffect, useState} from 'react';
+
 import Svg, {Path} from 'react-native-svg';
+
 import Customer from '../components/Customer';
+
+import {getHours} from '../functions/getHours';
 
 export const CustomerSelection = ({navigation}) => {
   const {navigate} = navigation;
@@ -67,15 +71,7 @@ export const CustomerSelection = ({navigation}) => {
   const userImage =
     'https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png';
 
-  var hours = new Date().getHours();
-
-  if (hours < 12) {
-    var greeting = 'Bom dia';
-  } else if (hours >= 12) {
-    var greeting = 'Boa tarde';
-  } else if (hours >= 17) {
-    var greeting = 'Boa noite';
-  }
+  const greeting = getHours();
 
   return (
     <ScrollView style={styles.container}>
