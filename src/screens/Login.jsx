@@ -14,7 +14,10 @@ import {AuthContext} from '../contexts/AuthContext';
 import Toast from 'react-native-simple-toast';
 import auth from '@react-native-firebase/auth';
 
+/* INICIANDO COMPONENTE */
+
 export const Login = ({navigation}) => {
+  /*  */
   const {navigate} = navigation;
 
   // redirect if there is a user logged in
@@ -90,7 +93,7 @@ export const Login = ({navigation}) => {
         console.log(error.message);
       });
   }
-
+  /* VARIA ATÉ AQUI */
   return (
     <View style={styles.loginContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
